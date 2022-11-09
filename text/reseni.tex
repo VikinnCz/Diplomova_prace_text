@@ -12,34 +12,59 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
 \section{MIR - Music information retrieval}
     Music information retrieval je interdisciplinární vědní obor sostředící se na získávání infromací z hudebních nahrávek.
-    Jsou zde kombinovány znalosti mnoha oborů jako jsou muzikologie, psychoakustika, strojové učení, zpracování signálů a další.
+    Jsou zde kombinovány znalosti mnoha oborů jako jsou muzikologie, psychoakustika, strojové učení, zpracování signálů a další. 
     
+
     Výstup jeho výzkumu je využíván populárními technologiemi. 
     Jednou z aplikací je personalizované doporučování hudebních skladeb, která se nachází v moderních streamovacích platformách.
     Další využítí je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky alanýze tempe a klíčových částí skladby.
     Tyto technologie se nachází v mnoha dalších aplikacích a s šířením se digitálního audia jejich důležitost stále poroste.
+    \cite{lidy09:448[TUW-181186]}\cite{a_new_companion_to_digital_humanities}
+    
+    \subsection{Historie}
+    \acs*{MIR} se začíná objevovat koncem devatenáctého a začátkme dvacátého století s příchodem moderních statistických metod.
+    V některých univerzitách tyto statistické metody začínají aplikovat na hudebu.
+    Ze začátku díky špatné dostupnosti počítačů se jedná spíše o ruční přepisování tabulatur přímo z hudebních partitur.
+    Následně se ze zjištěných rysů snažili specifikovat stylové chrakteristiky.  
+    S příchodem počítačů do výzkumných laboratoří v letech 1960 až 1970 se začalo více soutředit na počítačovou analýzu hudeby.
+    V těchto letech se poprvé začaly objevoat nyní známé termíny jako \uv{\it computational musicology} a \uv{\it music information retrieval}
+    První oblastí výzkumu bylo získávání rytmu hudbení nahrávky a z důvodu nízké popularity se výzkum zpomalil.
+    Tento trend následoval až do roku 1990 kdy vázkumu \acs*{MIR} pomohly dvě věci.
+    První z nich bylo velké zvětšování lehce dostupné hudby a druhým z důležitých bodů byl nárůst výpočetního výkonu počítačů.
+    Díky těmto bodům se stal výzkum dostupnější a jednodužší na realizaci.
+
+    Poté v říjnu roku 2000 bylo uspořádáno první mezinárodní symposium soustředící se na \acs*{MIR}.
+    Následně díky těmto pokrokům vznika celosvětová skupina \acs{ISMIR} (\acl{ISMIR}).
+    Zanedlouho naté vznikla další skupina \acs{MIREX} (\acl{MIREX}). Jedná se o skupinu vědců která se schází pravidelně každý rok a řeší problematiku \acs{MIR}.
 
     V \acs{MIR} jako vstupní data využívají zejména hudební informace v digitální potobě.
     Tyto data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů (not).
     Dalším možným typem je "digitální hudba", představovaná zápisem v \acs{MIDI} notách.
     V této práci budou jako vstupní data yvužívány digitální hudební nahrávky ("digitální audio"). 
     
-    Pipeline - řetězec zpracování (TODO: najít vhodné slovíčko v češtině)
+   \subsection{Řetězec zpracování - pipeline}
 
     Téměř standardně využívaný řetězec procesů v aplikacíc \acs{MIR} je popsána níže. 
+
+    Jako vstupní data se využívají zejména hudební informace v digitální potobě.
+    Tyto data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů (not).
+    Dalším možným typem je "digitální hudba", představovaná zápisem v \acs{MIDI} notách.
+    V této práci budou jako vstupní data yvužívány digitální hudební nahrávky ("digitální audio"). 
+
     Pokud jsou vstupní data komplexní na začátku je v řetězci zařezen blok předzpracování, která se stará o komprimaci vstupních singálů.
     U hudebních signálů se jedná například o konverzi stereo signálů na mono signál a jeho následnou komprimaci popsanou více v bodě (TODO: odkaz na bod audio)
+
+
     Dalším bodem v řetězci je extrakce vlastností signálu. 
     Zde je je nastaven poměr mezi vlastnostmi důležitými pro strojové učení lidskou expertní znalost.
     Poměr mezi těmito vlastnostmi závisí na aplikaci pro kterou je algoritmus určen.
     Ná základě získaných vlastností je nastavena struktura algoritmu pro odvození výsldných parametrů.
     (Popsat víc + přidat schéma z knihy strana 213-224)
-\cite{BurgoyneJohnAshley2015MIR}
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width = 0.4\linewidth]{obrazky/MIR-diagram.png}
-    \caption{Řetězec procesů MIR \cite{BurgoyneJohnAshley2015MIR}}
+    \caption{Řetězec procesů MIR \cite{a_new_companion_to_digital_humanities}}
     \label{fig:MIR_diagram}
 \end{figure}
 
