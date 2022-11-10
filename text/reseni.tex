@@ -36,11 +36,6 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
     Poté v říjnu roku 2000 bylo uspořádáno první mezinárodní symposium soustředící se na \acs*{MIR}.
     Následně díky těmto pokrokům vznika celosvětová skupina \acs{ISMIR} (\acl{ISMIR}).
     Zanedlouho naté vznikla další skupina \acs{MIREX} (\acl{MIREX}). Jedná se o skupinu vědců která se schází pravidelně každý rok a řeší problematiku \acs{MIR}.
-
-    V \acs{MIR} jako vstupní data využívají zejména hudební informace v digitální potobě.
-    Tyto data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů (not).
-    Dalším možným typem je "digitální hudba", představovaná zápisem v \acs{MIDI} notách.
-    V této práci budou jako vstupní data yvužívány digitální hudební nahrávky ("digitální audio"). 
     
    \subsection{Řetězec zpracování - pipeline}
 
@@ -52,16 +47,16 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
     V této práci budou jako vstupní data yvužívány digitální hudební nahrávky ("digitální audio"). 
 
     Pokud jsou vstupní data komplexní na začátku je v řetězci zařezen blok předzpracování, která se stará o komprimaci vstupních singálů.
-    U hudebních signálů se jedná například o konverzi stereo signálů na mono signál a jeho následnou komprimaci popsanou více v bodě (TODO: odkaz na bod audio)
-
+    U hudebních signálů se jedná například o konverzi stereo signálů na mono signál
+    a jeho následnou komprimaci popsanou více v bodě 
+    %TODO: odkaz na bod audio
 
     Dalším bodem v řetězci je extrakce vlastností signálu. 
     Zde je je nastaven poměr mezi vlastnostmi důležitými pro strojové učení lidskou expertní znalost.
     Poměr mezi těmito vlastnostmi závisí na aplikaci pro kterou je algoritmus určen.
     Ná základě získaných vlastností je nastavena struktura algoritmu pro odvození výsldných parametrů.
-    (Popsat víc + přidat schéma z knihy strana 213-224)
 
-\begin{figure}[!h]
+\begin{figure}[H]
     \centering
     \includegraphics[width = 0.4\linewidth]{obrazky/MIR-diagram.png}
     \caption{Řetězec procesů MIR \cite{a_new_companion_to_digital_humanities}}
@@ -76,7 +71,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
     a rozložení signálu na krátké překrývající se úseky ze kterých mohou být nezávisle extrahovány jejich vlastnosti. 
     Výsledkem je kolekce paralelně složených sekvencí hodnot vlastností, které se následně použijí pro odvozování (inference).
 
-  \begin{table}[!h]
+  \begin{table}[H]
     \centering
     \begin{tabular}{|p{0.07\linewidth} | p{0.31\linewidth} | p{0.27\linewidth} | p{0.25\linewidth}|}
         \hline
@@ -100,9 +95,45 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
     \label{tab:MIR_typicke_procesy}
   \end{table}
 
-\subsection{Beat and tempo detection}
+  %TODO: současné problémy
 
-\subsection{Parametrizace hudebních signálů}
+
+  \section{Parametrizace hudebních nahrávek}
+  V této kapitole jsou popsány principy získávání parametrů z hudebních signálů.
+  \cite{fundamental_of_music_processing}
+
+  %TODO: dopsat o čem kapitola je
+
+  \subsection{Reprezentace audio signálů}
+  Hudba může být reprezentována spoustou forem. 
+  Jako tradiční médium pro její ukládání ještě před vznikem záznamu sloužily vždy noty a další zápisy pomocí symbolů.
+  Výsledné hudební dílo ale představuje mnohem víc nežli počáteční noty.
+  Každý hudebník a nástroj do skladby dodává svou unikátnost.
+  Při hře se noty začnou proměňovat ve harmonické zvuky, hladké melodie a nástroje komunikují mezi sebou. 
+  Každý z hudebníků do skladby vnašé své emoce jinak reagují na tempo zvýrazňují odlišné noty a liší se jejich artikulace.
+  Všechny tyto proměné ve výsledku způsobují, že dílo není jen mechanické přehrání napsaných not.
+  Jeho součástí se stává unikátní přednes.
+
+  Při pohledu z fyzikálního hlediska důsledkem interpretace díla vznikají zvukové vlny šířící se vzduchem. 
+  Záznamem vzniklých zvukových vln získáváme audio signál.
+  Pojmem audio je označován řetězec sloužící k záznamu, přenosu a reprodukci zvuků v mezích lidského slyšení. 
+  Avšak audio v audio signálu se už nenachází přesná reprezentace not a jejich paramterů jako jsou čas nástupu, tón, délka trvání, dynamika.
+  Díky tomu je alanýz hudebních signálů obtížným úkolem a je ovlivněna reprezentací interpreta akustikou prostoru a vnímáním posluchače, kterým se zabývá samostatný obor nazývající se psychoakustika.
+  Nejdůležitějšími parametry audio signálu jsou: frekvence, výška tónu, dynamika, intenzita, hlasitost a také barva.
+
+  
+  Existují dvě základní reprezentace audio signálu. Prvním je tzv zobrazení v \textbf{časové oblasti},
+  které zobrazuje průběh amplitudy signálu v čase. 
+  %TODO: vložit obrázek a popsat více z knihy
+  Druhým často používanou reprezentací je zobrazení ve \textbf{frekvenční oblasti} znázornňující frekvenční složky signálu v daném časovém úseku.
+  %TODO: vložit obrázek a popsat více z knihy
+  K tomu abychom docílili zobrazení ve frekvenční oblasti se používá důležitého algoritmu \textbf{\acs{DFT}} (\acl{ISMIR}).
+  %TODO: Popsat více o DFT
+  Rozdíl, audio signál, DFT
+
+  \subsection{Časově-frekvenční reprezentace}
+  \subsection{Detekce tempa a dob}
+  \subsection{Klasifikace žánrů a nálady}
 
 \section{Systém Spectoda}
 
