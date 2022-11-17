@@ -99,41 +99,106 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
 
   \section{Parametrizace hudebních nahrávek}
-  V této kapitole jsou popsány principy získávání parametrů z hudebních signálů.
-  \cite{fundamental_of_music_processing}
-
-  %TODO: dopsat o čem kapitola je
+  V této kapitole je popsán audio signál. Jak vzniká, jeho reprezentace v číslicovám zpracování a základní principy práce s audiosignálem.
+  V bodech \ref{sec:Frekvence} až \ref{sec:Barva} jsou popsány parametry získávané z audio signálu. %TODO: doplnit správné reference
+  Získané parametry slouží pro přesnější popis skladby. \cite{fundamental_of_music_processing}
 
   \subsection{Reprezentace audio signálů}
   Hudba může být reprezentována spoustou forem. 
-  Jako tradiční médium pro její ukládání ještě před vznikem záznamu sloužily vždy noty a další zápisy pomocí symbolů.
-  Výsledné hudební dílo ale představuje mnohem víc nežli počáteční noty.
-  Každý hudebník a nástroj do skladby dodává svou unikátnost.
-  Při hře se noty začnou proměňovat ve harmonické zvuky, hladké melodie a nástroje komunikují mezi sebou. 
-  Každý z hudebníků do skladby vnašé své emoce jinak reagují na tempo zvýrazňují odlišné noty a liší se jejich artikulace.
-  Všechny tyto proměné ve výsledku způsobují, že dílo není jen mechanické přehrání napsaných not.
+  Jako tradiční médium pro její ukládání ještě před vznikem záznamu sloužily vždy noty a další typy zápisů pomocí symbolů.
+  Výsledné hudební dílo ale představuje mnohem více než počáteční notový zápis.
+  Každý hudebník a hudební nástroj do skladby dodává svou unikátnost.
+  Při hře se noty začnou proměňovat v harmonické zvuky, hladké melodie a nástroje vzájemně rezonují. 
+  Každý z hudebníků do skladby přináší svou interptretaci. Jinak reagují na tempo zvýrazňují odlišné noty a liší se jejich artikulace.
+  Všechny tyto proměnné ve výsledku způsobují, že dílo není jen mechanické přehrání napsaná partitury.
   Jeho součástí se stává unikátní přednes.
 
-  Při pohledu z fyzikálního hlediska důsledkem interpretace díla vznikají zvukové vlny šířící se vzduchem. 
-  Záznamem vzniklých zvukových vln získáváme audio signál.
+  Při pohledu z fyzikálního hlediska důsledkem interpretace díla vznikají zvukové vlny šířící se vzduchem.
+  Tyto vlny jsou reprezentovány kmítáním atomů plynu způsobující změny tlaku svým zhušťováním a zřěďováním. Při vlnění nedochází k přenosu hmotných částit.
+  Záznamem šířících se zvukových vln získáváme audio signál.
   Pojmem audio je označován řetězec sloužící k záznamu, přenosu a reprodukci zvuků v mezích lidského slyšení. 
-  Avšak audio v audio signálu se už nenachází přesná reprezentace not a jejich paramterů jako jsou čas nástupu, tón, délka trvání, dynamika.
-  Díky tomu je alanýz hudebních signálů obtížným úkolem a je ovlivněna reprezentací interpreta akustikou prostoru a vnímáním posluchače, kterým se zabývá samostatný obor nazývající se psychoakustika.
-  Nejdůležitějšími parametry audio signálu jsou: frekvence, výška tónu, dynamika, intenzita, hlasitost a také barva.
+  Avšak v audio signálu se už nenachází přesná reprezentace not a jejich paramterů jako jsou čas nástupu, tón, délka trvání, dynamika.
+  Díky tomu je analýza hudebních signálů obtížným úkolem a je ovlivněna reprezentací interpreta akustikou prostoru a vnímáním posluchače.
+  Popsanými problémy se zabývá samostatný vědní obor s názvem psychoakustika.
+  Nejdůležitějšími parametry audio signálu které jsou podrobně popsány níže definujeme: frekvence, výška tónu, dynamika, intenzita, hlasitost a také barva.
 
+
+  \subsection{Časová oblast}
+  Základní reprezentací audio signálu je tzv zobrazení v \textbf{časové oblasti}.
+  V časové oblasti číslicový signál představují vzorky. Jednotlivé vzorky udávají hodnotu signálu v daném čase.
+  Počet vzorků nám určuje vzorkovací frekvence signálu. Důležé pravidlo pro vzorkování signálu je popsáno rovnicí č. \ref*{rov:vzorkovaci_teorem}
   
-  Existují dvě základní reprezentace audio signálu. Prvním je tzv zobrazení v \textbf{časové oblasti},
-  které zobrazuje průběh amplitudy signálu v čase. 
-  %TODO: vložit obrázek a popsat více z knihy
-  Druhým často používanou reprezentací je zobrazení ve \textbf{frekvenční oblasti} znázornňující frekvenční složky signálu v daném časovém úseku.
-  %TODO: vložit obrázek a popsat více z knihy
-  K tomu abychom docílili zobrazení ve frekvenční oblasti se používá důležitého algoritmu \textbf{\acs{DFT}} (\acl{ISMIR}).
-  %TODO: Popsat více o DFT
-  Rozdíl, audio signál, DFT
+  \begin{equation}
+    f_{vz} > 2 * f_{max}
+    \label{rov:vzorkovaci_teorem}
+  \end{equation}
 
-  \subsection{Časově-frekvenční reprezentace}
-  \subsection{Detekce tempa a dob}
-  \subsection{Klasifikace žánrů a nálady}
+  kde $f_{vz}$ je vzorkovací frekvence a $f_{max}$ je maximální frekvence v audio signálu.  
+  Pokud jednotlivé vzorky zobrazíme graficky získáme průběh amplitudy signálu viz obrázek č.\ref*{fig:Waveform}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{obrazky/Waveform.png}
+    \caption{Zobrazení časového průběhu signálu}
+    \label{fig:Waveform}
+  \end{figure}
+
+  Tato reprezentace audio signálu poskytuje informace o amplitudě signálu. Čili je z ní možno vyčíst například dynamiku skladby, začátky a konce not.
+  
+  \subsection{Frekvenční oblast}
+  Pro získání více informací o hudebním díle je zobrazení v časové oblasti nedostatečné.
+  Proto se využívá tzv zobrazení ve \textbf{frekvenční oblasti}.
+
+  V časové oblasti se zobrazuje frekvenční spektrum signálu.
+  Toto spektrum představuje rozložení původní části signálu na jednotlivé harmonické frekvence reprezentující zpracovávaný signál.
+  V grafu jsou poté zobrazy frekvenční složky se kterých se signál zkládá viz obrázek č.\ref*{fig:Bass_tone} %TODO: přidat obrázek spektrogrmu
+
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.8\linewidth}
+        \includegraphics[width = \linewidth]{obrazky/Bass_tone_waveform.png}
+        \caption{Časová oblast}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.8\linewidth}
+        \includegraphics[width = \linewidth]{obrazky/Bass_tone_spectrum.png}
+        \caption{Frekvenční oblast}
+    \end{subfigure}
+    \caption{Reprezentace tónu E zahraného na basovou kytaru.}
+    \label{fig:Bass_tone}
+\end{figure}
+  
+  Jako nzorný důvod proč je transformace do frekvenční oblasti přínosná je dán příklad. Na nástroj je zahrán tón, který je nahrán. 
+  V časové oblasti je možné určit délku tónu a jeho průběh podle ADSR obálky popsané v bodě č. \ref*{sec:Barva}.
+  Pokud je ale potřeba zjistit výšku tónu a určit notu, tak je to téměř nemožné.
+  Díky transformaci do frekveční oblasti je patrná fundementální harmonická frekvence tónu.
+  Tato frekvence udává výšku tónu a je tak možné stanovit notu která byla zahrána.
+
+  Pro získání frekvenčního spektra signálu je třeba transformovat signál s časové oblasti.
+  K tomu se využívá \textbf{Fourierovy transformace}. 
+
+  Hlavní faktem Fourierovy transformace je, že každý periodický signál je možné rozložit na součet někonečně mnoha sinusových signálů s různou amplitudou a fází.
+  Toho je poté pomoí matematickýh postupů docílit.
+  Analyzující signál je rozložen na jeho frekvenční složky udávané amplitudou a fází.
+  Při grafickém zobrazení získaných složek vzniká spektrogram analyzovaného signálu viz obrázek č.\ref*{fig:Bass_tone} zobrazující jeho frekvenční koeficienty.
+  
+  efektivního algoritmu z ní odvozeného tvz \acs{FFT} (\acl{FFT}).
+
+
+  \textbf{\acs{DFT}} (\acl{DFT}).
+  %TODO: Popsat více o  FFT a DFT
+
+
+  %TODO: popsat parametry z knížky: frekvence, výška, dynamika, barva atd...
+
+  \subsection{Frekvence} \label{sec:Frekvence}
+
+  \subsection{Barva} \label{sec:Barva}
+
+  Jedním z důležiitých nástrojů pro jeho nalaýzuj je určení obálky signálu.
+  %TODO: Popsat ADSR obálku
+
+\section{Detekce tempa a dob}
+\section{Klasifikace žánrů a nálady}
 
 \section{Systém Spectoda}
 
