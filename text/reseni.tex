@@ -110,7 +110,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   Každý hudebník a hudební nástroj do skladby dodává svou unikátnost.
   Při hře se noty začnou proměňovat v harmonické zvuky, hladké melodie a nástroje vzájemně rezonují. 
   Každý z hudebníků do skladby přináší svou interptretaci. Jinak reagují na tempo zvýrazňují odlišné noty a liší se jejich artikulace.
-  Všechny tyto proměnné ve výsledku způsobují, že dílo není jen mechanické přehrání napsaná partitury.
+  Všechny tyto proměnné ve výsledku způsobují, že dílo není jen mechanické přehrání napsané partitury.
   Jeho součástí se stává unikátní přednes.
 
   Při pohledu z fyzikálního hlediska důsledkem interpretace díla vznikají zvukové vlny šířící se vzduchem.
@@ -151,7 +151,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
   V časové oblasti se zobrazuje frekvenční spektrum signálu.
   Toto spektrum představuje rozložení původní části signálu na jednotlivé harmonické frekvence reprezentující zpracovávaný signál.
-  V grafu jsou poté zobrazy frekvenční složky se kterých se signál zkládá viz obrázek č.\ref*{fig:Bass_tone} %TODO: přidat obrázek spektrogrmu
+  V grafu jsou poté zobrazy frekvenční složky se kterých se signál zkládá viz obrázek č.\ref*{fig:Bass_tone}.
 
   \begin{figure}[H]
     \centering
@@ -178,14 +178,44 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
   Hlavní faktem Fourierovy transformace je, že každý periodický signál je možné rozložit na součet někonečně mnoha sinusových signálů s různou amplitudou a fází.
   Toho je poté pomoí matematickýh postupů docílit.
-  Analyzující signál je rozložen na jeho frekvenční složky udávané amplitudou a fází.
-  Při grafickém zobrazení získaných složek vzniká spektrogram analyzovaného signálu viz obrázek č.\ref*{fig:Bass_tone} zobrazující jeho frekvenční koeficienty.
-  
-  efektivního algoritmu z ní odvozeného tvz \acs{FFT} (\acl{FFT}).
+  Analyzující signál je rozložen na jeho frekvenční složky udávané amplitudou a fází viz obrázek č.\ref*{fig:Bass_tone}.
+  Jako další grafické zobrazení časové oblasti hudebního signálu se pro jeho analýzu využívá spektrogramu.
+  % Spektrogram zobrazuje frekvenční složky signálu v závislosti na čase. Modul těchto složek je pak udáván barevnou škálou.
+  % Spektrogram je zobrazen na obrrázku č. %TODO: popsat spektrogram zde nebo jinde? a popsat? 
 
 
-  \textbf{\acs{DFT}} (\acl{DFT}).
-  %TODO: Popsat více o  FFT a DFT
+  \subsection{DFT - Diskrétní Fourierova transformace}
+
+  Pokud jsou signály zpracovávány pomocí výpočetních procesorů,
+  tak může být uložen pouze omezený počet parametrů signálu.
+  To znamená, že analogový signál spojitý v čase musí být převeden na signál digitální tvz. signál diskrétní, který je není spojitý v čase. 
+  Diskrétní signál je potom vhodný pro číslicové zpracování.
+  Důsledkem toho bylo nutné odvodit algoritmus \acs{DFT} přizpůsobený právě pro zpracování diskrétních signálů s konečným počtem hodnot.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{obrazky/Discrete_signal.png}
+    \caption{Časově spojitý signál a diskrétní signál}
+    \label{fig:Discrete_signal}
+  \end{figure}
+
+  Rovnice pro \acs{DFT} je potom zapsána v následujícím tvaru. 
+
+  \begin{equation}
+    X(k) = \hat{x}(k/N) = \sum_{n = 0}^{N - 1} x(n) exp(-2 \pi i k/N)
+    \label{rov:DFT}
+  \end{equation}
+
+  Kde $ k \in [0:M - 1] = [0:N - 1] $ a $ M \in \mathbb{N}$.
+
+  Ze strany výpočetní náročnosti je takto definovyný algoritmus neefektivní a výpočetně náročný.
+  Při počítání Fourierova koeficientu $X(k)$ je zapotřebí velkého množství velké množství operací v řádu $N^2$.
+  Proto pokud počet vzorků $N$ dosahuje většího množství je ve většině případů tento algoritmus příliš pomalý pro praktické využití.
+
+  Počet potřebných operací může být výrazně redukován použitím efektivního algoritmu známého jako \acs{FFT} (\acl{FFT}).
+
+
+  %TODO: Popsat více o  FFT a STFT
 
 
   %TODO: popsat parametry z knížky: frekvence, výška, dynamika, barva atd...
