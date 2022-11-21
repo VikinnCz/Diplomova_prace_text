@@ -246,15 +246,31 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   Tím ale dochází ke zmenšení přesnosti ve frekvenční oblasti.
   
   Na výsledku přesnosti analýzy poomcí \acs{STFT} závisí také tvar použité okénkové funkce.
-  V obrázku č. \ref*{fig:STFT} je použito obdélníkového okénka která díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
+  V obrázku č. \ref*{fig:STFT} je použito obdélníkového okénka které díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
   Existuje více tvarů okénkových funkcí pro odstranění nežádoucích složek.
   Například to jsou Kaise, Chebyshev, Hann a Haming a další.
   \cite{Time-frequency_distributions};
 
-  %TODO: popsat parametry z knížky: frekvence, výška, dynamika, barva atd...
+  %TODO: popsat parametry z knížky: dynamika intenzita a hlasitot, barva
 
-  \subsection{Frekvence} \label{sec:Frekvence}
+  \subsection{Dynamika intenzita a hlasitost} \label{sec:Frekvence}
 
+  Pojem \textbf{dynamika} je vyjadřuje jak hlasitost \uv{volume} zvuku stejně jako v notovém zápise udává hlasitost \uv{volume} přednesu.
+  V notovém zápise je dynamika popsána symboly jako jsou například pianissimo \uv{\emph{pp}}, piano \uv{\emph{p}}, forte \uv{\emph{f}} a další.
+
+  Naopak ve audiu je dynamika udána \textbf{hlasitostí \uv{loudness}} představována apmlitudou signálu nebo jeho efektivní hodnotou \acs{RMS} v čase.
+  Při měření hlasitosi je pak využíváno pojmů \textbf{intenzita} zvuku a \textbf{akustický výkon}.
+  Kde akustický výkon je definován jako kolik energie je vzduchem vyzářeno zvukovým vysílačem za jednotku času. Jednotkou je $[W]$
+  A intenzita zvuku pak je definována jako množství energie, které projde jednotkovou plochou kolmou na směr šíření na jednotku času. Jednotkou pak je $[Wm^{-2}]$ \cite{intenzita_zvuku_definice}
+  
+  Z pohledu vnímání hlasitosti lidským uchem je rozsah vnímané intenzity zvuku v řádech bilionů. Práh slyšení činí $10^{-12} Wm^{-2}$ a práh bolesti je $10 Wm^{-2}$.
+  Pro zmenšení tak velkého řádu je definována hladina intenzity zuvku v decibelech [$\textbf{dB}$]. Kde vztažnou hodnotou je práh slyšení $I_0 = 10^{-12} Wm^{-2}$.
+  Hladina intenzity se vypočítá dle rovnice č. \ref*{rov:hladina_intenzity}
+
+  \begin{equation}
+    L_I = 10*log(\frac{I}{I_0})
+    \label{rov:hladina_intenzity}
+  \end{equation}
   \subsection{Barva} \label{sec:Barva}
 
   Jedním z důležiitých nástrojů pro jeho nalaýzuj je určení obálky signálu.
