@@ -124,7 +124,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
 
   \subsection{Časová oblast}
-  Základní reprezentací audio signálu je tzv zobrazení v \textbf{časové oblasti}.
+  Základní reprezentací audio signálu je tzv. zobrazení v \textbf{časové oblasti}.
   V časové oblasti číslicový signál představují vzorky. Jednotlivé vzorky udávají hodnotu signálu v daném čase.
   Počet vzorků nám určuje vzorkovací frekvence signálu. Důležé pravidlo pro vzorkování signálu je popsáno rovnicí č. \ref*{rov:vzorkovaci_teorem}
   
@@ -147,7 +147,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   
   \subsection{Frekvenční oblast}
   Pro získání více informací o hudebním díle je zobrazení v časové oblasti nedostatečné.
-  Proto se využívá tzv zobrazení ve \textbf{frekvenční oblasti}.
+  Proto se využívá tzv. zobrazení ve \textbf{frekvenční oblasti}.
 
   V časové oblasti se zobrazuje frekvenční spektrum signálu.
   Toto spektrum představuje rozložení původní části signálu na jednotlivé harmonické frekvence reprezentující zpracovávaný signál.
@@ -176,7 +176,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   Pro získání frekvenčního spektra signálu je třeba transformovat signál s časové oblasti.
   K tomu se využívá \textbf{Fourierovy transformace}. 
 
-  Hlavní faktem Fourierovy transformace je, že každý periodický signál je možné rozložit na součet někonečně mnoha sinusových signálů s různou amplitudou a fází.
+  Hlavní pilířem Fourierovy transformace je, že každý periodický signál je možné rozložit na součet někonečně mnoha sinusových signálů s různou amplitudou a fází.
   Toho je poté pomoí matematickýh postupů docílit.
   Analyzující signál je rozložen na jeho frekvenční složky udávané amplitudou a fází viz obrázek č.\ref*{fig:Bass_tone}.
   Jako další grafické zobrazení časové oblasti hudebního signálu se pro jeho analýzu využívá spektrogramu.
@@ -213,10 +213,43 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   Proto pokud počet vzorků $N$ dosahuje většího množství je ve většině případů tento algoritmus příliš pomalý pro praktické využití.
 
   Počet potřebných operací může být výrazně redukován použitím efektivního algoritmu známého jako \acs{FFT} (\acl{FFT}).
+  Na vytvoření\acs{FFT} se zasloužil Carl Friedrich Gauss a Joseph Fourier zhruba před dvěma sty let.
+  Vynález tohoto algoritmu změnil své odvětví zpracování signálů a je dnes používán v miliardách telekomunikačních zařízeních.
+  Ačkoliv je ve velké míře využíván v telekomunikacích, tak právě i ve zpracování a analýze zvukových signálů zabírá důležitou roli.
 
+  Zjednodušeně \acs{FFT} využívá redundace napříč sinusovými signály různých frekvencní ke společnému výpočtu všech Fourierových koeficientů pomocí rekurze.
+  Díky tomu je dosaženo snížení výpočetní náročnosti počtu operací z řádu $N^2$ na $N\log_2 N$.
+  Například při použití vzorků $N = 2^10 = 1024$. \acs{FFT} vzžaduje $N\log_2N = 10240 $ operací namísto
+  $N^2 = 1048576$ operací při použití \acs{DFT}. Jak je vidět snížení výpočetní náročnosti je velké a exponenciálně roste s větším počtem vzorků $N$.
+  
+  \subsection{STFT - Short-time Fourier transform}
 
-  %TODO: Popsat více o  FFT a STFT
+  V roce 1946 Dennis Gabor představil \acs{STFT} jako potřebu zařazení frekvenčních složek do konkrétnímo času signálu.
+  Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejme v jakém časovém úseku signálu se získané fekvenční složky nachází.
+  Hlavní myšlenkou \acs{STFT} je, že namísto analyzování celého signálu je signál analyzována pouze jeho malá část.
+  Za tímto účelem je definována tzv. okénokvá funkce, která je nenulové pouze v malé části signálu.
+  Analyzovaný signál je následně vynásoben vzniklou okénkovou funkcí a díky tomu vzniká malá nenulová části signálu dle okénkové funkce viz obr č. \ref*{fig:princip_stft}.
+  Chceme li analyzovat signál v různých časech je tato funkce po signálu posouvána a následně se počítá Fourierova transformace pro každý výsledný okénkový signál.
 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/STFT.png}
+    \caption{Signál o délce $1 s$ s počáteční frekvencí $10 Hz$ a koncovou frekvencí $30 Hz$ \textbf{a)} Původní signál \textbf{b)} Signál s okénkem od $0,2 s$ do $0,5 s$ \textbf{c)} Signál s okénkem od $0,35 s$ do $0,65 s$ \textbf{d)} Signál s okénkem od $0,5 s$ do $0,8 s$};
+    \label{fig:STFT}
+  \end{figure}
+
+  Na obrázku č. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje výhodu přesného určení frekvenčních složek signálu v čase. 
+  Signál je násoben obdelníkovou okénkovou funkcí ve třech místech.
+  Tyto tři vzniklé signály jsou následně na sebe nezávazně transformovány do frekvenční oblasti.
+  Z výsledků Fourierovy transformace lze vidět, že každá z těchto částí má jiné frekvenční spektrum.
+  Pokud by bylo zapotřebí například určit přesný přechod mezi dvěma frekvencemi nacházejícími se v signálu. Lze spřesnit časové měřítko analýzy pomocí délky okénka.
+  Tím ale dochází ke zmenšení přesnosti ve frekvenční oblasti.
+  
+  Na výsledku přesnosti analýzy poomcí \acs{STFT} závisí také tvar použité okénkové funkce.
+  V obrázku č. \ref*{fig:STFT} je použito obdélníkového okénka která díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
+  Existuje více tvarů okénkových funkcí pro odstranění nežádoucích složek.
+  Například to jsou Kaise, Chebyshev, Hann a Haming a další.
+  \cite{Time-frequency_distributions};
 
   %TODO: popsat parametry z knížky: frekvence, výška, dynamika, barva atd...
 
