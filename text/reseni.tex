@@ -156,7 +156,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.8\linewidth}
-        \includegraphics[width = \linewidth]{obrazky/Bass_tone_waveform.png}
+        \includegraphics[width = \linewidth]{obrazky/Piano_tone_waveform.png}
         \caption{Časová oblast}
     \end{subfigure}
     \begin{subfigure}[b]{0.8\linewidth}
@@ -271,10 +271,50 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
     L_I = 10*log(\frac{I}{I_0})
     \label{rov:hladina_intenzity}
   \end{equation}
+
   \subsection{Barva} \label{sec:Barva}
 
-  Jedním z důležiitých nástrojů pro jeho nalaýzuj je určení obálky signálu.
-  %TODO: Popsat ADSR obálku
+  Hudebním vyjádření se za slovem barva zkrývá velmi komplexní sdružení atributů.
+  Jedná se jak o psychologický tak hudební problém který je vnímán individuálně.
+  \cite{The_perception_of_musical_timbre}
+
+  Zdjednodušeně se barva definuje jako vlastnosti díky které je možné rozeznat tón o stejné výšce a hlasitosti zahraný na dva různé náastroje.
+  Díky barvě je posluchač schopen rozeznávat různé zvuky nástrojů a typů interpretace.
+
+  Jelikož je barva špatně kategorizovatelná fyzikálníma veličinama je většinou interpretována nedefinovanými slovy.
+  Například popisujeme barvu jako jasnou, temnou, ostrou, čistou, teplou a další.
+
+  Jedním z možných nástrojů pro analýzu barvy tónu je tvz. obálka tónu/signálu.
+  Obálku signálu určuje amplituda signálu v čase viz obrázek č. ....%TODO: Přidat obrázek ADSR obálky
+  Je rozdělena na 4 fáze a to jsou \textbf{Attack - náběh} určující začátek tónu například úder paličkou na blánu bubnu.
+  V této fázi se nachází více ruchových složek z daného úderu a má velkou dynamiku.
+  Následuje fáze s názvem \textbf{Decay - útlum}.
+  Po hlasitém úderu amplituda signálu klesá a začíná převládat tonální složka. Decay udává dobu za kterou se signál z jeho maxima sníží na hodnotu sustain.
+  \textbf{Sustain - podržení} je fáze ve které je zřetelný tón a stálá hlasitost. Rezonující blána bubnu.
+  Poslední fází je \textbf{Release - uvolnění} při kterám dochází k poklesu hlasitosti zdroje zvuku až k uplnému utlumení.
+  Například přiložení tlumítka na rezonující strunu.
+
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.8\linewidth}
+        \includegraphics[width = \linewidth]{obrazky/Piano_tone_waveform.png}
+        \caption{Amplituda tónu}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.8\linewidth}
+        \includegraphics[width = \linewidth]{obrazky/Piano_tone_obalka.png}
+        \caption{Obálka tónu}
+    \end{subfigure}
+    \caption{Tón A5 zahraný na klavír a jeho ADSR obálka}
+    \label{fig:Bass_tone}
+  \end{figure}
+
+  Další informace o barvě signálu se nacházejí v jeho frekvenčním spektru. 
+  Tón zahraný na hudební nástroj má svou fundamentální (nosnou) frekvenci nazávanou první harmonická frekvence udávající jeho výšku.
+  Dle konstrukce nástroje se v signálu objevují násobky nosné frekvence.
+  Tyto násobky představují vyšší harmonické složky tónu.
+  Počet a amplituda vyšších harmonických složek má velký vliv na výslednou barvu tónu a je to hlavní důvod proč je lidské ucho schopné rozeznat stejný tón znějící na různé nástroje.
+
+  %TODO: vložit obrázek
 
 \section{Detekce tempa a dob}
 \section{Klasifikace žánrů a nálady}
