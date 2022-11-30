@@ -156,7 +156,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.8\linewidth}
-        \includegraphics[width = \linewidth]{obrazky/Piano_tone_waveform.png}
+        \includegraphics[width = \linewidth]{obrazky/Bass_tone_waveform.png}
         \caption{Časová oblast}
     \end{subfigure}
     \begin{subfigure}[b]{0.8\linewidth}
@@ -184,7 +184,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   % Spektrogram je zobrazen na obrrázku č. %TODO: popsat spektrogram zde nebo jinde? a popsat? 
 
 
-  \subsection{DFT - Diskrétní Fourierova transformace}
+  \subsection{DFT - Diskrétní Fourierova transformace}ĐĐ
 
   Pokud jsou signály zpracovávány pomocí výpočetních procesorů,
   tak může být uložen pouze omezený počet parametrů signálu.
@@ -285,7 +285,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   Například popisujeme barvu jako jasnou, temnou, ostrou, čistou, teplou a další.
 
   Jedním z možných nástrojů pro analýzu barvy tónu je tvz. obálka tónu/signálu.
-  Obálku signálu určuje amplituda signálu v čase viz obrázek č. ....%TODO: Přidat obrázek ADSR obálky
+  Obálku signálu určuje amplituda signálu v čase viz obrázek č. \ref*{fig:ADSR_envelope_on_piano_tone}
   Je rozdělena na 4 fáze a to jsou \textbf{Attack - náběh} určující začátek tónu například úder paličkou na blánu bubnu.
   V této fázi se nachází více ruchových složek z daného úderu a má velkou dynamiku.
   Následuje fáze s názvem \textbf{Decay - útlum}.
@@ -305,7 +305,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
         \caption{Obálka tónu}
     \end{subfigure}
     \caption{Tón A5 zahraný na klavír a jeho ADSR obálka}
-    \label{fig:Bass_tone}
+    \label{fig:ADSR_envelope_on_piano_tone}
   \end{figure}
 
   Další informace o barvě signálu se nacházejí v jeho frekvenčním spektru. 
@@ -316,7 +316,40 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
   %TODO: vložit obrázek
 
-\section{Detekce tempa a dob}
+\section{Detekce dob a analýza tempa skladby}
+V této kapitole jsou posány principy detekce tempa skladby a začátků not.
+S postupem času se techniky používané v \acs*{MIR} pro detekci dob vyvíjejí a vznikají různé přístupy.
+Níže jsou popsány základní principy pro detekci dob a analýzy tempa až po příchod hubokého strojového učení.
+Přístup k detekci dob se s vývojem hlubokých neuronových sítí značně změnil. 
+Dnes se v této oblasti využívá zejména struktur strojového učení.
+\cite{tempobeatdownbeat:book} \cite{fundamental_of_music_processing};
+
+%TODO: popsat problematiku s kapitoly 6.1
+
+  \subsection{Využití energie signálu}
+
+  \subsection{Využití spektra signálu}
+    %TODO: popsat specral flux functio https://tempobeatdownbeat.github.io/tutorial/ch2_basics/baseline.html
+  
+  \subsection{Detekce periodicity}
+    %TODO: popsat autokorelační funkci a její využití pro detekci tempa (periodicity)
+
+  \subsection{Vzužití neuronových sítí}
+    Deep neural networks(DNN)
+    %TODO: popsat dep learnin při beat trackingu https://tempobeatdownbeat.github.io/tutorial/ch3_going_deep/overview.html
+    %TODO: popsat postup (preprocessing, DNN, post processing)/(feature extraction, likelihood estimation, post processing)
+  
+  \subsection{Více vrstvé perceptronové sítě}
+
+  \subsection{Konvoluční neuronové sítě}
+    Temporal Convolutional networks
+    
+  \subsection{Rekurentní neuronové sítě}
+    Gated recurent units
+    Bi-directional models
+
+  \subsection{Hybridní architektury}
+
 \section{Klasifikace žánrů a nálady}
 
 \section{Systém Spectoda}
