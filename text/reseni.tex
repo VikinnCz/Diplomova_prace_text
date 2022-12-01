@@ -1,16 +1,16 @@
 \chapter{Teorie}
 
-Semestrální práce se zejména zabývá problematikou \acs{MIR}. Popsánou v kapitole (!doplnit kapitolu!).
-Důležitou roli zde hraje i úvaha nad realizací světelných animací.
-Je důležité aby bylo přemýšleno nad principem reakce světelných animací na hudbu.
+Semestrální práce se zabývá zejména problematikou \acs{MIR}. Popsánou v kapitole\ref{sec:MIR}.
 Nabízejí se otázky jak by měla daná animace reagovat na konkrétní děj skladby.
-Jakým způsobem navrhnout strukturu \dots
+Jakým způsobem navrhnout strukturu algoritmů a co by měly získané parametry ovlivňovat při vytváření animací.
+%TODO dopsat smzsluplně a konkrétněji.
 
-V táto části je popsána teorie zpracování hudební nahrávky pomocí známých algoritmů jako je například \acs{FFT} (\acl{FFT}) 
-či nabízené možnosti strojového učení. Struktura a možnosti systému Spectoda pro generování interaktivních světelných animací.
-Uměleckou částí, jak by měla animace prezentovat hudbu.
+V táto části jsou popsány následující segmenty: Teorie zpracování hudební nahrávky pomocí známých algoritmů. Například důležitým algoritmem je \acs{FFT} (\acl{FFT})
+popsaná více v bodě \ref{sec:FFT}, jeho variantý pak v bodech \ref{sec:DFT} a \ref{sec:STFT}.
+Nabízené moderní metody strojového učení s využitgím hlubokých neuronových sítí při detekci tempa skladby \ref{sec:Detekce_tempa} a určení žánru \ref{sec:Klasifikace_zanru}.  
+Struktura a možnosti systému Spectoda pro generování interaktivních světelných animací je podrobně popsána v bodě \ref{sec:Spectoda}.
 
-\section{MIR - Music information retrieval}
+\section{MIR - Music information retrieval} \label{sec:MIR}
     Music information retrieval je interdisciplinární vědní obor sostředící se na získávání infromací z hudebních nahrávek.
     Jsou zde kombinovány znalosti mnoha oborů jako jsou muzikologie, psychoakustika, strojové učení, zpracování signálů a další. 
     
@@ -100,7 +100,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
   \section{Parametrizace hudebních nahrávek}
   V této kapitole je popsán audio signál. Jak vzniká, jeho reprezentace v číslicovám zpracování a základní principy práce s audiosignálem.
-  V bodech \ref{sec:Frekvence} až \ref{sec:Barva} jsou popsány parametry získávané z audio signálu. %TODO: doplnit správné reference
+  V bodech \ref{sec:Frekvence} a \ref{sec:Barva} jsou popsány parametry získávané z audio signálu. %TODO: doplnit správné reference
   Získané parametry slouží pro přesnější popis skladby. \cite{fundamental_of_music_processing}
 
   \subsection{Reprezentace audio signálů}
@@ -126,7 +126,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   \subsection{Časová oblast}
   Základní reprezentací audio signálu je tzv. zobrazení v \textbf{časové oblasti}.
   V časové oblasti číslicový signál představují vzorky. Jednotlivé vzorky udávají hodnotu signálu v daném čase.
-  Počet vzorků nám určuje vzorkovací frekvence signálu. Důležé pravidlo pro vzorkování signálu je popsáno rovnicí č. \ref*{rov:vzorkovaci_teorem}
+  Počet vzorků nám určuje vzorkovací frekvence signálu. Důležé pravidlo pro vzorkování signálu je popsáno rovnicí č. \ref{rov:vzorkovaci_teorem}
   
   \begin{equation}
     f_{vz} > 2 * f_{max}
@@ -134,7 +134,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   \end{equation}
 
   kde $f_{vz}$ je vzorkovací frekvence a $f_{max}$ je maximální frekvence v audio signálu.  
-  Pokud jednotlivé vzorky zobrazíme graficky získáme průběh amplitudy signálu viz obrázek č.\ref*{fig:Waveform}
+  Pokud jednotlivé vzorky zobrazíme graficky získáme průběh amplitudy signálu viz obrázek č.\ref{fig:Waveform}
 
   \begin{figure}[H]
     \centering
@@ -145,7 +145,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
 
   Tato reprezentace audio signálu poskytuje informace o amplitudě signálu. Čili je z ní možno vyčíst například dynamiku skladby, začátky a konce not.
   
-  \subsection{Frekvenční oblast}
+  \subsection{Frekvenční oblast} \label{sec:FFT}
   Pro získání více informací o hudebním díle je zobrazení v časové oblasti nedostatečné.
   Proto se využívá tzv. zobrazení ve \textbf{frekvenční oblasti}.
 
@@ -184,7 +184,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   % Spektrogram je zobrazen na obrrázku č. %TODO: popsat spektrogram zde nebo jinde? a popsat? 
 
 
-  \subsection{DFT - Diskrétní Fourierova transformace}ĐĐ
+  \subsection{DFT - Diskrétní Fourierova transformace} \label{sec:DFT}
 
   Pokud jsou signály zpracovávány pomocí výpočetních procesorů,
   tak může být uložen pouze omezený počet parametrů signálu.
@@ -222,7 +222,7 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   Například při použití vzorků $N = 2^10 = 1024$. \acs{FFT} vzžaduje $N\log_2N = 10240 $ operací namísto
   $N^2 = 1048576$ operací při použití \acs{DFT}. Jak je vidět snížení výpočetní náročnosti je velké a exponenciálně roste s větším počtem vzorků $N$.
   
-  \subsection{STFT - Short-time Fourier transform}
+  \subsection{STFT - Short-time Fourier transform} \label{sec:STFT}
 
   V roce 1946 Dennis Gabor představil \acs{STFT} jako potřebu zařazení frekvenčních složek do konkrétnímo času signálu.
   Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejme v jakém časovém úseku signálu se získané fekvenční složky nachází.
@@ -250,8 +250,6 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   Existuje více tvarů okénkových funkcí pro odstranění nežádoucích složek.
   Například to jsou Kaise, Chebyshev, Hann a Haming a další.
   \cite{Time-frequency_distributions};
-
-  %TODO: popsat parametry z knížky: dynamika intenzita a hlasitot, barva
 
   \subsection{Dynamika intenzita a hlasitost} \label{sec:Frekvence}
 
@@ -309,14 +307,14 @@ Uměleckou částí, jak by měla animace prezentovat hudbu.
   \end{figure}
 
   Další informace o barvě signálu se nacházejí v jeho frekvenčním spektru. 
-  Tón zahraný na hudební nástroj má svou fundamentální (nosnou) frekvenci nazávanou první harmonická frekvence udávající jeho výšku.
+  Tón zahraný na hudební nástroj má svou fundamentální (nosnou) frekvenci nazývanou první harmonická frekvence udávající jeho výšku.
   Dle konstrukce nástroje se v signálu objevují násobky nosné frekvence.
   Tyto násobky představují vyšší harmonické složky tónu.
   Počet a amplituda vyšších harmonických složek má velký vliv na výslednou barvu tónu a je to hlavní důvod proč je lidské ucho schopné rozeznat stejný tón znějící na různé nástroje.
 
   %TODO: vložit obrázek
 
-\section{Detekce dob a analýza tempa skladby}
+\section{Detekce dob a analýza tempa skladby} \label{sec:Detekce_tempa}
 V této kapitole jsou posány principy detekce tempa skladby a začátků not.
 S postupem času se techniky používané v \acs*{MIR} pro detekci dob vyvíjejí a vznikají různé přístupy.
 Níže jsou popsány základní principy pro detekci dob a analýzy tempa až po příchod hubokého strojového učení.
@@ -343,15 +341,17 @@ Dnes se v této oblasti využívá zejména struktur strojového učení.
 
   \subsection{Konvoluční neuronové sítě}
     Temporal Convolutional networks
-    
+
   \subsection{Rekurentní neuronové sítě}
     Gated recurent units
     Bi-directional models
 
   \subsection{Hybridní architektury}
 
-\section{Klasifikace žánrů a nálady}
+\section{Klasifikace žánrů a nálady} \label{sec:Klasifikace_zanru}
 
-\section{Systém Spectoda}
+\section{"Získání" chromavektorů}
+
+\section{Systém Spectoda} \label{sec:Spectoda}
 
 \section{Hudební signál jako animace}

@@ -4,8 +4,8 @@
 %  draft,    				  % Testovací překlad
   12pt,       				% Velikost základního písma je 12 bodů
   a4paper,    				% Formát papíru je A4
-  %oneside,      			% Jednostranný tisk
-	twoside,      			% Dvoustranný tisk (kapitoly a další důležité části tedy začínají na lichých stranách)
+  oneside,      			% Jednostranný tisk
+	%twoside,      			% Dvoustranný tisk (kapitoly a další důležité části tedy začínají na lichých stranách)
 	unicode						% Záložky a metainformace ve výsledném  PDF budou v kódování unicode
 ]{report}				    	% Dokument třídy 'zpráva', vhodná pro sazbu závěrečných prací s kapitolami
 
@@ -140,8 +140,8 @@
 \pagestyle{empty} %vypnutí číslování stránek
 
 %%% Vložení desek -- od září 2021 na žádost fakulty nepoužíváno
-%\includepdf[pages=1]%  buďto generovaných informačním systémem
-  %{pdf/student-desky}% název souboru nesmí obsahovat mezery!
+\includepdf[pages=1]%  buďto generovaných informačním systémem
+  {pdf/semestral-desky}% název souboru nesmí obsahovat mezery!
 %%% NEBO vytvoření desek z balíčku
 %%\makecover
 %%%
@@ -151,7 +151,7 @@
 
 %% Vložení titulního listu
 \includepdf[pages=1]%    buďto generovaného informačním systémem
-  {pdf/student-titulka}% název souboru nesmí obsahovat mezery!
+  {pdf/semestral-titulka}% název souboru nesmí obsahovat mezery!
 %% NEBO vytvoření titulní stránky z balíčku
 %\maketitle
 %%
@@ -159,7 +159,7 @@
    
 %% Vložení zadání
 \includepdf[pages=1]%   buďto generovaného informačním systémem
-  {pdf/student-zadani}% název souboru nesmí obsahovat mezery!
+  {pdf/semestral-zadani}% název souboru nesmí obsahovat mezery!
 %% NEBO lze vytvořit prázdný list příkazem ze šablony
 %\patternpage{}%
 %	{\sffamily\Huge\centering ZDE VLOŽIT LIST ZADÁNÍ}%
@@ -168,7 +168,7 @@
 \oddpage% při dvojstranném tisku se přidá prázdná stránka
 
 %% Vysázení stránky s abstraktem
-\makeabstract
+%\makeabstract
 
 % Vysázení stránky s rozšířeným abstraktem
 % (pokud píšete práci v češtině či slovenštině, vložení rozšířeného abstraktu zrušte;
@@ -197,7 +197,7 @@
 
 %%% Vysázení seznamu výpisů kódu
 % (vynechejte, pokud máte dva nebo méně výpisů)
-\lstlistoflistings
+%\lstlistoflistings
 
 \cleardoublepage\pagestyle{plain}   % zapnutí číslování stránek
 

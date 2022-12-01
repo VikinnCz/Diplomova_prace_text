@@ -2,17 +2,18 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{Úvod}
 
-V rámci semestrální práce vzniknou algoritmy analyzující hudební nahrávku.
-Tyto algoritmy budou sloužit k získání potřebných dat jako jsou zejména beat detection,
-získání tempa skladby a následné získání chromavektorů.
-Při získávání parametrů je potřeba počítat s jejich následujícím využití v algoritmu generujícím animace pomocí systému Spectoda. 
-\bigskip
+V rámci semestrální práce jsou popsány možnosti pro dolování parametrů z hudebních nahrávek a jejich analýzu.
+Tyto techniky jsou využity pro získání potřebných informací o skladbě.
+Například data o tempu a rozmístění dob, žánr a tónové či spektrální rozložení skladby.
+Dále je navržena struktura algoritmu sloužícího pro převod získaných parametrů na sekvence animací kompatibilních se systémem Spectoda.
+%TODO: popsat více po dopsání celé práce.
 
 Práce je rozložena do tří na sebe navazujících cílů.
+Prvním z cílů je průzkum vědních oborů soustředících se na danou problematiku. Například \acs{MIR} (\acl{MIR}).
+Z existujícíh výzkumů jsou vybrány postupy analýzy hudebních signálů vyhovující pro použití v rámci výsledného algoritmu.
 
-Prvním z nich je nashromaždění dostatku teoretických informací o problematice \acs{MIR} (\acl{MIR})
-a možnostech dolování informací z hudební nahrávky.
+Druhým cílem práce je navrhnout vnitřní strukuturu výsledného algoritmu převádějícího získané parametry na sekvence animací pro systém Spectoda.
+Důležitým úkolem je vymyslet jak bude docházet k takovému přenosu a co dané parametry ovlivní v rámci generování unikátních sekvencí animace.
 
-Druhým cílem práce pak je na základě získaných znalostí navrhnout vhodnou strukturu algoritmu pro generování sekvencí světelných animací pracujících na systému Spectoda.
-
-Posledním cílem semestrální práce je právě vytvoření funkčního systému pro analýzu hudební nahrávky a dolování získávání předem stanovených parametrů.
+Poslední třetí cíl se zaobývá vytvořením funkčního systému pro získávání parametrů z hudební nahrávky.
+Důraz je kladen na využití dostupných moderních metod analýzy hudebních signálu.
