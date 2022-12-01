@@ -3,7 +3,6 @@
 Semestrální práce se zabývá zejména problematikou \acs{MIR}. Popsánou v kapitole\ref{sec:MIR}.
 Nabízejí se otázky jak by měla daná animace reagovat na konkrétní děj skladby.
 Jakým způsobem navrhnout strukturu algoritmů a co by měly získané parametry ovlivňovat při vytváření animací.
-%TODO dopsat smzsluplně a konkrétněji.
 
 V táto části jsou popsány následující segmenty: Teorie zpracování hudební nahrávky pomocí známých algoritmů. Například důležitým algoritmem je \acs{FFT} (\acl{FFT})
 popsaná více v bodě \ref{sec:FFT}, jeho variantý pak v bodech \ref{sec:DFT} a \ref{sec:STFT}.
@@ -19,23 +18,27 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     Jednou z aplikací je personalizované doporučování hudebních skladeb, která se nachází v moderních streamovacích platformách.
     Další využítí je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky alanýze tempe a klíčových částí skladby.
     Tyto technologie se nachází v mnoha dalších aplikacích a s šířením se digitálního audia jejich důležitost stále poroste.
-    \cite{lidy09:448[TUW-181186]}\cite{a_new_companion_to_digital_humanities}
     
     \subsection{Historie}
-    \acs*{MIR} se začíná objevovat koncem devatenáctého a začátkme dvacátého století s příchodem moderních statistických metod.
-    V některých univerzitách tyto statistické metody začínají aplikovat na hudebu.
-    Ze začátku díky špatné dostupnosti počítačů se jedná spíše o ruční přepisování tabulatur přímo z hudebních partitur.
-    Následně se ze zjištěných rysů snažili specifikovat stylové chrakteristiky.  
-    S příchodem počítačů do výzkumných laboratoří v letech 1960 až 1970 se začalo více soutředit na počítačovou analýzu hudeby.
-    V těchto letech se poprvé začaly objevoat nyní známé termíny jako \uv{\it computational musicology} a \uv{\it music information retrieval}
-    První oblastí výzkumu bylo získávání rytmu hudbení nahrávky a z důvodu nízké popularity se výzkum zpomalil.
-    Tento trend následoval až do roku 1990 kdy vázkumu \acs*{MIR} pomohly dvě věci.
-    První z nich bylo velké zvětšování lehce dostupné hudby a druhým z důležitých bodů byl nárůst výpočetního výkonu počítačů.
-    Díky těmto bodům se stal výzkum dostupnější a jednodužší na realizaci.
+    V tomto bodě je napsán souhrn historie MIR z knihy \cite{a_new_companion_to_digital_humanities}.
+    \acs*{MIR} se začíná objevovat na přelomu devatenáctého a dvacátého století s příchodem moderních statistických metod.
+    Začínají se objevovat pokusy o aplikování statistických metod na hudební partitury.
+    Protože ještě nebyly natolik dostupné počítače jednalo se spíše o ruční práci s partiturami a tabularueou.
+    Z grafických notací se analyzovaly jejich rysy a specifikovaly charakteristiky hudebního díla.
+    S příchodem počítačů do výzkumných laboratoří v letech 1960 až 1970 se začalo více rozvíjet zpracování sginálů a s tím související možnosti analýzy hudebních nahrávek pomocí počítačů.
+    V těchto letech se poprvé začaly objevoat nyní známé termíny jako \uv{computational musicology} a \uv{ music information retrieval}
+    První oblast výzkumu se soustředila na analazýzu tempa skladby. Z důvodu nízké popularity se však výzkum zpomalil.
+    Tento útlum pokračoval až do roku 1990 kdy výzkumu \acs*{MIR} pomohly dvě změny.
+    První důležitou změnou byly rostoucí databáze digitální hudby, která se staly lehce dostupné pro výzkumné týmy.
+    Druhým bodem který přispěl k vývoji \acs{MIR} byl nárůst výpočetního výkonu počítačů a nižší náklady s nimi spojené.
+    Díky těmto změnám se stal výzkum dostupnější a jednodužší na realizaci \cite{a_new_companion_to_digital_humanities}.
 
-    Poté v říjnu roku 2000 bylo uspořádáno první mezinárodní symposium soustředící se na \acs*{MIR}.
-    Následně díky těmto pokrokům vznika celosvětová skupina \acs{ISMIR} (\acl{ISMIR}).
-    Zanedlouho naté vznikla další skupina \acs{MIREX} (\acl{MIREX}). Jedná se o skupinu vědců která se schází pravidelně každý rok a řeší problematiku \acs{MIR}.
+    Poté v říjnu roku 2000 bylo uspořádáno první mezinárodní symposium soustředící se na \acs{MIR}.
+    Z této mezinárodní konference se stala tradice a vybudovala se kolem ní velká komunita nazývaná \acs{ISMIR}\footnote{International Society of Music Information Retrieval - Mezinárodní združení pro \acs*{MIR}}.
+    Každoročním vyvrcholením \acs{ISMIR} je právě váše zmíněná konference, na které vědci z celého světa prezentují pokroky v oblasti výzkumu \acs{MIR}.
+    Zanedlouho naté v roce 2005 byl v rámic této konference představen model \acs{MIREX}\footnote{The Music Information Retrieval Evaluation eXchange - komunitní rámec pro hodnocení pokroků výzkumu v oblasti \acs{MIR}.
+    Obhospodařovaný laboratočí International Music Information Retrieval Systems Evaluation Laboratory sídlící na University of Illinois.  \cite{Downie2010}.}
+    sloužící jako správa zásad pro hodnocení pokroků ve výzkumu \acs{MIR}\cite{Downie2010}.
     
    \subsection{Řetězec zpracování - pipeline}
 
@@ -48,8 +51,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
     Pokud jsou vstupní data komplexní na začátku je v řetězci zařezen blok předzpracování, která se stará o komprimaci vstupních singálů.
     U hudebních signálů se jedná například o konverzi stereo signálů na mono signál
-    a jeho následnou komprimaci popsanou více v bodě 
-    %TODO: odkaz na bod audio
+    a jeho následnou komprimaci popsanou více v bodě \ref{sec:Audio}.
 
     Dalším bodem v řetězci je extrakce vlastností signálu. 
     Zde je je nastaven poměr mezi vlastnostmi důležitými pro strojové učení lidskou expertní znalost.
@@ -68,7 +70,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     Právní podmínky jsou zde příznivé a vědecké instituce nemají problém pro svou práci získat velké množství materiálu chráněného autorským právem.
     Z důvodu velké komplexsnosti vstupních signálů se využívá několik technik komprimaca signálů kterými jsou. 
     Slučování vícekanálových nahrávek do mono sginálu. Převzorkování signálu na nižší vzorkovací kmitočty,
-    a rozložení signálu na krátké překrývající se úseky ze kterých mohou být nezávisle extrahovány jejich vlastnosti. 
+    a rozložení signálu na krátké překrývající se úseky ze kterých mohou být nezávisle extrahovány jejich vlastnosti\cite{lidy09:448[TUW-181186]}. 
     Výsledkem je kolekce paralelně složených sekvencí hodnot vlastností, které se následně použijí pro odvozování (inference).
 
   \begin{table}[H]
@@ -103,7 +105,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   V bodech \ref{sec:Frekvence} a \ref{sec:Barva} jsou popsány parametry získávané z audio signálu. %TODO: doplnit správné reference
   Získané parametry slouží pro přesnější popis skladby. \cite{fundamental_of_music_processing}
 
-  \subsection{Reprezentace audio signálů}
+  \subsection{Reprezentace audio signálů} \label{sec:Audio}
   Hudba může být reprezentována spoustou forem. 
   Jako tradiční médium pro její ukládání ještě před vznikem záznamu sloužily vždy noty a další typy zápisů pomocí symbolů.
   Výsledné hudební dílo ale představuje mnohem více než počáteční notový zápis.
