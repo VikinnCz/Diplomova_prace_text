@@ -293,30 +293,30 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Hladina intenzity se vypočítá dle rovnice \ref{rov:hladina_intenzity}.
 
   \begin{equation}
-    L_I = 10*log(\frac{I}{I_0})
+    L_I = 10log(\frac{I}{I_0})
     \label{rov:hladina_intenzity}
   \end{equation}
 
   \subsection{Barva} \label{sec:Barva}
 
-  Hudebním vyjádření se za slovem barva zkrývá velmi komplexní sdružení atributů.
-  Jedná se jak o psychologický tak hudební problém který je vnímán individuálně.
-  \cite{The_perception_of_musical_timbre}
+  V hudebním vyjádření se za slovem barva zkrývá komplexní sdružení atributů.
+  Jedná se jak o psychologický tak hudební problém, který je vnímán individuálně\cite{The_perception_of_musical_timbre}.
 
-  Zdjednodušeně se barva definuje jako vlastnosti díky které je možné rozeznat tón o stejné výšce a hlasitosti zahraný na dva různé náastroje.
-  Díky barvě je posluchač schopen rozeznávat různé zvuky nástrojů a typů interpretace.
+  Zdjednodušeně se barva definuje jako vlastnosti, díky kterým je možné rozeznat tón o stejné výšce a hlasitosti zahraný na dva různé náastroje\cite{MULLER2014713}.
+  Díky barvě je posluchač schopen rozeznávat odlišné zvuky nástrojů a typů interpretace.
 
-  Jelikož je barva špatně kategorizovatelná fyzikálníma veličinama je většinou interpretována nedefinovanými slovy.
-  Například popisujeme barvu jako jasnou, temnou, ostrou, čistou, teplou a další.
+  Z důvodu špatné kategorizace barvy fyzikálními veličinami je většinou interpretována přídavnými jmény.
+  Například je barva popisována jako jasná, temná, ostrá, čistá, teplá, pestrá, nazální a další.
 
   Jedním z možných nástrojů pro analýzu barvy tónu je tvz. obálka tónu/signálu.
-  Obálku signálu určuje amplituda signálu v čase viz obr. \ref{fig:ADSR_envelope_on_piano_tone}
-  Je rozdělena na 4 fáze a to jsou \textbf{Attack - náběh} určující začátek tónu například úder paličkou na blánu bubnu.
+  Obálku určuje amplituda signálu v čase viz obr. \ref{fig:ADSR_envelope_on_piano_tone}
+  Je rozdělena na 4 fáze popsané z knihy Fundamentals of Music Processing \cite{fundamental_of_music_processing}.
+  \textbf{Attack \uv{náběh}} určující začátek tónu například úder paličkou na blánu bubnu.
   V této fázi se nachází více ruchových složek z daného úderu a má velkou dynamiku.
-  Následuje fáze s názvem \textbf{Decay - útlum}.
+  Následuje fáze s názvem \textbf{Decay \uv{útlum}}.
   Po hlasitém úderu amplituda signálu klesá a začíná převládat tonální složka. Decay udává dobu za kterou se signál z jeho maxima sníží na hodnotu sustain.
-  \textbf{Sustain - podržení} je fáze ve které je zřetelný tón a stálá hlasitost. Rezonující blána bubnu.
-  Poslední fází je \textbf{Release - uvolnění} při kterám dochází k poklesu hlasitosti zdroje zvuku až k uplnému utlumení.
+  \textbf{Sustain \uv{podržení}} je fáze ve které je zřetelný tón a stálá hlasitost. Rezonující blána bubnu.
+  Poslední fází je \textbf{Release \uv{uvolnění}} při kterám dochází k poklesu hlasitosti zdroje zvuku až k uplnému utlumení
   Například přiložení tlumítka na rezonující strunu.
 
   \begin{figure}[H]
@@ -334,17 +334,17 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   \end{figure}
 
   Další informace o barvě signálu se nacházejí v jeho frekvenčním spektru. 
-  Tón zahraný na hudební nástroj má svou fundamentální (nosnou) frekvenci nazývanou první harmonická frekvence udávající jeho výšku.
+  Tón zahraný na hudební nástroj má svou fundamentální \uv{nosnou} frekvenci nazývanou první harmonická udávající jeho výšku.
   Dle konstrukce nástroje se v signálu objevují násobky nosné frekvence.
   Tyto násobky představují vyšší harmonické složky tónu.
-  Počet a amplituda vyšších harmonických složek má velký vliv na výslednou barvu tónu a je to hlavní důvod proč je lidské ucho schopné rozeznat stejný tón znějící na různé nástroje.
+  Počet a amplituda vyšších harmonických složek má vliv na výslednou barvu tónu a je to hlavní důvod proč je lidské ucho schopné rozeznat stejný tón znějící na různé nástroje.
 
   %TODO: vložit obrázek
 
 \section{Detekce dob a analýza tempa skladby} \label{sec:Detekce_tempa}
 V této kapitole jsou posány principy detekce tempa skladby a začátků not.
-S postupem času se techniky používané v \acs*{MIR} pro detekci dob vyvíjejí a vznikají různé přístupy.
-Níže jsou popsány základní principy pro detekci dob a analýzy tempa až po příchod hubokého strojového učení.
+S postupem času se techniky používané v \acs{MIR} pro detekci dob vyvíjejí a vznikají odlišné přístupy.
+Níže jsou popsány základní principy pro detekci dob a analýzy tempa až po příchod strojového učení.
 Přístup k detekci dob se s vývojem hlubokých neuronových sítí značně změnil. 
 Dnes se v této oblasti využívá zejména struktur strojového učení.
 \cite{tempobeatdownbeat:book} \cite{fundamental_of_music_processing};
