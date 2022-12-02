@@ -34,7 +34,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     Díky těmto změnám se stal výzkum dostupnější a jednodužší na realizaci \cite{a_new_companion_to_digital_humanities}.
 
     Poté v říjnu roku 2000 bylo uspořádáno první mezinárodní symposium soustředící se na \acs{MIR}.
-    Z této mezinárodní konference se stala tradice a vybudovala se kolem ní velká komunita nazývaná \acs{ISMIR}\footnote{International Society of Music Information Retrieval - Mezinárodní združení pro \acs*{MIR}}.
+    Z této mezinárodní konference se stala tradice a vybudovala se kolem ní velká komunita nazývaná \acs{ISMIR}\footnote{International Society of Music Information Retrieval - Mezinárodní sdružení pro \acs*{MIR}}.
     Každoročním vyvrcholením \acs{ISMIR} je právě váše zmíněná konference, na které vědci z celého světa prezentují pokroky v oblasti výzkumu \acs{MIR}.
     Zanedlouho naté v roce 2005 byl v rámic této konference představen model \acs{MIREX}\footnote{The Music Information Retrieval Evaluation eXchange - komunitní rámec pro hodnocení pokroků výzkumu v oblasti \acs{MIR}.
     Obhospodařovaný laboratočí International Music Information Retrieval Systems Evaluation Laboratory sídlící na University of Illinois.  \cite{Downie2010}.}
@@ -42,36 +42,48 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     
    \subsection{Řetězec zpracování - pipeline}
 
-    Téměř standardně využívaný řetězec procesů v aplikacíc \acs{MIR} je popsána níže. 
+    V tomto bodě je popsán postup zprtacování dat v palikacíhc \acs{MIR}.
+    Jedná se o systém, kterým jsou data zpracovávána a určuje standardně využívaný řetězec jak při tvorbě algoritmů postupovat .
+    
+    Vstupními date se rozumí zejména hudební informace v digitální potobě.
+    Tyto vstupní data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů (not)\cite{a_new_companion_to_digital_humanities}.
+    Například digitalizovaná partitura.
+    Dalším možným typem je \uv{digitální hudba}.
+    Jedná se o hudbu čistě v \uv{digitálních notách} představujících sadu příkazů.
+    Například zápis v \acs{MIDI}\footnote{Musical Instrument Digital Interface -
+    Volně dostupný hudební standart specifikující hardwerové a softwarové požadavky pro digitální přenos hudební notace a komunikace mezi nástroji.\cite{wiki:MIDI}}.
+    Nejrozšířenější formou vstupních dat jsou digitální hudební nahrávky představující audio signály.
 
-    Jako vstupní data se využívají zejména hudební informace v digitální potobě.
-    Tyto data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů (not).
-    Dalším možným typem je "digitální hudba", představovaná zápisem v \acs{MIDI} notách.
-    V této práci budou jako vstupní data yvužívány digitální hudební nahrávky ("digitální audio"). 
+    \textbf{Pre-processing - předzpracování signálu}
+    Na začátku řetězce je zařazen blok předzpracování vstupních signálů.
+    Tento blok se postará o připravení dat do podoby vhodné pro extrakci vlastností.
+    Jedná se například o komprimaci komplexních vstupních signálů popsaných níže.
+    Nebo je signál převáděn z časové do frekvenční oblasti.
+    Více o technikách předzpracování je popsaáno v bodě \ref{sec:Parametrizace}.
 
-    Pokud jsou vstupní data komplexní na začátku je v řetězci zařezen blok předzpracování, která se stará o komprimaci vstupních singálů.
-    U hudebních signálů se jedná například o konverzi stereo signálů na mono signál
-    a jeho následnou komprimaci popsanou více v bodě \ref{sec:Audio}.
+    \textbf{Feature extraction - extrakce vlastností signálu}
+    Podle požadovaných vlastností pro extrakci je využito různých modelů popsaných v bodech \ref{sec:Detekce_tempa}, \ref{sec:Klasifikace_zanru} a \ref{sec:Chroma_vektory}.
+    S rostoucí popularitou strojového učení začaly při extrakci vlastností hudební nahrávky převládatkombinace hlubokých neuronových sítí.
+    Tyto kombinace umožňují přesnější parametrizaci a menší chybovost.
 
-    Dalším bodem v řetězci je extrakce vlastností signálu. 
-    Zde je je nastaven poměr mezi vlastnostmi důležitými pro strojové učení lidskou expertní znalost.
-    Poměr mezi těmito vlastnostmi závisí na aplikaci pro kterou je algoritmus určen.
-    Ná základě získaných vlastností je nastavena struktura algoritmu pro odvození výsldných parametrů.
+    \textbf{Post-processing - konečné zpracování}
+    Posledním blokem v řetězci je tvz. \uv{post-procesing} zajišťující zpracování a optimalizaci získaných dat.
+    Post-procesing zpracuje data do požadované formy. V některých případech také dokáže ovlivní přesnost zpracování.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = 0.4\linewidth]{obrazky/MIR-diagram.png}
+    \includegraphics[width = 0.4\linewidth]{obrazky/MIR-diagram.pdf}
     \caption{Řetězec procesů MIR \cite{a_new_companion_to_digital_humanities}}
     \label{fig:MIR_diagram}
 \end{figure}
 
-    Zpracování audio signálů je již dvě desetilétí hlavním trendem výzkumu \acs*{MIR}.
-    Je to přirození tím, že zde není téměř žádná přirozená hranice a je možné téměř vše.
-    Právní podmínky jsou zde příznivé a vědecké instituce nemají problém pro svou práci získat velké množství materiálu chráněného autorským právem.
-    Z důvodu velké komplexsnosti vstupních signálů se využívá několik technik komprimaca signálů kterými jsou. 
+    Digitální hudební nahrávka se jako forma vstupních dat stala hlavním trendem výzkumu \acs{MIR}.
+    Je to způsobeno zejména dostupností velkých databází nahrávek ke kterým mají vědecké instituce přístup a nepotýkají se s problémy souvisejícími s autorskými právy \cite{a_new_companion_to_digital_humanities}.
+
+    Z důvodu velké komplexsnosti vstupních dat se využívá několik technik komprimaca signálů. 
     Slučování vícekanálových nahrávek do mono sginálu. Převzorkování signálu na nižší vzorkovací kmitočty,
-    a rozložení signálu na krátké překrývající se úseky ze kterých mohou být nezávisle extrahovány jejich vlastnosti\cite{lidy09:448[TUW-181186]}. 
-    Výsledkem je kolekce paralelně složených sekvencí hodnot vlastností, které se následně použijí pro odvozování (inference).
+    a rozložení na krátké překrývající se úseky, ze kterých mohou být nezávisle extrahovány jejich vlastnosti\cite{lidy09:448[TUW-181186]}. 
+    Výsledkem je kolekce paralelně složených sekvencí hodnot vlastností, které se následně zpracují na požadovaná výstupní data.
 
   \begin{table}[H]
     \centering
@@ -79,8 +91,8 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
         \hline
         {\bf Data}                 & {\bf Vyhledávání informací} & {\bf Klasifikace a odhad} & {\bf Sekvenční značení}\\
         \hline
-        Audio                      & Identifikace skladby,
-                                     Řazení,
+        Audio                      & Indetifikace kopi \uv{coverů},
+                                     Řazení skladeb,
                                      Měření podobnosti,
                                      Získání otisku,
                                      Generování seznamu skladeb
@@ -93,16 +105,17 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
                                      Segmentace                   \\
         \hline
     \end{tabular}
-    \caption{Typické procesy na základně vstupních a výstupních dat.}
+    \caption{Typické procesy na základně vstupních a výstupních dat. \cite{a_new_companion_to_digital_humanities}}
     \label{tab:MIR_typicke_procesy}
   \end{table}
 
-  %TODO: současné problémy
+  \subsection{Současné problémy}
 
+  %TODO: dopsat kapitolu
 
-  \section{Parametrizace hudebních nahrávek}
+  \section{Parametrizace hudebních nahrávek} \label{sec:Parametrizace}
   V této kapitole je popsán audio signál. Jak vzniká, jeho reprezentace v číslicovám zpracování a základní principy práce s audiosignálem.
-  V bodech \ref{sec:Frekvence} a \ref{sec:Barva} jsou popsány parametry získávané z audio signálu. %TODO: doplnit správné reference
+  V bodech \ref{sec:Dynamika} a \ref{sec:Barva} jsou popsány parametry získávané z audio signálu.
   Získané parametry slouží pro přesnější popis skladby. \cite{fundamental_of_music_processing}
 
   \subsection{Reprezentace audio signálů} \label{sec:Audio}
@@ -253,7 +266,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Například to jsou Kaise, Chebyshev, Hann a Haming a další.
   \cite{Time-frequency_distributions};
 
-  \subsection{Dynamika intenzita a hlasitost} \label{sec:Frekvence}
+  \subsection{Dynamika intenzita a hlasitost} \label{sec:Dynamika}
 
   Pojem \textbf{dynamika} je vyjadřuje jak hlasitost \uv{volume} zvuku stejně jako v notovém zápise udává hlasitost \uv{volume} přednesu.
   V notovém zápise je dynamika popsána symboly jako jsou například pianissimo \uv{\emph{pp}}, piano \uv{\emph{p}}, forte \uv{\emph{f}} a další.
@@ -352,7 +365,7 @@ Dnes se v této oblasti využívá zejména struktur strojového učení.
 
 \section{Klasifikace žánrů a nálady} \label{sec:Klasifikace_zanru}
 
-\section{"Získání" chromavektorů}
+\section{"Získání" chromavektorů} \label{sec:Chroma_vektory}
 
 \section{Systém Spectoda} \label{sec:Spectoda}
 
