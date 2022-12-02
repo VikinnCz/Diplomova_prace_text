@@ -46,7 +46,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     Jedná se o systém, kterým jsou data zpracovávána a určuje standardně využívaný řetězec jak při tvorbě algoritmů postupovat .
     
     Vstupními date se rozumí zejména hudební informace v digitální potobě.
-    Tyto vstupní data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů (not)\cite{a_new_companion_to_digital_humanities}.
+    Tyto vstupní data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů \uv{not}\cite{a_new_companion_to_digital_humanities}.
     Například digitalizovaná partitura.
     Dalším možným typem je \uv{digitální hudba}.
     Jedná se o hudbu čistě v \uv{digitálních notách} představujících sadu příkazů.
@@ -116,7 +116,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   \section{Parametrizace hudebních nahrávek} \label{sec:Parametrizace}
   V této kapitole je popsán audio signál. Jak vzniká, jeho reprezentace v číslicovám zpracování a základní principy práce s audiosignálem.
   V bodech \ref{sec:Dynamika} a \ref{sec:Barva} jsou popsány parametry získávané z audio signálu.
-  Získané parametry slouží pro přesnější popis skladby. \cite{fundamental_of_music_processing}
+  Získané parametry slouží pro přesnější popis skladby.
 
   \subsection{Reprezentace audio signálů} \label{sec:Audio}
   Hudba může být reprezentována spoustou forem. 
@@ -126,30 +126,33 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Při hře se noty začnou proměňovat v harmonické zvuky, hladké melodie a nástroje vzájemně rezonují. 
   Každý z hudebníků do skladby přináší svou interptretaci. Jinak reagují na tempo zvýrazňují odlišné noty a liší se jejich artikulace.
   Všechny tyto proměnné ve výsledku způsobují, že dílo není jen mechanické přehrání napsané partitury.
-  Jeho součástí se stává unikátní přednes.
+  Jeho součástí se stává unikátní přednes \cite{fundamental_of_music_processing}.
 
   Při pohledu z fyzikálního hlediska důsledkem interpretace díla vznikají zvukové vlny šířící se vzduchem.
-  Tyto vlny jsou reprezentovány kmítáním atomů plynu způsobující změny tlaku svým zhušťováním a zřěďováním. Při vlnění nedochází k přenosu hmotných částit.
-  Záznamem šířících se zvukových vln získáváme audio signál.
-  Pojmem audio je označován řetězec sloužící k záznamu, přenosu a reprodukci zvuků v mezích lidského slyšení. 
+  Tyto vlny jsou reprezentovány kmítáním částic v pružném prostředí. V takovém prostředí jsou částice na sebe vázány a vytvářejí soustavu oscilátorů. Pokud dojde k vychýlení jedné částice ze své rovnovážné polohy,
+  vlivem okolních částic dochází k působení pružných sil a vzniká její kmitání. 
+  Zároveň dochází k vzájemnému rozkmitání okolních částit a prostředím se začne šířít vlna. Jednotlivé částice kmitají pouze kolem své rovnovážné polohy. Nedochází tak k přenosu látky ale pouze energie a hybnosti\cite{crocker1998handbook}.
+  Popsané kmitání jsme schopní zachytit pomocí akustických měničů.
+  Je získán analogový signál šířících se zvukových vln nazývaný jako audio signál.
+  Pojmem audio je označován řetězec sloužící k záznamu, přenosu a reprodukci zvuků v mezích lidského slyšení.
   Avšak v audio signálu se už nenachází přesná reprezentace not a jejich paramterů jako jsou čas nástupu, tón, délka trvání, dynamika.
   Díky tomu je analýza hudebních signálů obtížným úkolem a je ovlivněna reprezentací interpreta akustikou prostoru a vnímáním posluchače.
-  Popsanými problémy se zabývá samostatný vědní obor s názvem psychoakustika.
-  Nejdůležitějšími parametry audio signálu které jsou podrobně popsány níže definujeme: frekvence, výška tónu, dynamika, intenzita, hlasitost a také barva.
-
+  Zmíněnými problémy se zabývá samostatný vědní obor s názvem psychoakustika.
+  Nejdůležitějšími parametry audio signálu které jsou podrobně popsány níže definujeme: frekvence, výška tónu, dynamika, intenzita, hlasitost a také barva \cite{fundamental_of_music_processing}.
 
   \subsection{Časová oblast}
   Základní reprezentací audio signálu je tzv. zobrazení v \textbf{časové oblasti}.
-  V časové oblasti číslicový signál představují vzorky. Jednotlivé vzorky udávají hodnotu signálu v daném čase.
-  Počet vzorků nám určuje vzorkovací frekvence signálu. Důležé pravidlo pro vzorkování signálu je popsáno rovnicí č. \ref{rov:vzorkovaci_teorem}
-  
+  V časové oblasti představují číslicový signál vzorky. Jednotlivé vzorky udávají hodnotu signálu v daném čase.
+  Počet vzorků vztažených na jednotku času určuje vzorkovací frekvence signálu.
+  Důležitým pravidlem pro vzorkování signálu je Shannonův-Nyquistův vzorkovací teorém popsán rovnicí \ref{rov:vzorkovaci_teorem},
+
   \begin{equation}
-    f_{vz} > 2 * f_{max}
+    f_{vz} > 2f_{max}
     \label{rov:vzorkovaci_teorem}
   \end{equation}
 
-  kde $f_{vz}$ je vzorkovací frekvence a $f_{max}$ je maximální frekvence v audio signálu.  
-  Pokud jednotlivé vzorky zobrazíme graficky získáme průběh amplitudy signálu viz obrázek č.\ref{fig:Waveform}
+  kde $f_{vz}$ je vzorkovací frekvence a $f_{max}$ je maximální frekvence v audio signálu \cite{bracewell1978fourier}.  
+  Pokud jednotlivé vzorky zobrazíme graficky získáme průběh signálu v čase viz obr.\ref{fig:Waveform}.
 
   \begin{figure}[H]
     \centering
@@ -158,15 +161,15 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:Waveform}
   \end{figure}
 
-  Tato reprezentace audio signálu poskytuje informace o amplitudě signálu. Čili je z ní možno vyčíst například dynamiku skladby, začátky a konce not.
+  Tato reprezentace audio signálu poskytuje informace průběhu amplitudy signálu. Využívá senapříklad pro výpočet energie signálu popsaný v bodě \ref{sec:energie_signalu}.
   
   \subsection{Frekvenční oblast} \label{sec:FFT}
-  Pro získání více informací o hudebním díle je zobrazení v časové oblasti nedostatečné.
-  Proto se využívá tzv. zobrazení ve \textbf{frekvenční oblasti}.
+  Pro získání dalalších informací o hudebním díle se využívá transformace signálu do frekvenční oblasti umožňující odlišné znázornění struktury signálu.
 
-  V časové oblasti se zobrazuje frekvenční spektrum signálu.
-  Toto spektrum představuje rozložení původní části signálu na jednotlivé harmonické frekvence reprezentující zpracovávaný signál.
-  V grafu jsou poté zobrazy frekvenční složky se kterých se signál zkládá viz obrázek č.\ref*{fig:Bass_tone}.
+  Ve frekvenční oblasti je signál reprezentován jeho frekvenčními složkami popsanými v komplexním tvaru.
+  Spektrum představuje rozložení původní části signálu na jednotlivé frekvenční složky popsané funkcí sinus. Kde reálná složka obsahuje informaci o modulu \uv{velikosti} funkce sinus.
+  Imaginární složka komplexního čísla pak udává počáteční fázi.
+  V grafu jsou poté zobrazy frekvenční složky se kterých se signál skládá viz obr. \ref*{fig:Bass_tone}.
 
   \begin{figure}[H]
     \centering
@@ -182,24 +185,28 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:Bass_tone}
 \end{figure}
   
-  Jako nzorný důvod proč je transformace do frekvenční oblasti přínosná je dán příklad. Na nástroj je zahrán tón, který je nahrán. 
-  V časové oblasti je možné určit délku tónu a jeho průběh podle ADSR obálky popsané v bodě č. \ref*{sec:Barva}.
-  Pokud je ale potřeba zjistit výšku tónu a určit notu, tak je to téměř nemožné.
-  Díky transformaci do frekveční oblasti je patrná fundementální harmonická frekvence tónu.
+  Jako názorný důvod proč je transformace do frekvenční oblasti přínosná je dán příklad. Na nástroj je zahrán tón, který je zaznamenán. 
+  V časové oblasti je možné určit délku tónu a jeho průběh podle ADSR obálky popsané v bodě \ref*{sec:Barva}.
+  Pokud je ale potřeba zjistit výšku tónu a určit notu, tak se jedná o složýitý proces.
+  Díky transformaci do frekveční oblasti je patrná fundementální frekvence tónu.
+  Označována také první harmonická.
   Tato frekvence udává výšku tónu a je tak možné stanovit notu která byla zahrána.
 
   Pro získání frekvenčního spektra signálu je třeba transformovat signál s časové oblasti.
-  K tomu se využívá \textbf{Fourierovy transformace}. 
+  K tomu se využívá \textbf{Fourierovy transformace}.
+  Definována jako transformace převádějící signál mezi časovou a fekvenční oblastní poomcí harmonických signálů \uv{funkce sins a cosinus}.
 
-  Hlavní pilířem Fourierovy transformace je, že každý periodický signál je možné rozložit na součet někonečně mnoha sinusových signálů s různou amplitudou a fází.
+  Hlavní pilířem Fourierovy transformace je, že každý periodický signál je možné rozložit na součet někonečně mnoha sinusových signálů s různou amplitudou a fází \cite{bracewell1978fourier}.
   Toho je poté pomoí matematickýh postupů docílit.
-  Analyzující signál je rozložen na jeho frekvenční složky udávané amplitudou a fází viz obrázek č.\ref*{fig:Bass_tone}.
-  Jako další grafické zobrazení časové oblasti hudebního signálu se pro jeho analýzu využívá spektrogramu.
+  Analyzující signál je rozložen na jeho frekvenční složky udávané amplitudou a fází viz obr. \ref*{fig:Bass_tone}.
+  Jako další grafické zobrazení frekvenční oblasti hudebního signálu se pro jeho analýzu využívá spektrogramu.
   % Spektrogram zobrazuje frekvenční složky signálu v závislosti na čase. Modul těchto složek je pak udáván barevnou škálou.
   % Spektrogram je zobrazen na obrrázku č. %TODO: popsat spektrogram zde nebo jinde? a popsat? 
 
 
   \subsection{DFT - Diskrétní Fourierova transformace} \label{sec:DFT}
+
+\cite{strichartz2003guide}
 
   Pokud jsou signály zpracovávány pomocí výpočetních procesorů,
   tak může být uložen pouze omezený počet parametrů signálu.
@@ -243,7 +250,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejme v jakém časovém úseku signálu se získané fekvenční složky nachází.
   Hlavní myšlenkou \acs{STFT} je, že namísto analyzování celého signálu je signál analyzována pouze jeho malá část.
   Za tímto účelem je definována tzv. okénokvá funkce, která je nenulové pouze v malé části signálu.
-  Analyzovaný signál je následně vynásoben vzniklou okénkovou funkcí a díky tomu vzniká malá nenulová části signálu dle okénkové funkce viz obr č. \ref*{fig:princip_stft}.
+  Analyzovaný signál je následně vynásoben vzniklou okénkovou funkcí a díky tomu vzniká malá nenulová části signálu dle okénkové funkce viz obr. \ref{fig:princip_stft}.
   Chceme li analyzovat signál v různých časech je tato funkce po signálu posouvána a následně se počítá Fourierova transformace pro každý výsledný okénkový signál.
 
   \begin{figure}[H]
@@ -253,7 +260,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:STFT}
   \end{figure}
 
-  Na obrázku č. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje výhodu přesného určení frekvenčních složek signálu v čase. 
+  Na obr. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje výhodu přesného určení frekvenčních složek signálu v čase. 
   Signál je násoben obdelníkovou okénkovou funkcí ve třech místech.
   Tyto tři vzniklé signály jsou následně na sebe nezávazně transformovány do frekvenční oblasti.
   Z výsledků Fourierovy transformace lze vidět, že každá z těchto částí má jiné frekvenční spektrum.
@@ -261,24 +268,29 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Tím ale dochází ke zmenšení přesnosti ve frekvenční oblasti.
   
   Na výsledku přesnosti analýzy poomcí \acs{STFT} závisí také tvar použité okénkové funkce.
-  V obrázku č. \ref*{fig:STFT} je použito obdélníkového okénka které díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
+  V obr. \ref*{fig:STFT} je použito obdélníkového okénka které díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
   Existuje více tvarů okénkových funkcí pro odstranění nežádoucích složek.
   Například to jsou Kaise, Chebyshev, Hann a Haming a další.
   \cite{Time-frequency_distributions};
 
-  \subsection{Dynamika intenzita a hlasitost} \label{sec:Dynamika}
-
-  Pojem \textbf{dynamika} je vyjadřuje jak hlasitost \uv{volume} zvuku stejně jako v notovém zápise udává hlasitost \uv{volume} přednesu.
-  V notovém zápise je dynamika popsána symboly jako jsou například pianissimo \uv{\emph{pp}}, piano \uv{\emph{p}}, forte \uv{\emph{f}} a další.
-
-  Naopak ve audiu je dynamika udána \textbf{hlasitostí \uv{loudness}} představována apmlitudou signálu nebo jeho efektivní hodnotou \acs{RMS} v čase.
-  Při měření hlasitosi je pak využíváno pojmů \textbf{intenzita} zvuku a \textbf{akustický výkon}.
-  Kde akustický výkon je definován jako kolik energie je vzduchem vyzářeno zvukovým vysílačem za jednotku času. Jednotkou je $[W]$
-  A intenzita zvuku pak je definována jako množství energie, které projde jednotkovou plochou kolmou na směr šíření na jednotku času. Jednotkou pak je $[Wm^{-2}]$ \cite{intenzita_zvuku_definice}
+  \subsection{Dynamika hlasitost a intenzita} \label{sec:Dynamika}
   
-  Z pohledu vnímání hlasitosti lidským uchem je rozsah vnímané intenzity zvuku v řádech bilionů. Práh slyšení činí $10^{-12} Wm^{-2}$ a práh bolesti je $10 Wm^{-2}$.
-  Pro zmenšení tak velkého řádu je definována hladina intenzity zuvku v decibelech [$\textbf{dB}$]. Kde vztažnou hodnotou je práh slyšení $I_0 = 10^{-12} Wm^{-2}$.
-  Hladina intenzity se vypočítá dle rovnice č. \ref*{rov:hladina_intenzity}
+  V češtině se pojem hlasitost využívá pro reprezentaci subjektivního vnímání akustickho tlaku definovanou například jednotkou phon\footnote{Phon - logaritmická jednotka vyjadřující individuální vnímání hlasitosti. Vnímání hlasitosti lidského ucha je závislé na křivce prahu slyšení a může se lišit pro každý tón \cite{tumarkin_1950}.}. 
+  Stejně tak je hlasitost využívána, hovoří li se o měřené hlasitosti vyjádřené například hladinou intenzity zvuku popsanou níže nebo efektivní hodnotou signálu.
+  Z důvodu lepší srozumitelnosti jsou dále využívána anglické pojmy \uv{volume} a \uv{loudness}. 
+
+  \textbf{Dynamika} popisuje průběh hlasitosti \uv{volume}interpretovaného hudebního díla. Udává jeden z faktorů jak lze například odlišit stejnou skladbu zahranou různými muzikanty. Interpretací skladby umělec vytváří dynamiku přednášeného díla \cite{fundamental_of_music_processing}.
+  V notovém zápise je dynamika neboli hlasitost přednesu popsána symboly jako jsou například pianissimo \uv{\emph{pp}}, piano \uv{\emph{p}}, forte \uv{\emph{f}} a další.
+
+  V audio signálu je dynamika brána jako hlasitost \uv{loudness} Jedná se o změny apmlitudy signálu nebo jeho efektivní hodnoty \acs{RMS}\footnote{RMS - udává statistickou hodnotu z měření velikosti veličin. Je využívána u periodických veličin\cite{RMS_value}.} v čase.
+
+  Při měření hlasitosi \uv{loudness} v akustickém prosotru je pak využíváno pojmů \textbf{intenzita} zvuku a \textbf{akustický výkon}.
+  Kde akustický výkon je definovánjako množství energie  vyzářené akustickým vysílačem ve vzduchu za jednotku čausu.\cite{acoustic_power}. Jednotkou je $W$.
+  A intenzita zvuku pak je definována jako množství energie, které projde jednotkovou plochou kolmou na směr šíření na jednotku času. Jednotkou pak je $Wm^{-2}$ \cite{intenzita_zvuku_definice}
+  
+  Z pohledu vnímání hlasitosti lidským uchem je rozsah vnímané intenzity zvuku v řádech bilionů. Práh slyšení činí $10^{-12}$ $Wm^{-2}$ a práh bolesti je $10$ $Wm^{-2}$.
+  Pro zmenšení tak velkého řádu je definována hladina intenzity zuvku v decibelech $dB$. Kde vztažnou hodnotou je práh slyšení $I_0 = 10^{-12}$ $Wm^{-2}$.
+  Hladina intenzity se vypočítá dle rovnice \ref{rov:hladina_intenzity}.
 
   \begin{equation}
     L_I = 10*log(\frac{I}{I_0})
@@ -298,7 +310,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Například popisujeme barvu jako jasnou, temnou, ostrou, čistou, teplou a další.
 
   Jedním z možných nástrojů pro analýzu barvy tónu je tvz. obálka tónu/signálu.
-  Obálku signálu určuje amplituda signálu v čase viz obrázek č. \ref*{fig:ADSR_envelope_on_piano_tone}
+  Obálku signálu určuje amplituda signálu v čase viz obr. \ref{fig:ADSR_envelope_on_piano_tone}
   Je rozdělena na 4 fáze a to jsou \textbf{Attack - náběh} určující začátek tónu například úder paličkou na blánu bubnu.
   V této fázi se nachází více ruchových složek z daného úderu a má velkou dynamiku.
   Následuje fáze s názvem \textbf{Decay - útlum}.
@@ -339,7 +351,7 @@ Dnes se v této oblasti využívá zejména struktur strojového učení.
 
 %TODO: popsat problematiku s kapitoly 6.1
 
-  \subsection{Využití energie signálu}
+  \subsection{Využití energie signálu} \label{sec:energie_signalu}
 
   \subsection{Využití spektra signálu}
     %TODO: popsat specral flux functio https://tempobeatdownbeat.github.io/tutorial/ch2_basics/baseline.html
