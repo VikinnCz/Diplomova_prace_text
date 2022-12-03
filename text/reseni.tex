@@ -4,8 +4,8 @@ Semestrální práce se zabývá zejména problematikou \acs{MIR}. Popsánou v k
 Nabízejí se otázky jak by měla daná animace reagovat na konkrétní děj skladby.
 Jakým způsobem navrhnout strukturu algoritmů a co by měly získané parametry ovlivňovat při vytváření animací.
 
-V táto části jsou popsány následující segmenty: Teorie zpracování hudební nahrávky pomocí známých algoritmů. Například důležitým algoritmem je \acs{FFT} (\acl{FFT})
-popsaná více v bodě \ref{sec:FFT}, jeho variantý pak v bodech \ref{sec:DFT} a \ref{sec:STFT}.
+V táto části jsou popsány následující segmenty: Teorie zpracování hudební nahrávky pomocí známých algoritmů. Například důležitým algoritmem je \acs{FT}\footnote{\acl{FT}.}
+popsaná více v bodě \ref{sec:FT}, její variantý pak v bodech \ref{sec:DFT} a \ref{sec:STFT}.
 Nabízené moderní metody strojového učení s využitgím hlubokých neuronových sítí při detekci tempa skladby \ref{sec:Detekce_tempa} a určení žánru \ref{sec:Klasifikace_zanru}.  
 Struktura a možnosti systému Spectoda pro generování interaktivních světelných animací je podrobně popsána v bodě \ref{sec:Spectoda}.
 
@@ -163,11 +163,11 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   Tato reprezentace audio signálu poskytuje informace průběhu amplitudy signálu. Využívá senapříklad pro výpočet energie signálu popsaný v bodě \ref{sec:energie_signalu}.
   
-  \subsection{Frekvenční oblast} \label{sec:FFT}
+  \subsection{Frekvenční oblast} \label{sec:FT}
   Pro získání dalalších informací o hudebním díle se využívá transformace signálu do frekvenční oblasti umožňující odlišné znázornění struktury signálu.
 
   Ve frekvenční oblasti je signál reprezentován jeho frekvenčními složkami popsanými v komplexním tvaru.
-  Spektrum představuje rozložení původní části signálu na jednotlivé frekvenční složky popsané funkcí sinus. Kde reálná složka obsahuje informaci o modulu \uv{velikosti} funkce sinus.
+  Spektrum představuje rozložení původní části signálu na jednotlivé frekvenční složky popsané funkcí sinus. Kde reálná složka obsahuje informaci o magnitudu \uv{velikosti} funkce sinus.
   Imaginární složka komplexního čísla pak udává počáteční fázi.
   V grafu jsou poté zobrazy frekvenční složky se kterých se signál skládá viz obr. \ref*{fig:Bass_tone}.
 
@@ -192,27 +192,38 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Označována také první harmonická.
   Tato frekvence udává výšku tónu a je tak možné stanovit notu která byla zahrána.
 
-  Pro získání frekvenčního spektra signálu je třeba transformovat signál s časové oblasti.
-  K tomu se využívá \textbf{Fourierovy transformace}.
-  Definována jako transformace převádějící signál mezi časovou a fekvenční oblastní poomcí harmonických signálů \uv{funkce sins a cosinus}.
+  Pro získání frekvenčního spektra signálu je třeba transformovat signál s časové oblasti. K tomu slouží několik úprav Fourierovy transformace podle vlastností vstupního signálu. Tyto metody jsou dále nazývány jako Fourierovy řady, Diskrétní časová Fourierova transformace a Diskrétní Fourierova transformace. V případě audio signálu se vyžívá zejména Diskrétní Fourierovy transformace popsané v bodě \ref{sec:DFT}.
 
-  Hlavní pilířem Fourierovy transformace je, že každý periodický signál je možné rozložit na součet někonečně mnoha sinusových signálů s různou amplitudou a fází \cite{bracewell1978fourier}.
-  Toho je poté pomoí matematickýh postupů docílit.
-  Analyzující signál je rozložen na jeho frekvenční složky udávané amplitudou a fází viz obr. \ref*{fig:Bass_tone}.
-  Jako další grafické zobrazení frekvenční oblasti hudebního signálu se pro jeho analýzu využívá spektrogramu.
-  % Spektrogram zobrazuje frekvenční složky signálu v závislosti na čase. Modul těchto složek je pak udáván barevnou škálou.
-  % Spektrogram je zobrazen na obrrázku č. %TODO: popsat spektrogram zde nebo jinde? a popsat? 
+  \textbf{Fourierovy transformace} zkráceně definována jako transformace převádějící signál mezi časovou a fekvenční oblastní poomcí harmonických signálů jež popisují funkce sinus a cosinus.\cite{bracewell1978fourier} Funkce sinus a cosinus představují komplexní exponenciály.
+  \begin{equation}
+    e^{i\alpha t} = \cos(\alpha t) + i \sin(\alpha t)
+  \end{equation}
+  Fourierova transformace pro \textbf{ spojitý neperiodický signál} je pak zapsána jako
+  \begin{equation}
+    X(f) = \int_{-\infty}^{\infty} x(t) e^{-i\omega t} dt
+  \end{equation}
+  kde $\omega = 2\pi f$ a udává uhlovou frekvenci. Magnituda $|X(f)|$ je potom funkcí sudou \cite{sneddon1995fourier}.
 
+  Pro signál který je \textbf{spojitý a periodický} se definují Fourierovy řady a integrální funkce je počítaná pouze pro jednu periodu signálu
+  \begin{equation}
+    c[f_k] = \frac{1}{T_0} \int_{0}^{T_0} x(t) e^{-i k \omega_0 t} dt
+  \end{equation}
+  kde $f_k = k \times f_0$ a $k \in (\mathbb{Z}; 0, \pm 1, \pm 2, \dots)$. Vypočítané spektrum je diskrétní a neperiodické \cite{sneddon1995fourier}.
+
+  Pokud je vstupní signál diskrétní hovoříme o Diskrétní Fourierově transformaci která je více popsána v následujícím bodě \ref{sec:DFT}.
+
+ Po transformaci signálu do frekvenčního spektra jsou data signálu v komplexním tvarua a jejich magnituda $|X(f)|$ je funkce sudá a tím pádem symetrická kolme nuly a fáze $\varphi_x(f)$ je funkcí lichou čili je středově symetrická. Pro analýzu audio signálů se využívá kladná část spektra.
 
   \subsection{DFT - Diskrétní Fourierova transformace} \label{sec:DFT}
 
 \cite{strichartz2003guide}
+\cite{bracewell1978fourier}
 
   Pokud jsou signály zpracovávány pomocí výpočetních procesorů,
-  tak může být uložen pouze omezený počet parametrů signálu.
+  tak může být uložen pouze omezený počet hodnot signálu.
   To znamená, že analogový signál spojitý v čase musí být převeden na signál digitální tvz. signál diskrétní, který je není spojitý v čase. 
   Diskrétní signál je potom vhodný pro číslicové zpracování.
-  Důsledkem toho bylo nutné odvodit algoritmus \acs{DFT} přizpůsobený právě pro zpracování diskrétních signálů s konečným počtem hodnot.
+  Proto jsou pospsány algoritmus \acs{DFT} přizpůsobené právě pro zpracování diskrétních signály nespojité v čase.
 
   \begin{figure}[H]
     \centering
@@ -221,46 +232,60 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:Discrete_signal}
   \end{figure}
 
-  Rovnice pro \acs{DFT} je potom zapsána v následujícím tvaru. 
-
+  Opět jsou dány dolišné definice pro signál diskrétní neperiodický a diskrétní periodický. Protože se jedná o signál diskrétní, tak zde odpadají integrální funkce.
+  Pokud se jedná o signál \textbf{diskrétní neperiodický} jeho výsledné spektrum bude spojité a hovoříme o Fourierově transformaci diskrétní v čase. Matematicky je zapsána v následujícím tvaru
   \begin{equation}
-    X(k) = \hat{x}(k/N) = \sum_{n = 0}^{N - 1} x(n) exp(-2 \pi i k/N)
+    X(f) = \sum_{n = -\infty}^{\infty} x[n] e^{-i \Omega n}
+    \label{rov:DTFT}
+  \end{equation}
+  kde
+  \begin{equation}
+    \Omega = 2 \pi (f/f_s)
+  \end{equation}
+  a $f_s$ je vzorkovací frekvence signálu.
+
+  Protože v praxi signál není nikdy nekonečně dlouhý, tak je možné jej poskládat za sebe a vytvořit tak signál periodický. Pro periodické signály je výpočet \acs{DFT} zapsán ve tvaru
+  \begin{equation}
+    X[f_k] = \sum_{n = 1}^{N_0} x[n] e^{-i\Omega_k n}
     \label{rov:DFT}
   \end{equation}
-
-  Kde $ k \in [0:M - 1] = [0:N - 1] $ a $ M \in \mathbb{N}$.
+  kde
+  \begin{equation}
+    \Omega_k = 2 \pi \frac{f_k}{f_s}
+  \end{equation}
+  \begin{equation}
+    f_k = \frac{k f_s}{N_0}
+  \end{equation}
+  a $k \in(\mathbb{Z}; 0, N_0 -1)$. $N_0$ Počet vrzorků v jedné periodě signálu.
+  Hustota spektra $K$ v takovém případě odpovídá $K = N_0$.
 
   Ze strany výpočetní náročnosti je takto definovyný algoritmus neefektivní a výpočetně náročný.
-  Při počítání Fourierova koeficientu $X(k)$ je zapotřebí velkého množství velké množství operací v řádu $N^2$.
-  Proto pokud počet vzorků $N$ dosahuje většího množství je ve většině případů tento algoritmus příliš pomalý pro praktické využití.
+  Pro výpočet \acs{DFT} je zapotřebí velkého množství operací složitost algoritmu je pak zapsána jako $O(N^2)$.
+  Proto pokud počet vzorků $N$ dosahuje většího množství je ve spoustě případů tento algoritmus příliš pomalý a neefektivní pro praktické využití.
 
-  Počet potřebných operací může být výrazně redukován použitím efektivního algoritmu známého jako \acs{FFT} (\acl{FFT}).
-  Na vytvoření\acs{FFT} se zasloužil Carl Friedrich Gauss a Joseph Fourier zhruba před dvěma sty let.
-  Vynález tohoto algoritmu změnil své odvětví zpracování signálů a je dnes používán v miliardách telekomunikačních zařízeních.
-  Ačkoliv je ve velké míře využíván v telekomunikacích, tak právě i ve zpracování a analýze zvukových signálů zabírá důležitou roli.
-
-  Zjednodušeně \acs{FFT} využívá redundace napříč sinusovými signály různých frekvencní ke společnému výpočtu všech Fourierových koeficientů pomocí rekurze.
-  Díky tomu je dosaženo snížení výpočetní náročnosti počtu operací z řádu $N^2$ na $N\log_2 N$.
-  Například při použití vzorků $N = 2^10 = 1024$. \acs{FFT} vzžaduje $N\log_2N = 10240 $ operací namísto
-  $N^2 = 1048576$ operací při použití \acs{DFT}. Jak je vidět snížení výpočetní náročnosti je velké a exponenciálně roste s větším počtem vzorků $N$.
+  Počet potřebných operací může být výrazně redukován. 
+  Na vývoj efektivního řešení výpočtu \acs{DFT} se zasloužil Carl Friedrich Gauss a Joseph Fourier zhruba před dvěma sty lety. Tento algoritmus nazýváme Rychlou Fourierovou transformací zkráceně FFT.
+  Jeho složitost pro výpočet byla snížena na $O(N \log_2 N)$ \cite{fundamental_of_music_processing}.
+  Například při použití vzorků $N = 2^{10} = 1024$. \acs{FFT} vzžaduje $N\log_2N = 10240 $ operací namísto $N^2 = 1048576$ operací při použití \acs{DFT}. Jak je vidět snížení výpočetní náročnosti je velké a exponenciálně roste s větším počtem vzorků $N$.
+  Vynález \acs{FFT} změnil odvětví zpracování signálů a je dnes využíván v miliardách telekomunikačních zařízeních. Stejně tak i ve zpracování a analýze zvukových signálů hraje důležitou roli \cite{fundamental_of_music_processing}.
   
   \subsection{STFT - Short-time Fourier transform} \label{sec:STFT}
 
-  V roce 1946 Dennis Gabor představil \acs{STFT} jako potřebu zařazení frekvenčních složek do konkrétnímo času signálu.
+  V roce 1946 Dennis Gabor představil \acs{STFT} jako možnost zařazení frekvenčních složek do konkrétnímo času signálu \cite{strichartz2003guide}.
   Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejme v jakém časovém úseku signálu se získané fekvenční složky nachází.
-  Hlavní myšlenkou \acs{STFT} je, že namísto analyzování celého signálu je signál analyzována pouze jeho malá část.
+  Hlavní myšlenkou \acs{STFT} je, že namísto analyzování celého signálu je analyzována pouze jeho malá část.
   Za tímto účelem je definována tzv. okénokvá funkce, která je nenulové pouze v malé části signálu.
-  Analyzovaný signál je následně vynásoben vzniklou okénkovou funkcí a díky tomu vzniká malá nenulová části signálu dle okénkové funkce viz obr. \ref{fig:princip_stft}.
-  Chceme li analyzovat signál v různých časech je tato funkce po signálu posouvána a následně se počítá Fourierova transformace pro každý výsledný okénkový signál.
+  Analyzovaný signál je následně vynásoben vzniklou okénkovou funkcí a díky tomu vzniká malá nenulová část signálu dle okénkové funkce viz obr. \ref{fig:STFT}.
+  Chceme li analyzovat signál v různých časech je tato funkce po signálu posouvána a následně se počítá \acs{DFT} pro každý výsledný okénkový signál.
 
   \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/STFT.png}
-    \caption{Signál o délce $1 s$ s počáteční frekvencí $10 Hz$ a koncovou frekvencí $30 Hz$ \textbf{a)} Původní signál \textbf{b)} Signál s okénkem od $0,2 s$ do $0,5 s$ \textbf{c)} Signál s okénkem od $0,35 s$ do $0,65 s$ \textbf{d)} Signál s okénkem od $0,5 s$ do $0,8 s$};
+    \caption{Signál o délce $1 s$ s počáteční frekvencí $10 Hz$ a koncovou frekvencí $30 Hz$ \textbf{a)} Původní signál \textbf{b)} Signál s okénkem od $0,2 s$ do $0,5 s$ \textbf{c)} Signál s okénkem od $0,35 s$ do $0,65 s$ \textbf{d)} Signál s okénkem od $0,5 s$ do $0,8 s$ \cite{fundamental_of_music_processing}}
     \label{fig:STFT}
   \end{figure}
 
-  Na obr. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje výhodu přesného určení frekvenčních složek signálu v čase. 
+  Na obr. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje princip určování frekvenčních složek v čase a jejich výhzody. 
   Signál je násoben obdelníkovou okénkovou funkcí ve třech místech.
   Tyto tři vzniklé signály jsou následně na sebe nezávazně transformovány do frekvenční oblasti.
   Z výsledků Fourierovy transformace lze vidět, že každá z těchto částí má jiné frekvenční spektrum.
@@ -270,8 +295,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Na výsledku přesnosti analýzy poomcí \acs{STFT} závisí také tvar použité okénkové funkce.
   V obr. \ref*{fig:STFT} je použito obdélníkového okénka které díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
   Existuje více tvarů okénkových funkcí pro odstranění nežádoucích složek.
-  Například to jsou Kaise, Chebyshev, Hann a Haming a další.
-  \cite{Time-frequency_distributions};
+  Například to jsou Kaise, Chebyshev, Hann a Haming a další \cite{Time-frequency_distributions}.
 
   \subsection{Dynamika hlasitost a intenzita} \label{sec:Dynamika}
   
