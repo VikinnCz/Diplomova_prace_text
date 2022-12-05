@@ -156,7 +156,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   \begin{figure}[H]
     \centering
-    \includegraphics[width = 0.8\linewidth]{obrazky/Waveform.png}
+    \includegraphics[width = 0.8\linewidth]{obrazky/Waveform.eps}
     \caption{Zobrazení časového průběhu signálu}
     \label{fig:Waveform}
   \end{figure}
@@ -171,17 +171,18 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Imaginární složka komplexního čísla pak udává počáteční fázi.
   V grafu jsou poté zobrazy frekvenční složky se kterých se signál skládá viz obr. \ref*{fig:Bass_tone}.
 
+
+  % \begin{figure}[H]
+  %   \centering
+  %   \includegraphics[width = 0.9\linewidth]{obrazky/Bass_tone_spectrum.eps}
+  %   \caption{Zobrazení časového průběhu signálu}
+  %   \label{fig:Waveform}
+  % \end{figure}
+
   \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.8\linewidth}
-        \includegraphics[width = \linewidth]{obrazky/Bass_tone_waveform.png}
-        \caption{Časová oblast}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.8\linewidth}
-        \includegraphics[width = \linewidth]{obrazky/Bass_tone_spectrum.png}
-        \caption{Frekvenční oblast}
-    \end{subfigure}
-    \caption{Reprezentace tónu E zahraného na basovou kytaru.}
+        \includegraphics[width = 1\linewidth]{obrazky/Bass_tone_spectrum.eps}
+    \caption{Reprezentace tónu E zahraného na basovou kytaru. \textbf{a)} Časová oblast ~ ~ ~ ~ ~\textbf{b)} Frekvenční spektrum}
     \label{fig:Bass_tone}
 \end{figure}
   
@@ -227,7 +228,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   \begin{figure}[H]
     \centering
-    \includegraphics[width = 0.8\linewidth]{obrazky/Discrete_signal.png}
+    \includegraphics[width = 0.8\linewidth]{obrazky/Discrete_signal.eps}
     \caption{Časově spojitý signál a diskrétní signál}
     \label{fig:Discrete_signal}
   \end{figure}
@@ -280,7 +281,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   \begin{figure}[H]
     \centering
-    \includegraphics[width = 1\linewidth]{obrazky/STFT.png}
+    \includegraphics[width = 1\linewidth]{obrazky/STFT.eps}
     \caption{Signál o délce $1 s$ s počáteční frekvencí $10 Hz$ a koncovou frekvencí $30 Hz$ \textbf{a)} Původní signál \textbf{b)} Signál s okénkem od $0,2 s$ do $0,5 s$ \textbf{c)} Signál s okénkem od $0,35 s$ do $0,65 s$ \textbf{d)} Signál s okénkem od $0,5 s$ do $0,8 s$ \cite{fundamental_of_music_processing}}
     \label{fig:STFT}
   \end{figure}
@@ -345,15 +346,8 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.8\linewidth}
-        \includegraphics[width = \linewidth]{obrazky/Piano_tone_waveform.png}
-        \caption{Amplituda tónu}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.8\linewidth}
-        \includegraphics[width = \linewidth]{obrazky/Piano_tone_obalka.png}
-        \caption{Obálka tónu}
-    \end{subfigure}
-    \caption{Tón A5 zahraný na klavír a jeho ADSR obálka}
+    \includegraphics[width = 1\linewidth]{obrazky/ADSR.eps}
+    \caption{Tón A5 zahraný na klavír \textbf{a)} Amplituda tónu \textbf{b)} ADSR obálka tónu}
     \label{fig:ADSR_envelope_on_piano_tone}
   \end{figure}
 
