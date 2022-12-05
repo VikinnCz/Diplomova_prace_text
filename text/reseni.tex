@@ -357,20 +357,34 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Tyto násobky představují vyšší harmonické složky tónu.
   Počet a amplituda vyšších harmonických složek má vliv na výslednou barvu tónu a je to hlavní důvod proč je lidské ucho schopné rozeznat stejný tón znějící na různé nástroje.
 
-  %TODO: vložit obrázek
+  %TODO: vložit obrázek spektrogramu tónu
 
-\section{Detekce dob a analýza tempa skladby} \label{sec:Detekce_tempa}
-V této kapitole jsou posány principy detekce tempa skladby a začátků not.
-S postupem času se techniky používané v \acs{MIR} pro detekci dob vyvíjejí a vznikají odlišné přístupy.
-Níže jsou popsány základní principy pro detekci dob a analýzy tempa až po příchod strojového učení.
-Přístup k detekci dob se s vývojem hlubokých neuronových sítí značně změnil. 
-Dnes se v této oblasti využívá zejména struktur strojového učení.
-\cite{tempobeatdownbeat:book} \cite{fundamental_of_music_processing};
+\section{Detekce nástupů a analýza tempa skladby} \label{sec:Detekce_tempa}
+% V této kapitole jsou posány principy analýzy tempa skladby a detekce dob sklady. 
+S vývojem nových technologií se mění i přístupy využiváané v \acs{MIR} pro analazýzu tempa skladby. 
+V této kapitole je popsán postupný vývoj algoritmů.
+Od nejjednodužších přístupů po komplexní řešení využívající moderní metody hlubokých neuronových sítí.
 
-%TODO: popsat problematiku s kapitoly 6.1
+Detekce nástupů lze chápat jako detekci začátků not či dalších hudebních událostí, které se vyskytnout v průběhu skaldby.
+Výskyt takových udáslotí je provázen zvýšením energie signálu zaznamenané ve fázi nástupu dle ADSR obálky popsané v bodě \ref{sec:Barva}.
+Typickým znakem pro fázi nátupu je rychlý nárůst obálky amplitudy signálu.
+V této fázi se při vytváření tónu vyskytují \textbf{Tranzienty}. Tranzienty je možné pozorovat zejména u neperkusivních nástrojů například u dechových nebo smyčcových.
+Jsou představovány nakmitávajícími a dokmitávajícími pochody. Jedná se o zvuk netónové podoby připomínající hluk s výraznými frekvenčními změnami.
+U smyčcových nástrojů takový zvuk může být ze začátku způsoben drhnutím smyčce o strunu do chvíle než se ustálí její kmitání. Délka tranzientů pak může dosahovat od jednotek milisekund až po stovky milisekund v závisloti na typu nástroje, technice hry \cite{syrový2013hudební}.
+Například v případě piana tranzient odpovídá počáteční fázi kdy byla zmáčknuta klávesa.
+Na základě zmáčknutí klávesy dochází ke zvednutí tlumítka, kladívko udeří do struny, struna začíná vybrovat a víbrace se přenáší do těla piana.
+V této fázi začíná tělo rezonovat a konečně dochází k ustálení tónové složky. Při úderu kladívka dochází k velkému přenosu energie patrném na obálce tónu. Díky tomu je lehké určit začátek tónu podle nárůstu amplitudy obálky \cite{fundamental_of_music_processing}.
+
+U některých nástrojů je však energie přenášená po celou dobu znění tónu konstantně a dochází k pomalému jemnému náběhu tónu například u určitých technik hry na smyčcové nástroje nebo u dechových nástrojů. Fáze náběhu je pak pomalá a dlouhá a plynule přechází do fáze podržení. Pro tyto jemné zvuky se stává obtížné určit skutečnou pozici začátku noty.
+
+%TODO: doplnit obrázek obálka perkusivního zvuku a táhlého
+
+Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se napříkladod polyfoní skladbu. Polyfoní skladoubou rozumíme skladbu tvořenou více hlasy.
+Zároveň nemají určenou roli vedoucího a doprovodného hlasu \cite{6155601}.
+Takové uspořádání hlasů může vést k překrývání a nástupy mohou být maskovány. Díky jevu maskování je obtížné zaznamenat změny energie signálu. V tomto případě přichází potřeba po komplexnějších metodát detekce nástupů \cite{fundamental_of_music_processing}. Například pohled na krátkodobé změny ve spektru signálu pomocí využití \acs{STFT} popsané v bodě \ref{sec:STFT}.
 
   \subsection{Využití energie signálu} \label{sec:energie_signalu}
-
+  \cite{tempobeatdownbeat:book}
   \subsection{Využití spektra signálu}
     %TODO: popsat specral flux functio https://tempobeatdownbeat.github.io/tutorial/ch2_basics/baseline.html
   
