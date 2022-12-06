@@ -384,9 +384,39 @@ Zároveň nemají určenou roli vedoucího a doprovodného hlasu \cite{6155601}.
 Takové uspořádání hlasů může vést k překrývání a nástupy mohou být maskovány. Díky jevu maskování je obtížné zaznamenat změny energie signálu. V tomto případě přichází potřeba po komplexnějších metodát detekce nástupů \cite{fundamental_of_music_processing}. Například pohled na krátkodobé změny ve spektru signálu pomocí využití \acs{STFT} popsané v bodě \ref{sec:STFT}.
 
   \subsection{Využití energie signálu} \label{sec:energie_signalu}
-  \cite{tempobeatdownbeat:book}
+
+  Jak již bylo zmíněno při hraní dochází k přenosu energie od hřáče na hudební nástroj.
+  Tento přenos je ve značné míře provázen rychlým nárůstem amplitudy ve fázi náběhu na začátku tónu.
+  Například při úderu kladívka piana na strunu nebo úderu paličky na blánu bubnu.
+  Ná základě tohoto jevu je možnost detekovat nástup tónu pomocí funkce pro výpočet energie signálu v daném místě.
+  Náhle změny signálu v takto definované funkci ukazují potencionální místa nástupů.
+  Matematicky pak funkci popisujeme. Nechť $x(n)$ je diskrétní signál.
+  Stejně jako u \acs{STFT} popsané v bodě \ref{sec:STFT} je definována okénková funkce $w(n)$ ve tvaru zvonu \uv{bell-shaped function} která je posouvaná po signálu $x(n)$.
+  Okénková funkce je symetrická podle počátku a potom platí že $ m \in [-M : M]$ a $M \in \mathbb{N}$. Funkce lokální energie signálu je pak zapsána
+  \begin{equation}
+    E_{xw}(n) = \sum_{m = -M}^{M} |s(n+m)w(m)|^2
+  \end{equation}
+  pro $n \in \mathbb{Z}$ \cite{fundamental_of_music_processing}.
+
+  Pro názornější zobrazení se následně vypočítá derivace funkce lokální energie. V případě diskrétního signálu se derivace realizuje jako rozdíl dvou po sobě jdoucích vzorků. Protože pro detekci nástupů je důležitá zejména pozitivní změna energie nikooiv její pokles jsou ponechány pouze pozitivní rozdíly a negativní jsou zapsány jako nulové. V anglické literatuře je tneto proces známý také jako půlvlnné usměrnění \uv{half-wave rectification}. Vzorece jsou zapsány následovně 
+  \begin{equation}
+    r = E_{wx}(n+1) - E_{wx}(n)
+  \end{equation}
+  \begin{equation}
+    \Delta_E(n) = \frac{r + |r|}{2} = \genfrac{\lbrace}{\rbrace}{0pt}{}{r, \; \text{if} \: r \geq 0 }{0,\; \text{if} \: r < 0}
+  \end{equation}
+  kde $r \in \mathbb{R}$ a $n \in \mathbb{Z}$.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width = 0.8\linewidth]{obrazky/Energy_based_novely.eps}
+    \caption{Detkte nástupů perikusivního zvuku\textbf{a)} Amplituda nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
+    \label{fig:ADSR_envelope_on_piano_tone}
+  \end{figure}
+
   \subsection{Využití spektra signálu}
     %TODO: popsat specral flux functio https://tempobeatdownbeat.github.io/tutorial/ch2_basics/baseline.html
+    \cite{tempobeatdownbeat:book}
   
   \subsection{Detekce periodicity}
     %TODO: popsat autokorelační funkci a její využití pro detekci tempa (periodicity)
