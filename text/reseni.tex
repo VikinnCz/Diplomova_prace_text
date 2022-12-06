@@ -161,7 +161,8 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:Waveform}
   \end{figure}
 
-  Tato reprezentace audio signálu poskytuje informace průběhu amplitudy signálu. Využívá senapříklad pro výpočet energie signálu popsaný v bodě \ref{sec:energie_signalu}.
+  Tato reprezentace audio signálu poskytuje informace průběhu amplitudy signálu.
+  Využívá senapříklad pro výpočet energie signálu popsaný v bodě \ref{sec:Energie_signalu}.
   
   \subsection{Frekvenční oblast} \label{sec:FT}
   Pro získání dalalších informací o hudebním díle se využívá transformace signálu do frekvenční oblasti umožňující odlišné znázornění struktury signálu.
@@ -383,7 +384,7 @@ Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden 
 Zároveň nemají určenou roli vedoucího a doprovodného hlasu \cite{6155601}.
 Takové uspořádání hlasů může vést k překrývání a nástupy mohou být maskovány. Díky jevu maskování je obtížné zaznamenat změny energie signálu. V tomto případě přichází potřeba po komplexnějších metodát detekce nástupů \cite{fundamental_of_music_processing}. Například pohled na krátkodobé změny ve spektru signálu pomocí využití \acs{STFT} popsané v bodě \ref{sec:STFT}.
 
-  \subsection{Využití energie signálu} \label{sec:energie_signalu}
+  \subsection{Využití energie signálu} \label{sec:Energie_signalu}
 
   Jak již bylo zmíněno při hraní dochází k přenosu energie od hřáče na hudební nástroj.
   Tento přenos je ve značné míře provázen rychlým nárůstem amplitudy ve fázi náběhu na začátku tónu.
@@ -398,6 +399,13 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   \end{equation}
   pro $n \in \mathbb{Z}$ \cite{fundamental_of_music_processing}.
 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.8\linewidth]{obrazky/Energy_based_novely.eps}
+    \caption{Detkte nástupů perikusivního zvuku\textbf{a)} Amplituda nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
+    \label{fig:energy_based_novelty}
+  \end{figure}
+
   Pro názornější zobrazení se následně vypočítá derivace funkce lokální energie. V případě diskrétního signálu se derivace realizuje jako rozdíl dvou po sobě jdoucích vzorků. Protože pro detekci nástupů je důležitá zejména pozitivní změna energie nikooiv její pokles jsou ponechány pouze pozitivní rozdíly a negativní jsou zapsány jako nulové. V anglické literatuře je tneto proces známý také jako půlvlnné usměrnění \uv{half-wave rectification}. Vzorece jsou zapsány následovně 
   \begin{equation}
     r = E_{wx}(n+1) - E_{wx}(n)
@@ -406,17 +414,26 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
     \Delta_E(n) = \frac{r + |r|}{2} = \genfrac{\lbrace}{\rbrace}{0pt}{}{r, \; \text{if} \: r \geq 0 }{0,\; \text{if} \: r < 0}
   \end{equation}
   kde $r \in \mathbb{R}$ a $n \in \mathbb{Z}$.
+  Na obrázku \ref{fig:energy_based_novelty} lze vidět zobrazení takto vypočítané lokální energie signálu a její derivace. Analyzovaný signál se skládá z několika perkusivních úderů.
+  Pro výpočet bylo použito okno typu \uv{bell-shaped function} o velikosti 201 vzorků.
 
-  \begin{figure}
-    \centering
-    \includegraphics[width = 0.8\linewidth]{obrazky/Energy_based_novely.eps}
-    \caption{Detkte nástupů perikusivního zvuku\textbf{a)} Amplituda nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
-    \label{fig:ADSR_envelope_on_piano_tone}
-  \end{figure}
 
   \subsection{Využití spektra signálu}
+
+  Díky rozložení signálu na jeho spektrum pomocí Fourierovy transformace popsané v bodě \ref{sec:FT} je možné lépe rozeznat strukturu nahrávky a zmírnit efekt maskování který nastává při metodách založených energii signálu popsané v bodě \ref{sec:Energie_signalu}.
+  V polyfoní hudbě mohou interpretace o nižší hlasistosti bý maskovány hlasitějšími projevy.
+  Kdy například jeden nástroj v tónové fázi podržení ADSR obálky, popsané v bodě \ref{sec:Barva}, může být hlasitější než než fáza náběhu druhého nástroje.
+  Takový nástup je pak maskován a je obtížné detekovat jeho nástup.
+  V případě maskování některých z nástrojů v časové oblasti je možné spektrum signálu zaměřit na frekvenční oblast spektra ve které se maskovaný nástroj nachází.
+  Díky tomu je možné nástup tónu takového nástroje detekovat pomocí spektra signálu. Každý hudební nástroj obsazuje jiné frekvenční spektrum \cite{fundamental_of_music_processing}.
+  Díky tomu se různé nástroje nachází na odlišných místech spektra, jak spektrum daného nástroje vypadá určuje také barvu jeho barvu popsanou v bodě \ref{sec:Barva}.
+  S takovým jevem je důležité počítat při detekci nástupů založené na spektru signálu. 
+ 
+
     %TODO: popsat specral flux functio https://tempobeatdownbeat.github.io/tutorial/ch2_basics/baseline.html
-    \cite{tempobeatdownbeat:book}
+    \cite{tempobeatdownbeat:book}]
+
+    TODO: popsat nějakou metodu s knížky fundamental...
   
   \subsection{Detekce periodicity}
     %TODO: popsat autokorelační funkci a její využití pro detekci tempa (periodicity)
