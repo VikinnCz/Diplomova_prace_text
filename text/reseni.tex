@@ -287,7 +287,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:STFT}
   \end{figure}
 
-  Na obr. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje princip určování frekvenčních složek v čase a jejich výhzody. 
+  Na obr. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje princip určování frekvenčních složek v čase a jejich výhody. 
   Signál je násoben obdelníkovou okénkovou funkcí ve třech místech.
   Tyto tři vzniklé signály jsou následně na sebe nezávazně transformovány do frekvenční oblasti.
   Z výsledků Fourierovy transformace lze vidět, že každá z těchto částí má jiné frekvenční spektrum.
@@ -298,6 +298,18 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   V obr. \ref*{fig:STFT} je použito obdélníkového okénka které díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
   Existuje více tvarů okénkových funkcí pro odstranění nežádoucích složek.
   Například to jsou Kaise, Chebyshev, Hann a Haming a další \cite{Time-frequency_distributions}.
+  
+  Pokud jsou analyzované data skrza okénka funkce \acs{STFT} poskládány zpět za sebe, tak představují matici udávající průběh frekvenčního spektra signálu v čase.
+  Takové zobrazení se nazává \textbf{spektogram} a v případě 2d zobrazení se skládá z časové a frekvenční osy.
+  Magnituda frekvencí je pak zobrazena barevoun škálou. Viz obrázek \ref{fig:Spectrogram}.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Spectrogam.eps}
+    \caption{Nahrávka piana \textbf{a)} Amplituda nahrávky \textbf{b)} Frekvenční spektrum nahrávky zobrazené pomocí spektrogramu}
+    \label{fig:Spectrogram}
+  \end{figure}
+   %TODO: vložit obrázek spektogramu.
 
   \subsection{Dynamika hlasitost a intenzita} \label{sec:Dynamika}
   
@@ -402,7 +414,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.8\linewidth]{obrazky/Energy_based_novely.eps}
-    \caption{Detkte nástupů perikusivního zvuku\textbf{a)} Amplituda nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
+    \caption{Detkte nástupů perikusivního zvuku \textbf{a)} Amplituda nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
     \label{fig:energy_based_novelty}
   \end{figure}
 
@@ -411,10 +423,10 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
     r = E_{wx}(n+1) - E_{wx}(n)
   \end{equation}
   \begin{equation}
-    \Delta_E(n) = \frac{r + |r|}{2} = \genfrac{\lbrace}{\rbrace}{0pt}{}{r, \; \text{if} \: r \geq 0 }{0,\; \text{if} \: r < 0}
+    \Delta_E(n) = \frac{r + |r|}{2} = \genfrac{\lbrace}{}{0pt}{}{r, \; \text{if} \: r \geq 0 }{0,\; \text{if} \: r < 0}
   \end{equation}
   kde $r \in \mathbb{R}$ a $n \in \mathbb{Z}$.
-  Na obrázku \ref{fig:energy_based_novelty} lze vidět zobrazení takto vypočítané lokální energie signálu a její derivace. Analyzovaný signál se skládá z několika perkusivních úderů.
+  Na obr. \ref{fig:energy_based_novelty} lze vidět zobrazení takto vypočítané lokální energie signálu a její derivace. Analyzovaný signál se skládá z několika perkusivních úderů.
   Pro výpočet bylo použito okno typu \uv{bell-shaped function} o velikosti 201 vzorků.
 
 
@@ -429,12 +441,58 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   Díky tomu se různé nástroje nachází na odlišných místech spektra, jak spektrum daného nástroje vypadá určuje také barvu jeho barvu popsanou v bodě \ref{sec:Barva}.
   S takovým jevem je důležité počítat při detekci nástupů založené na spektru signálu. 
  
+  Jedním ze spůsobů analýzy nástupů pomocí spektra je detekovat změny ve spektru v průběhu času. Při zobrazení časového sprůběhu spektra nazývaného spektogram popsaný v bodě \ref{sec:STFT}.
+  Jsou za sebou v čase poskládány vektory nesoucí informaci o spektru.
+  Pokud jdou potovnány rozdíly mezi dvěma po sobě jdoucími vektory spektogramu jsou získány informace o změně spektra v čase.
+  Protože tranzienty při fázi náběhu se skládají z části z ruchové složky rozléhající se přes velkou část slyšitelného frekvenčního spektra je tak možné detekovat nástupy.
+  Popsané metodě porovnávání vektorů se také \textbf{spektrální tok} \cite{fundamental_of_music_processing}.
+  Pro výpočet spektrálního toku existuje více druhů přístupu lišících se předszpracováním dat a konečným zpracováním výsledků.
+  Níže jsou popsány dvě metody výpočtu ze spektogramu a náslezde z mel spektogramu.
 
-    %TODO: popsat specral flux functio https://tempobeatdownbeat.github.io/tutorial/ch2_basics/baseline.html
-    \cite{tempobeatdownbeat:book}]
+  Výpočet spektrálního toku se provede derivací vstupního diskréntího signálu který zde představuje vektory spektrálních složek. Výpočet probíhá pri každou spektrální složku a výsledek je sečten jak je popsáno rovnicí 
+\begin{equation}
+  r(n) = \sum_{k = 0}^{K} |X|(n+1,k) - |X|(n,k)
+\end{equation}
 
-    TODO: popsat nějakou metodu s knížky fundamental...
-  
+\begin{equation}
+  \Delta S_t(n) = \frac{r(n) + |r(n)|}{2} = \genfrac{\lbrace}{}{0pt}{}{r, \; \text{if} \: r \geq 0 }{0,\; \text{if} \: r < 0}
+\end{equation}
+  kde $ n \in \mathbb{Z}$ a $K$ je počet spektrálních složek v jednom vektoru.
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Spektralni_tok.eps}
+    \caption{Výpočet spektrálního toku pro nahrávku piana \textbf{a)} Amplituda nahrávky \textbf{b)} Spektogram narhávky \textbf{c)} Spektrální tok bez komprese \textbf{d)} Spektrální tok s kompresí spektra $\gamma = 1$}
+    \label{fig:Spectralni_tok}
+  \end{figure}
+  Pro dosažení přesnějších výsledků je možnost komprese spektrogramu. Funkce pro logaritmickou kompresi singálu je zapsána jako 
+  \begin{equation}
+    X_c = \log (1+\gamma |X|)
+  \end{equation}
+  kde pro správnou kompresi je pottřeba aby $\gamma \geq 1$.
+  Míra komprese je určena velikostí $\gamma$. Nižší hodnoty jsou vhodné pro lepší detekci perkusivních zvuků.
+  Při vyžších hodnotách $\gamma$ dochází k větší kompresi spektrogramu a a jsou zřetelnější zvuku o nižší intenzitě.
+  Při velké kompresi dochází také ke zvýraznění ruchových složek signálu \cite{fundamental_of_music_processing}. 
+
+
+  Například v článku z \acs{ISMIR} 2021 \cite{tempobeatdownbeat:book} je spektrální tok počítán s Mel Spectogramu popsaného níže.
+  Protože lidské ucho vnímá výšku frekvence logaritmicky je jednodužší rozeznat rozdíl mezi frekvencemi u nižžší části spektra než u vyžších frekvencí.
+  Například rozdíl mezi 500 Hz a 1 kHz je pro lidské ucho dobře detekovatelný a zřetelný.
+  Odlišné rozlišovací schopnosti výšky v různých frekvenčních pásmech je způsobeno biologickým rozvržením vnitřního ucha. Proto pro lepší rozlišování na základě lidského vnímání zvuku vznikla Melova stupnice.
+  \textbf{Melova stuopnice} je vjemová škála výšek, které posluchač posoudil jako od sebe stejně vzdálené. Referenčním bodem je pak definováno 1000 mel které odpovídá frekvenci 1000 Hz\cite{StevensS.S1937ASft}.
+  Výpočet spektrálního toku je následně stejný jak pří výpočtu ze spektogramu. Výslednou křivku je možné vidět na obr. \ref{fig:Mel_spectralni_tok}.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Mel_spektralni_tok.eps}
+    \caption{Výpočet spektrálního toku z mel spektrogramu pro nahrávku piana \textbf{a)} Amplituda nahrávky \textbf{b)} Mel spektogram narhávky \textbf{c)} Spektrální tok}
+    \label{fig:Mel_spectralni_tok}
+  \end{figure}
+
+  % Možnností postprocesignu je například výsledný spektrální tok proložit funkcí lokálního průběmru
+  % \begin{equation}
+  %   \mu(n) = \frac{1}{2M + 1} \sum_{m = -M}^{M} \Delta S_t(n + m)
+  % \end{equation}
+
   \subsection{Detekce periodicity}
     %TODO: popsat autokorelační funkci a její využití pro detekci tempa (periodicity)
 
