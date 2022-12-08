@@ -5,47 +5,47 @@ Nabízejí se otázky jak by měla daná animace reagovat na konkrétní děj sk
 Jakým způsobem navrhnout strukturu algoritmů a co by měly získané parametry ovlivňovat při vytváření animací.
 
 V táto části jsou popsány následující segmenty: Teorie zpracování hudební nahrávky pomocí známých algoritmů. Například důležitým algoritmem je \acs{FT}\footnote{\acl{FT}.}
-popsaná více v bodě \ref{sec:FT}, její variantý pak v bodech \ref{sec:DFT} a \ref{sec:STFT}.
-Nabízené moderní metody strojového učení s využitgím hlubokých neuronových sítí při detekci tempa skladby \ref{sec:Detekce_tempa} a určení žánru \ref{sec:Klasifikace_zanru}.  
-Struktura a možnosti systému Spectoda pro generování interaktivních světelných animací je podrobně popsána v bodě \ref{sec:Spectoda}.
+popsaná více v bodě \ref{sec:FT}, její varianty pak v bodech \ref{sec:DFT} a \ref{sec:STFT}.
+Nabízené moderní metody strojového učení s využitím hlubokých neuronových sítí při detekci tempa skladby \ref{sec:Detekce_tempa} a určení žánru \ref{sec:Klasifikace_zanru}.  
+Struktura a možnosti systému Spectoda pro generování interaktivních světelných animací jsou podrobně popsány v bodě \ref{sec:Spectoda}.
 
 \section{MIR - Music information retrieval} \label{sec:MIR}
     Music information retrieval je interdisciplinární vědní obor sostředící se na získávání infromací z hudebních nahrávek.
     Jsou zde kombinovány znalosti mnoha oborů jako jsou muzikologie, psychoakustika, strojové učení, zpracování signálů a další. 
     
 
-    Výstup jeho výzkumu je využíván populárními technologiemi. 
-    Jednou z aplikací je personalizované doporučování hudebních skladeb, která se nachází v moderních streamovacích platformách.
-    Další využítí je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky alanýze tempe a klíčových částí skladby.
-    Tyto technologie se nachází v mnoha dalších aplikacích a s šířením se digitálního audia jejich důležitost stále poroste.
+    Výstupy jeho výzkumu jsou využívány v populárních technologických aplikacích. 
+    Jednou z aplikací je personalizované doporučování hudebních skladeb, které se nachází v moderních streamovacích platformách.
+    Další využítí je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky analýze tempe a klíčových částí skladby.
+    Tyto technologie se nachází v mnoha dalších aplikacích a s šířením se digitálního audia jejich důležitost stále roste.
     
     \subsection{Historie}
     V tomto bodě je napsán souhrn historie MIR z knihy \cite{a_new_companion_to_digital_humanities}.
-    \acs*{MIR} se začíná objevovat na přelomu devatenáctého a dvacátého století s příchodem moderních statistických metod.
+    \acs{MIR} se začíná objevovat na přelomu devatenáctého a dvacátého století s příchodem moderních statistických metod.
     Začínají se objevovat pokusy o aplikování statistických metod na hudební partitury.
-    Protože ještě nebyly natolik dostupné počítače jednalo se spíše o ruční práci s partiturami a tabularueou.
-    Z grafických notací se analyzovaly jejich rysy a specifikovaly charakteristiky hudebního díla.
-    S příchodem počítačů do výzkumných laboratoří v letech 1960 až 1970 se začalo více rozvíjet zpracování sginálů a s tím související možnosti analýzy hudebních nahrávek pomocí počítačů.
-    V těchto letech se poprvé začaly objevoat nyní známé termíny jako \uv{computational musicology} a \uv{ music information retrieval}
-    První oblast výzkumu se soustředila na analazýzu tempa skladby. Z důvodu nízké popularity se však výzkum zpomalil.
-    Tento útlum pokračoval až do roku 1990 kdy výzkumu \acs*{MIR} pomohly dvě změny.
-    První důležitou změnou byly rostoucí databáze digitální hudby, která se staly lehce dostupné pro výzkumné týmy.
+    Protože ještě nebyly natolik dostupné počítače jednalo se spíše o ruční práci s partiturami a tabulaturou.
+    Z grafických notací se analyzovaly rysy skladeb a specifikovaly charakteristiky hudebního díla.
+    S příchodem počítačů do výzkumných laboratoří se v letech 1960 až 1970 začalo více rozvíjet zpracování sginálů a s tím související možnosti analýzy hudebních nahrávek pomocí počítačů.
+    V těchto letech se poprvé začaly objevoat nyní známé termíny jako \uv{computational musicology} a \uv{music information retrieval}
+    První oblast výzkumu se soustředila na analýzu tempa skladby. Z důvodu nízké popularity se však výzkum zpomalil.
+    Tento útlum pokračoval až do roku 1990 kdy výzkumu \acs{MIR} pomohly dvě změny.
+    První důležitou změnou byly rostoucí databáze digitální hudby, která se stala lehce dostupná pro výzkumné týmy.
     Druhým bodem který přispěl k vývoji \acs{MIR} byl nárůst výpočetního výkonu počítačů a nižší náklady s nimi spojené.
     Díky těmto změnám se stal výzkum dostupnější a jednodužší na realizaci \cite{a_new_companion_to_digital_humanities}.
 
     Poté v říjnu roku 2000 bylo uspořádáno první mezinárodní symposium soustředící se na \acs{MIR}.
-    Z této mezinárodní konference se stala tradice a vybudovala se kolem ní velká komunita nazývaná \acs{ISMIR}\footnote{International Society of Music Information Retrieval - Mezinárodní sdružení pro \acs*{MIR}}.
-    Každoročním vyvrcholením \acs{ISMIR} je právě váše zmíněná konference, na které vědci z celého světa prezentují pokroky v oblasti výzkumu \acs{MIR}.
+    Z této mezinárodní konference se stala tradice a vybudovala se kolem ní velká komunita nazývaná \acs{ISMIR}\footnote{International Society of Music Information Retrieval - Mezinárodní sdružení pro \acs{MIR}}.
+    Každoročním vyvrcholením \acs{ISMIR} je právě výše zmíněná konference, na které vědci z celého světa prezentují pokroky v oblasti výzkumu \acs{MIR}.
     Zanedlouho naté v roce 2005 byl v rámic této konference představen model \acs{MIREX}\footnote{The Music Information Retrieval Evaluation eXchange - komunitní rámec pro hodnocení pokroků výzkumu v oblasti \acs{MIR}.
     Obhospodařovaný laboratočí International Music Information Retrieval Systems Evaluation Laboratory sídlící na University of Illinois.  \cite{Downie2010}.}
     sloužící jako správa zásad pro hodnocení pokroků ve výzkumu \acs{MIR}\cite{Downie2010}.
     
    \subsection{Řetězec zpracování - pipeline}
 
-    V tomto bodě je popsán postup zprtacování dat v palikacíhc \acs{MIR}.
+    V tomto bodě je popsán postup zpracování dat v palikacíhc \acs{MIR}.
     Jedná se o systém, kterým jsou data zpracovávána a určuje standardně využívaný řetězec jak při tvorbě algoritmů postupovat .
     
-    Vstupními date se rozumí zejména hudební informace v digitální potobě.
+    Vstupními daty se rozumí zejména hudební informace v digitální podobě.
     Tyto vstupní data se rozlišují do více typů. Mohou to být obrázky představující digitální formu zápisu hudby pomocí symbolů \uv{not}\cite{a_new_companion_to_digital_humanities}.
     Například digitalizovaná partitura.
     Dalším možným typem je \uv{digitální hudba}.
@@ -63,12 +63,12 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
     \textbf{Feature extraction - extrakce vlastností signálu}
     Podle požadovaných vlastností pro extrakci je využito různých modelů popsaných v bodech \ref{sec:Detekce_tempa}, \ref{sec:Klasifikace_zanru} a \ref{sec:Chroma_vektory}.
-    S rostoucí popularitou strojového učení začaly při extrakci vlastností hudební nahrávky převládatkombinace hlubokých neuronových sítí.
+    S rostoucí popularitou strojového učení začaly při extrakci vlastností hudební nahrávky převládat kombinace hlubokých neuronových sítí.
     Tyto kombinace umožňují přesnější parametrizaci a menší chybovost.
 
     \textbf{Post-processing - konečné zpracování}
     Posledním blokem v řetězci je tvz. \uv{post-procesing} zajišťující zpracování a optimalizaci získaných dat.
-    Post-procesing zpracuje data do požadované formy. V některých případech také dokáže ovlivní přesnost zpracování.
+    Post-procesing zpracuje data do požadované formy. V některých případech také dokáže ovlivnit přesnost zpracování.
 
 \begin{figure}[H]
     \centering
@@ -80,7 +80,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     Digitální hudební nahrávka se jako forma vstupních dat stala hlavním trendem výzkumu \acs{MIR}.
     Je to způsobeno zejména dostupností velkých databází nahrávek ke kterým mají vědecké instituce přístup a nepotýkají se s problémy souvisejícími s autorskými právy \cite{a_new_companion_to_digital_humanities}.
 
-    Z důvodu velké komplexsnosti vstupních dat se využívá několik technik komprimaca signálů. 
+    Z důvodu velké komplexsnosti vstupních dat se využívá několik technik komprimace signálů. 
     Slučování vícekanálových nahrávek do mono sginálu. Převzorkování signálu na nižší vzorkovací kmitočty,
     a rozložení na krátké překrývající se úseky, ze kterých mohou být nezávisle extrahovány jejich vlastnosti\cite{lidy09:448[TUW-181186]}. 
     Výsledkem je kolekce paralelně složených sekvencí hodnot vlastností, které se následně zpracují na požadovaná výstupní data.
@@ -91,7 +91,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
         \hline
         {\bf Data}                 & {\bf Vyhledávání informací} & {\bf Klasifikace a odhad} & {\bf Sekvenční značení}\\
         \hline
-        Audio                      & Indetifikace kopi \uv{coverů},
+        Audio                      & Indetifikace kopie \uv{coverů},
                                      Řazení skladeb,
                                      Měření podobnosti,
                                      Získání otisku,
@@ -114,13 +114,13 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   %TODO: dopsat kapitolu
 
   \section{Parametrizace hudebních nahrávek} \label{sec:Parametrizace}
-  V této kapitole je popsán audio signál. Jak vzniká, jeho reprezentace v číslicovám zpracování a základní principy práce s audiosignálem.
+  V této kapitole je popsán audio signál. Jak vzniká, jeho reprezentace v číslicovém zpracování a základní principy práce s audiosignálem.
   V bodech \ref{sec:Dynamika} a \ref{sec:Barva} jsou popsány parametry získávané z audio signálu.
   Získané parametry slouží pro přesnější popis skladby.
 
   \subsection{Reprezentace audio signálů} \label{sec:Audio}
   Hudba může být reprezentována spoustou forem. 
-  Jako tradiční médium pro její ukládání ještě před vznikem záznamu sloužily vždy noty a další typy zápisů pomocí symbolů.
+  Jako tradiční médium pro její ukládání ještě před vznikem záznamu sloužily noty a další typy zápisů pomocí symbolů.
   Výsledné hudební dílo ale představuje mnohem více než počáteční notový zápis.
   Každý hudebník a hudební nástroj do skladby dodává svou unikátnost.
   Při hře se noty začnou proměňovat v harmonické zvuky, hladké melodie a nástroje vzájemně rezonují. 
@@ -136,7 +136,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Je získán analogový signál šířících se zvukových vln nazývaný jako audio signál.
   Pojmem audio je označován řetězec sloužící k záznamu, přenosu a reprodukci zvuků v mezích lidského slyšení.
   Avšak v audio signálu se už nenachází přesná reprezentace not a jejich paramterů jako jsou čas nástupu, tón, délka trvání, dynamika.
-  Díky tomu je analýza hudebních signálů obtížným úkolem a je ovlivněna reprezentací interpreta akustikou prostoru a vnímáním posluchače.
+  Díky tomu je analýza hudebních signálů obtížným úkolem a je ovlivněna reprezentací interpreta, akustikou prostoru a vnímáním posluchače.
   Zmíněnými problémy se zabývá samostatný vědní obor s názvem psychoakustika.
   Nejdůležitějšími parametry audio signálu které jsou podrobně popsány níže definujeme: frekvence, výška tónu, dynamika, intenzita, hlasitost a také barva \cite{fundamental_of_music_processing}.
 
@@ -144,13 +144,11 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Základní reprezentací audio signálu je tzv. zobrazení v \textbf{časové oblasti}.
   V časové oblasti představují číslicový signál vzorky. Jednotlivé vzorky udávají hodnotu signálu v daném čase.
   Počet vzorků vztažených na jednotku času určuje vzorkovací frekvence signálu.
-  Důležitým pravidlem pro vzorkování signálu je Shannonův-Nyquistův vzorkovací teorém popsán rovnicí \ref{rov:vzorkovaci_teorem},
-
+  Důležitým pravidlem pro vzorkování signálu je Shannonův-Nyquistův vzorkovací teorém
   \begin{equation}
     f_{vz} > 2f_{max}
     \label{rov:vzorkovaci_teorem}
   \end{equation}
-
   kde $f_{vz}$ je vzorkovací frekvence a $f_{max}$ je maximální frekvence v audio signálu \cite{bracewell1978fourier}.  
   Pokud jednotlivé vzorky zobrazíme graficky získáme průběh signálu v čase viz obr.\ref{fig:Waveform}.
 
@@ -161,16 +159,16 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:Waveform}
   \end{figure}
 
-  Tato reprezentace audio signálu poskytuje informace průběhu amplitudy signálu.
-  Využívá senapříklad pro výpočet energie signálu popsaný v bodě \ref{sec:Energie_signalu}.
+  Tato reprezentace audio signálu poskytuje informace o průběhu amplitudy signálu.
+  Využívá se například pro výpočet energie signálu popsaný v bodě \ref{sec:Energie_signalu}.
   
   \subsection{Frekvenční oblast} \label{sec:FT}
   Pro získání dalalších informací o hudebním díle se využívá transformace signálu do frekvenční oblasti umožňující odlišné znázornění struktury signálu.
 
   Ve frekvenční oblasti je signál reprezentován jeho frekvenčními složkami popsanými v komplexním tvaru.
-  Spektrum představuje rozložení původní části signálu na jednotlivé frekvenční složky popsané funkcí sinus. Kde reálná složka obsahuje informaci o magnitudu \uv{velikosti} funkce sinus.
+  Spektrum představuje rozložení původní části signálu na jednotlivé frekvenční složky popsané funkcí sinus. Kde reálná složka obsahuje informaci o magnitudě \uv{velikosti} funkce sinus.
   Imaginární složka komplexního čísla pak udává počáteční fázi.
-  V grafu jsou poté zobrazy frekvenční složky se kterých se signál skládá viz obr. \ref*{fig:Bass_tone}.
+  V grafu jsou poté zobrazeny frekvenční složky se kterých se signál skládá viz obr. \ref{fig:Bass_tone}.
 
 
   % \begin{figure}[H]
@@ -182,13 +180,13 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   \begin{figure}[H]
     \centering
-        \includegraphics[width = 1\linewidth]{obrazky/Bass_tone_spectrum.eps}
+        \includegraphics[width = 0.8\linewidth]{obrazky/Bass_tone_spectrum.eps}
     \caption{Reprezentace tónu E zahraného na basovou kytaru. \textbf{a)} Časová oblast ~ ~ ~ ~ ~\textbf{b)} Frekvenční spektrum}
     \label{fig:Bass_tone}
 \end{figure}
   
   Jako názorný důvod proč je transformace do frekvenční oblasti přínosná je dán příklad. Na nástroj je zahrán tón, který je zaznamenán. 
-  V časové oblasti je možné určit délku tónu a jeho průběh podle ADSR obálky popsané v bodě \ref*{sec:Barva}.
+  V časové oblasti je možné určit délku tónu a jeho průběh podle ADSR obálky popsané v bodě \ref{sec:Barva}.
   Pokud je ale potřeba zjistit výšku tónu a určit notu, tak se jedná o složýitý proces.
   Díky transformaci do frekveční oblasti je patrná fundementální frekvence tónu.
   Označována také první harmonická.
@@ -196,7 +194,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   Pro získání frekvenčního spektra signálu je třeba transformovat signál s časové oblasti. K tomu slouží několik úprav Fourierovy transformace podle vlastností vstupního signálu. Tyto metody jsou dále nazývány jako Fourierovy řady, Diskrétní časová Fourierova transformace a Diskrétní Fourierova transformace. V případě audio signálu se vyžívá zejména Diskrétní Fourierovy transformace popsané v bodě \ref{sec:DFT}.
 
-  \textbf{Fourierovy transformace} zkráceně definována jako transformace převádějící signál mezi časovou a fekvenční oblastní poomcí harmonických signálů jež popisují funkce sinus a cosinus.\cite{bracewell1978fourier} Funkce sinus a cosinus představují komplexní exponenciály.
+  \textbf{Fourierovy transformace} zkráceně definována jako transformace převádějící signál mezi časovou a fekvenční oblastní poomcí harmonických signálů jež popisují funkce sinus a cosinus \cite{bracewell1978fourier}. Funkce sinus a cosinus představují komplexní exponenciály.
   \begin{equation}
     e^{i\alpha t} = \cos(\alpha t) + i \sin(\alpha t)
   \end{equation}
@@ -214,18 +212,15 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   Pokud je vstupní signál diskrétní hovoříme o Diskrétní Fourierově transformaci která je více popsána v následujícím bodě \ref{sec:DFT}.
 
- Po transformaci signálu do frekvenčního spektra jsou data signálu v komplexním tvarua a jejich magnituda $|X(f)|$ je funkce sudá a tím pádem symetrická kolme nuly a fáze $\varphi_x(f)$ je funkcí lichou čili je středově symetrická. Pro analýzu audio signálů se využívá kladná část spektra.
+ Po transformaci signálu do frekvenčního spektra jsou data signálu v komplexním tvarua a jejich magnituda $|X(f)|$ je funkce sudá, tím pádem symetrická kolme nuly a fáze $\varphi_x(f)$ je funkcí lichou čili je středově symetrická. Pro analýzu audio signálů se využívá kladná část spektra.
 
   \subsection{DFT - Diskrétní Fourierova transformace} \label{sec:DFT}
-
-\cite{strichartz2003guide}
-\cite{bracewell1978fourier}
 
   Pokud jsou signály zpracovávány pomocí výpočetních procesorů,
   tak může být uložen pouze omezený počet hodnot signálu.
   To znamená, že analogový signál spojitý v čase musí být převeden na signál digitální tvz. signál diskrétní, který je není spojitý v čase. 
   Diskrétní signál je potom vhodný pro číslicové zpracování.
-  Proto jsou pospsány algoritmus \acs{DFT} přizpůsobené právě pro zpracování diskrétních signály nespojité v čase.
+  Proto jsou pospsané algoritmy \acs{DFT} přizpůsobené právě pro zpracování diskrétních signálů nespojitých v čase.
 
   \begin{figure}[H]
     \centering
@@ -234,7 +229,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:Discrete_signal}
   \end{figure}
 
-  Opět jsou dány dolišné definice pro signál diskrétní neperiodický a diskrétní periodický. Protože se jedná o signál diskrétní, tak zde odpadají integrální funkce.
+  Opět jsou dány odlišné definice pro signál diskrétní neperiodický a diskrétní periodický. Protože se jedná o signál diskrétní, tak zde odpadají integrální funkce.
   Pokud se jedná o signál \textbf{diskrétní neperiodický} jeho výsledné spektrum bude spojité a hovoříme o Fourierově transformaci diskrétní v čase. Matematicky je zapsána v následujícím tvaru
   \begin{equation}
     X(f) = \sum_{n = -\infty}^{\infty} x[n] e^{-i \Omega n}
@@ -258,7 +253,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   \begin{equation}
     f_k = \frac{k f_s}{N_0}
   \end{equation}
-  a $k \in(\mathbb{Z}; 0, N_0 -1)$. $N_0$ Počet vrzorků v jedné periodě signálu.
+  a $k \in(\mathbb{Z}; 0, N_0 -1)$. $N_0$ udává počet vrzorků v jedné periodě signálu.
   Hustota spektra $K$ v takovém případě odpovídá $K = N_0$.
 
   Ze strany výpočetní náročnosti je takto definovyný algoritmus neefektivní a výpočetně náročný.
@@ -268,15 +263,15 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Počet potřebných operací může být výrazně redukován. 
   Na vývoj efektivního řešení výpočtu \acs{DFT} se zasloužil Carl Friedrich Gauss a Joseph Fourier zhruba před dvěma sty lety. Tento algoritmus nazýváme Rychlou Fourierovou transformací zkráceně FFT.
   Jeho složitost pro výpočet byla snížena na $O(N \log_2 N)$ \cite{fundamental_of_music_processing}.
-  Například při použití vzorků $N = 2^{10} = 1024$. \acs{FFT} vzžaduje $N\log_2N = 10240 $ operací namísto $N^2 = 1048576$ operací při použití \acs{DFT}. Jak je vidět snížení výpočetní náročnosti je velké a exponenciálně roste s větším počtem vzorků $N$.
+  Například při použití vzorků $N = 2^{10} = 1024$. \acs{FFT} vyžaduje $N\log_2N = 10240 $ operací namísto $N^2 = 1048576$ operací při použití \acs{DFT}. Jak je vidět snížení výpočetní náročnosti je velké a exponenciálně roste s větším počtem vzorků $N$.
   Vynález \acs{FFT} změnil odvětví zpracování signálů a je dnes využíván v miliardách telekomunikačních zařízeních. Stejně tak i ve zpracování a analýze zvukových signálů hraje důležitou roli \cite{fundamental_of_music_processing}.
   
   \subsection{STFT - Short-time Fourier transform} \label{sec:STFT}
 
-  V roce 1946 Dennis Gabor představil \acs{STFT} jako možnost zařazení frekvenčních složek do konkrétnímo času signálu \cite{strichartz2003guide}.
-  Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejme v jakém časovém úseku signálu se získané fekvenční složky nachází.
+  V roce 1946 Dennis Gabor představil \acs{STFT} jako možnost zařazení frekvenčních složek ke konkrétnímo času signálu \cite{strichartz2003guide}.
+  Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejmé v jakém časovém úseku signálu se získané fekvenční složky nachází.
   Hlavní myšlenkou \acs{STFT} je, že namísto analyzování celého signálu je analyzována pouze jeho malá část.
-  Za tímto účelem je definována tzv. okénokvá funkce, která je nenulové pouze v malé části signálu.
+  Za tímto účelem je definovaná tzv. okénokvá funkce, která je nenulové pouze v malé části signálu.
   Analyzovaný signál je následně vynásoben vzniklou okénkovou funkcí a díky tomu vzniká malá nenulová část signálu dle okénkové funkce viz obr. \ref{fig:STFT}.
   Chceme li analyzovat signál v různých časech je tato funkce po signálu posouvána a následně se počítá \acs{DFT} pro každý výsledný okénkový signál.
 
@@ -287,25 +282,25 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     \label{fig:STFT}
   \end{figure}
 
-  Na obr. \ref*{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje princip určování frekvenčních složek v čase a jejich výhody. 
+  Na obr. \ref{fig:STFT} je graficky znázorněna myšlenka \acs{STFT}, která ukazuje princip určování frekvenčních složek v čase a jejich výhody. 
   Signál je násoben obdelníkovou okénkovou funkcí ve třech místech.
   Tyto tři vzniklé signály jsou následně na sebe nezávazně transformovány do frekvenční oblasti.
   Z výsledků Fourierovy transformace lze vidět, že každá z těchto částí má jiné frekvenční spektrum.
-  Pokud by bylo zapotřebí například určit přesný přechod mezi dvěma frekvencemi nacházejícími se v signálu. Lze spřesnit časové měřítko analýzy pomocí délky okénka.
+  Pokud by bylo zapotřebí například určit přesný přechod mezi dvěma frekvencemi nacházejícími se v signálu. Lze zpřesnit časové měřítko analýzy pomocí délky okénka.
   Tím ale dochází ke zmenšení přesnosti ve frekvenční oblasti.
   
   Na výsledku přesnosti analýzy poomcí \acs{STFT} závisí také tvar použité okénkové funkce.
-  V obr. \ref*{fig:STFT} je použito obdélníkového okénka které díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
+  V obr. \ref{fig:STFT} je použito obdélníkového okénka které díky svým ostrým hranám zkresluje výsledek o nechtěné frekvenční složky.
   Existuje více tvarů okénkových funkcí pro odstranění nežádoucích složek.
-  Například to jsou Kaise, Chebyshev, Hann a Haming a další \cite{Time-frequency_distributions}.
+  Například to jsou Kaise, Chebyshev, Hann, Haming a další \cite{Time-frequency_distributions}.
   
-  Pokud jsou analyzované data skrza okénka funkce \acs{STFT} poskládány zpět za sebe, tak představují matici udávající průběh frekvenčního spektra signálu v čase.
+  Pokud jsou analyzované data skrze okénka funkce \acs{STFT} poskládány zpět za sebe, tak představují matici udávající průběh frekvenčního spektra signálu v čase.
   Takové zobrazení se nazává \textbf{spektogram} a v případě 2d zobrazení se skládá z časové a frekvenční osy.
   Magnituda frekvencí je pak zobrazena barevoun škálou. Viz obrázek \ref{fig:Spectrogram}.
 
   \begin{figure}
     \centering
-    \includegraphics[width = 1\linewidth]{obrazky/Spectrogam.eps}
+    \includegraphics[width = 0.8\linewidth]{obrazky/Spectrogam.eps}
     \caption{Nahrávka piana \textbf{a)} Amplituda nahrávky \textbf{b)} Frekvenční spektrum nahrávky zobrazené pomocí spektrogramu}
     \label{fig:Spectrogram}
   \end{figure}
@@ -313,7 +308,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
   \subsection{Dynamika hlasitost a intenzita} \label{sec:Dynamika}
   
-  V češtině se pojem hlasitost využívá pro reprezentaci subjektivního vnímání akustickho tlaku definovanou například jednotkou phon\footnote{Phon - logaritmická jednotka vyjadřující individuální vnímání hlasitosti. Vnímání hlasitosti lidského ucha je závislé na křivce prahu slyšení a může se lišit pro každý tón \cite{tumarkin_1950}.}. 
+  V češtině se pojem hlasitost využívá pro reprezentaci subjektivního vnímání akustického tlaku definovanou například jednotkou phon\footnote{Phon - logaritmická jednotka vyjadřující individuální vnímání hlasitosti. Vnímání hlasitosti lidského ucha je závislé na křivce prahu slyšení a může se lišit pro každý tón \cite{tumarkin_1950}.}. 
   Stejně tak je hlasitost využívána, hovoří li se o měřené hlasitosti vyjádřené například hladinou intenzity zvuku popsanou níže nebo efektivní hodnotou signálu.
   Z důvodu lepší srozumitelnosti jsou dále využívána anglické pojmy \uv{volume} a \uv{loudness}. 
 
@@ -323,7 +318,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   V audio signálu je dynamika brána jako hlasitost \uv{loudness} Jedná se o změny apmlitudy signálu nebo jeho efektivní hodnoty \acs{RMS}\footnote{RMS - udává statistickou hodnotu z měření velikosti veličin. Je využívána u periodických veličin\cite{RMS_value}.} v čase.
 
   Při měření hlasitosi \uv{loudness} v akustickém prosotru je pak využíváno pojmů \textbf{intenzita} zvuku a \textbf{akustický výkon}.
-  Kde akustický výkon je definovánjako množství energie  vyzářené akustickým vysílačem ve vzduchu za jednotku čausu.\cite{acoustic_power}. Jednotkou je $W$.
+  Kde akustický výkon je definovánjako množství energie  vyzářené akustickým vysílačem ve vzduchu za jednotku času.\cite{acoustic_power}. Jednotkou je $W$.
   A intenzita zvuku pak je definována jako množství energie, které projde jednotkovou plochou kolmou na směr šíření na jednotku času. Jednotkou pak je $Wm^{-2}$ \cite{intenzita_zvuku_definice}
   
   Z pohledu vnímání hlasitosti lidským uchem je rozsah vnímané intenzity zvuku v řádech bilionů. Práh slyšení činí $10^{-12}$ $Wm^{-2}$ a práh bolesti je $10$ $Wm^{-2}$.
@@ -340,26 +335,26 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   V hudebním vyjádření se za slovem barva zkrývá komplexní sdružení atributů.
   Jedná se jak o psychologický tak hudební problém, který je vnímán individuálně\cite{The_perception_of_musical_timbre}.
 
-  Zdjednodušeně se barva definuje jako vlastnosti, díky kterým je možné rozeznat tón o stejné výšce a hlasitosti zahraný na dva různé náastroje\cite{MULLER2014713}.
+  Zjednodušeně se barva definuje jako vlastnosti, díky kterým je možné rozeznat tón o stejné výšce a hlasitosti zahraný na dva různé náastroje\cite{MULLER2014713}.
   Díky barvě je posluchač schopen rozeznávat odlišné zvuky nástrojů a typů interpretace.
 
   Z důvodu špatné kategorizace barvy fyzikálními veličinami je většinou interpretována přídavnými jmény.
-  Například je barva popisována jako jasná, temná, ostrá, čistá, teplá, pestrá, nazální a další.
+  Například je barva popisována jako jasná, temná, ostrá, čistá, teplá, pestrá, nazální, tonální a další.
 
-  Jedním z možných nástrojů pro analýzu barvy tónu je tvz. obálka tónu/signálu.
+  Jedním z možných nástrojů pro analýzu barvy tónu je tvz. obálka tónu \uv{signálu}.
   Obálku určuje amplituda signálu v čase viz obr. \ref{fig:ADSR_envelope_on_piano_tone}
   Je rozdělena na 4 fáze popsané z knihy Fundamentals of Music Processing \cite{fundamental_of_music_processing}.
-  \textbf{Attack \uv{náběh}} určující začátek tónu například úder paličkou na blánu bubnu.
+  \textbf{Attack \uv{náběh}} určující začátek tónu. Například úder paličkou na blánu bubnu.
   V této fázi se nachází více ruchových složek z daného úderu a má velkou dynamiku.
   Následuje fáze s názvem \textbf{Decay \uv{útlum}}.
   Po hlasitém úderu amplituda signálu klesá a začíná převládat tonální složka. Decay udává dobu za kterou se signál z jeho maxima sníží na hodnotu sustain.
   \textbf{Sustain \uv{podržení}} je fáze ve které je zřetelný tón a stálá hlasitost. Rezonující blána bubnu.
-  Poslední fází je \textbf{Release \uv{uvolnění}} při kterám dochází k poklesu hlasitosti zdroje zvuku až k uplnému utlumení
+  Poslední fází je \textbf{Release \uv{uvolnění}} při kterám dochází k poklesu hlasitosti zdroje zvuku až k uplnému utlumení.
   Například přiložení tlumítka na rezonující strunu.
 
   \begin{figure}[H]
     \centering
-    \includegraphics[width = 1\linewidth]{obrazky/ADSR.eps}
+    \includegraphics[width = 0.8\linewidth]{obrazky/ADSR.eps}
     \caption{Tón A5 zahraný na klavír \textbf{a)} Amplituda tónu \textbf{b)} ADSR obálka tónu}
     \label{fig:ADSR_envelope_on_piano_tone}
   \end{figure}
@@ -374,16 +369,16 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
 
 \section{Detekce nástupů a analýza tempa skladby} \label{sec:Detekce_tempa}
 % V této kapitole jsou posány principy analýzy tempa skladby a detekce dob sklady. 
-S vývojem nových technologií se mění i přístupy využiváané v \acs{MIR} pro analazýzu tempa skladby. 
+S vývojem nových technologií se mění i přístupy využívané v \acs{MIR} pro analýzu tempa skladby. 
 V této kapitole je popsán postupný vývoj algoritmů.
-Od nejjednodužších přístupů po komplexní řešení využívající moderní metody hlubokých neuronových sítí.
+Od nejjednodušších přístupů po komplexní řešení využívající moderní metody hlubokých neuronových sítí.
 
-Detekce nástupů lze chápat jako detekci začátků not či dalších hudebních událostí, které se vyskytnout v průběhu skaldby.
+Detekce nástupů lze chápat jako detekci začátků not či dalších hudebních událostí, které se vyskytnou v průběhu skaldby.
 Výskyt takových udáslotí je provázen zvýšením energie signálu zaznamenané ve fázi nástupu dle ADSR obálky popsané v bodě \ref{sec:Barva}.
-Typickým znakem pro fázi nátupu je rychlý nárůst obálky amplitudy signálu.
+Typickým znakem pro fázi nástupu je rychlý nárůst obálky amplitudy signálu.
 V této fázi se při vytváření tónu vyskytují \textbf{Tranzienty}. Tranzienty je možné pozorovat zejména u neperkusivních nástrojů například u dechových nebo smyčcových.
 Jsou představovány nakmitávajícími a dokmitávajícími pochody. Jedná se o zvuk netónové podoby připomínající hluk s výraznými frekvenčními změnami.
-U smyčcových nástrojů takový zvuk může být ze začátku způsoben drhnutím smyčce o strunu do chvíle než se ustálí její kmitání. Délka tranzientů pak může dosahovat od jednotek milisekund až po stovky milisekund v závisloti na typu nástroje, technice hry \cite{syrový2013hudební}.
+U smyčcových nástrojů takový zvuk může být ze začátku způsoben drhnutím smyčce o strunu do chvíle než se ustálí její kmitání. Délka tranzientů pak může dosahovat od jednotek milisekund až po stovky milisekund v závisloti na typu nástroje a technice hry \cite{syrový2013hudební}.
 Například v případě piana tranzient odpovídá počáteční fázi kdy byla zmáčknuta klávesa.
 Na základě zmáčknutí klávesy dochází ke zvednutí tlumítka, kladívko udeří do struny, struna začíná vybrovat a víbrace se přenáší do těla piana.
 V této fázi začíná tělo rezonovat a konečně dochází k ustálení tónové složky. Při úderu kladívka dochází k velkému přenosu energie patrném na obálce tónu. Díky tomu je lehké určit začátek tónu podle nárůstu amplitudy obálky \cite{fundamental_of_music_processing}.
@@ -392,7 +387,7 @@ U některých nástrojů je však energie přenášená po celou dobu znění t�
 
 %TODO: doplnit obrázek obálka perkusivního zvuku a táhlého
 
-Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se napříkladod polyfoní skladbu. Polyfoní skladoubou rozumíme skladbu tvořenou více hlasy.
+Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se například o polyfoní skladbu. Polyfoní skladoubou rozumíme skladbu tvořenou více hlasy.
 Zároveň nemají určenou roli vedoucího a doprovodného hlasu \cite{6155601}.
 Takové uspořádání hlasů může vést k překrývání a nástupy mohou být maskovány. Díky jevu maskování je obtížné zaznamenat změny energie signálu. V tomto případě přichází potřeba po komplexnějších metodát detekce nástupů \cite{fundamental_of_music_processing}. Například pohled na krátkodobé změny ve spektru signálu pomocí využití \acs{STFT} popsané v bodě \ref{sec:STFT}.
 
@@ -432,24 +427,24 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
 
   \subsection{Využití spektra signálu}
 
-  Díky rozložení signálu na jeho spektrum pomocí Fourierovy transformace popsané v bodě \ref{sec:FT} je možné lépe rozeznat strukturu nahrávky a zmírnit efekt maskování který nastává při metodách založených energii signálu popsané v bodě \ref{sec:Energie_signalu}.
-  V polyfoní hudbě mohou interpretace o nižší hlasistosti bý maskovány hlasitějšími projevy.
-  Kdy například jeden nástroj v tónové fázi podržení ADSR obálky, popsané v bodě \ref{sec:Barva}, může být hlasitější než než fáza náběhu druhého nástroje.
-  Takový nástup je pak maskován a je obtížné detekovat jeho nástup.
+  Díky rozložení signálu na jeho spektrum pomocí Fourierovy transformace popsané v bodě \ref{sec:FT} je možné lépe rozeznat strukturu nahrávky a zmírnit efekt maskování který nastává při metodách založených na energii signálu popsaných v bodě \ref{sec:Energie_signalu}.
+  V polyfonní hudbě mohou interpretace o nižší hlasistosti bý maskovány hlasitějšími projevy.
+  Kdy například jeden nástroj v tónové fázi podržení ADSR obálky, popsané v bodě \ref{sec:Barva}, může být hlasitější než fáza náběhu druhého nástroje.
+  Takový nástup je pak maskován a je obtížná jeho detekce.
   V případě maskování některých z nástrojů v časové oblasti je možné spektrum signálu zaměřit na frekvenční oblast spektra ve které se maskovaný nástroj nachází.
   Díky tomu je možné nástup tónu takového nástroje detekovat pomocí spektra signálu. Každý hudební nástroj obsazuje jiné frekvenční spektrum \cite{fundamental_of_music_processing}.
-  Díky tomu se různé nástroje nachází na odlišných místech spektra, jak spektrum daného nástroje vypadá určuje také barvu jeho barvu popsanou v bodě \ref{sec:Barva}.
+  Díky tomu se různé nástroje nachází na odlišných místech spektra, jak spektrum daného nástroje vypadá určuje také barvu popsanou v bodě \ref{sec:Barva}.
   S takovým jevem je důležité počítat při detekci nástupů založené na spektru signálu. 
  
-  Jedním ze spůsobů analýzy nástupů pomocí spektra je detekovat změny ve spektru v průběhu času. Při zobrazení časového sprůběhu spektra nazývaného spektogram popsaný v bodě \ref{sec:STFT}.
+  Jedním ze spůsobů analýzy nástupů pomocí spektra je detekovat změny ve spektru v průběhu času. Při zobrazení časového průběhu spektra nazývaného spektogram popsaný v bodě \ref{sec:STFT}.
   Jsou za sebou v čase poskládány vektory nesoucí informaci o spektru.
-  Pokud jdou potovnány rozdíly mezi dvěma po sobě jdoucími vektory spektogramu jsou získány informace o změně spektra v čase.
+  Pokud jdou počítány rozdíly mezi dvěma po sobě jdoucími vektory spektogramu jsou získány informace o změně spektra v čase.
   Protože tranzienty při fázi náběhu se skládají z části z ruchové složky rozléhající se přes velkou část slyšitelného frekvenčního spektra je tak možné detekovat nástupy.
-  Popsané metodě porovnávání vektorů se také \textbf{spektrální tok} \cite{fundamental_of_music_processing}.
-  Pro výpočet spektrálního toku existuje více druhů přístupu lišících se předszpracováním dat a konečným zpracováním výsledků.
-  Níže jsou popsány dvě metody výpočtu ze spektogramu a náslezde z mel spektogramu.
+  Popsané metodě porovnávání vektorů se také říká \textbf{spektrální tok} \cite{fundamental_of_music_processing}.
+  Pro výpočet spektrálního toku existuje více druhů přístupů lišících se předszpracováním dat a konečným zpracováním výsledků.
+  Níže jsou popsány dvě metody výpočtu ze spektogramu a náslezdně z mel spektogramu.
 
-  Výpočet spektrálního toku se provede derivací vstupního diskréntího signálu který zde představuje vektory spektrálních složek. Výpočet probíhá pri každou spektrální složku a výsledek je sečten jak je popsáno rovnicí 
+  Výpočet spektrálního toku se provede derivací vstupního diskréntího signálu který zde představuje vektory spektrálních složek. Výpočet probíhá pro každou spektrální složku a výsledek je sečten. Popsáno rovnicí 
 \begin{equation}
   r(n) = \sum_{k = 0}^{K} |X|(n+1,k) - |X|(n,k)
 \end{equation}
@@ -460,7 +455,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   kde $ n \in \mathbb{Z}$ a $K$ je počet spektrálních složek v jednom vektoru.
   \begin{figure}[H]
     \centering
-    \includegraphics[width = 1\linewidth]{obrazky/Spektralni_tok.eps}
+    \includegraphics[width = 0.9\linewidth]{obrazky/Spektralni_tok.eps}
     \caption{Výpočet spektrálního toku pro nahrávku piana \textbf{a)} Amplituda nahrávky \textbf{b)} Spektogram narhávky \textbf{c)} Spektrální tok bez komprese \textbf{d)} Spektrální tok s kompresí spektra $\gamma = 1$}
     \label{fig:Spectralni_tok}
   \end{figure}
@@ -470,20 +465,20 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   \end{equation}
   kde pro správnou kompresi je pottřeba aby $\gamma \geq 1$.
   Míra komprese je určena velikostí $\gamma$. Nižší hodnoty jsou vhodné pro lepší detekci perkusivních zvuků.
-  Při vyžších hodnotách $\gamma$ dochází k větší kompresi spektrogramu a a jsou zřetelnější zvuku o nižší intenzitě.
-  Při velké kompresi dochází také ke zvýraznění ruchových složek signálu \cite{fundamental_of_music_processing}. 
+  Při vyšších hodnotách $\gamma$ dochází k větší kompresi spektrogramu a jsou zřetelnější zvuky o nižší intenzitě.
+  Při velké kompresi dochází také k zvýraznění ruchových složek signálu \cite{fundamental_of_music_processing}. 
 
 
   Například v článku z \acs{ISMIR} 2021 \cite{tempobeatdownbeat:book} je spektrální tok počítán s Mel Spectogramu popsaného níže.
-  Protože lidské ucho vnímá výšku frekvence logaritmicky je jednodužší rozeznat rozdíl mezi frekvencemi u nižžší části spektra než u vyžších frekvencí.
+  Protože lidské ucho vnímá výšku frekvence logaritmicky je jednodužší rozeznat rozdíl mezi frekvencemi u nižší části spektra než u vyšších frekvencí.
   Například rozdíl mezi 500 Hz a 1 kHz je pro lidské ucho dobře detekovatelný a zřetelný.
   Odlišné rozlišovací schopnosti výšky v různých frekvenčních pásmech je způsobeno biologickým rozvržením vnitřního ucha. Proto pro lepší rozlišování na základě lidského vnímání zvuku vznikla Melova stupnice.
-  \textbf{Melova stuopnice} je vjemová škála výšek, které posluchač posoudil jako od sebe stejně vzdálené. Referenčním bodem je pak definováno 1000 mel které odpovídá frekvenci 1000 Hz\cite{StevensS.S1937ASft}.
+  \textbf{Melova stuopnice} je vjemová škála výšek, které posluchač posoudil jako od sebe stejně vzdálené. Referenčním bodem je pak definováno 1000 mel které odpovídají frekvenci 1000 Hz\cite{StevensS.S1937ASft}.
   Výpočet spektrálního toku je následně stejný jak pří výpočtu ze spektogramu. Výslednou křivku je možné vidět na obr. \ref{fig:Mel_spectralni_tok}.
 
   \begin{figure}[H]
     \centering
-    \includegraphics[width = 1\linewidth]{obrazky/Mel_spektralni_tok.eps}
+    \includegraphics[width = 0.8\linewidth]{obrazky/Mel_spektralni_tok.eps}
     \caption{Výpočet spektrálního toku z mel spektrogramu pro nahrávku piana \textbf{a)} Amplituda nahrávky \textbf{b)} Mel spektogram narhávky \textbf{c)} Spektrální tok}
     \label{fig:Mel_spectralni_tok}
   \end{figure}
