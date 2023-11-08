@@ -501,6 +501,24 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   % \end{equation}
 
   \subsection{Detekce periodicity}
+    Detekce periodicity je nezbytnou součástí procesu při detekci dob skladby.
+    Důležitou technikou pro detekci periodicity je autokorelační funkce.
+    Autokorelační funkce slouží pro detekci periodických vzorů v datech.
+    Tato metoda dokáže detekovat tempo, ale neumožňuje určit o jakou dobu se jedná.
+    Základní použití je výpočet autokorelační funkce s energie signálu z bodu \ref{sec:Energie_signalu}. Matameticky je pak popsána dle rovnice \ref{rov:autocorelation}. \cite{Signal_processing_methods_for_music_transcription}
+
+    \begin{equation}
+      r(n,i) = \sum_{u = -(T_w / 2) + 1}^{T_w / 2} E(n+u)E(n+u-i)
+      \label{rov:autocorelation}
+    \end{equation}
+
+    Při detekci periodicity je možné využít také banky rezonátorů hřebenového filtru s konstantním poločasem \cite{Tempo_and_beat_analysis_of_acoustic_musical_signals} nebo fázově blokující rezonátory \cite{Resonance_and_the_perciption_of_musical_meter}.
+
+
+    Autokorelačn funkce zde přináší několik výhod. Jednoduchost a efektivita. Je to jednoduchá metoda pro zjisštění periodicity v signálech a vyžaduje menší množství paměti než jiné víše zmíněné metody. Autokorelace může odhali ne zcela zřejmé periodické vzory, které nemusí být při poslechu nebo pozorování okamžitě zřejmé. Zároveň je robustní vůči šumu. Při analýze také nedochází ke ztrátě informace. \cite{Tempo_and_metrical_analzsis_by_tracking_multiple_metrical_levels_using_autocorrelation}
+    
+    Autokorelace má také své nevýhody. Není vhodná pro analýzu v reláném čase protože potřebuje dostatečné množství dat a je potřebné aby v analyzovaném datovém okně byla obsažena celá perioda. V opačném případě nedojdte k jejímu nalezení. Autokorelace není schopná pracovat s fází signálu. Pro rozpoznání fáze je zapotřebí dalších metoda. Nekonstantní tempo v analyzovaném signálu představuje pro autokorelační analýzu problém.\cite{Tempo_and_metrical_analzsis_by_tracking_multiple_metrical_levels_using_autocorrelation}
+
     %TODO: popsat autokorelační funkci a její využití pro detekci tempa (periodicity)
 
   \subsection{Vzužití neuronových sítí}
@@ -508,20 +526,26 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
     %TODO: popsat dep learnin při beat trackingu https://tempo beatdownbeat.github.io/tutorial/ch3_going_deep/overview.html
     %TODO: popsat postup (preprocessing, DNN, post processing)/(feature extraction, likelihood estimation, post processing)
   
-  \subsection{Více vrstvé perceptronové sítě}
+  % \subsection{Více vrstvé perceptronové sítě}
 
-  \subsection{Konvoluční neuronové sítě}
-    Temporal Convolutional networks
+  % \subsection{Konvoluční neuronové sítě}
+  %   Temporal Convolutional networks
 
-  \subsection{Rekurentní neuronové sítě}
-    Gated recurent units
-    Bi-directional models
+  % \subsection{Rekurentní neuronové sítě}
+  %   Gated recurent units
+  %   Bi-directional models
 
-  \subsection{Hybridní architektury}
+  % \subsection{Hybridní architektury}
 
 \section{Klasifikace žánrů a nálady} \label{sec:Klasifikace_zanru}
 
-\section{"Získání" chromavektorů} \label{sec:Chroma_vektory}
+\section{Chromavektory} \label{sec:Chroma_vektory}
+
+\section{Dostupná řešení}
+
+\subsection{Librosa}
+\subsection{Madmom}
+\subsection{Aubio}
 
 \section{Systém Spectoda} \label{sec:Spectoda}
 
