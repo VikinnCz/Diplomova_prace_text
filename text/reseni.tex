@@ -521,8 +521,8 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
 
     %TODO: popsat autokorelační funkci a její využití pro detekci tempa (periodicity)
 
-  \subsection{Vzužití neuronových sítí}
-    Deep neural networks(DNN)
+  % \subsection{Vzužití neuronových sítí}  -----Zatím přeskakuju než najdu vhodné zdroje---
+  %   Deep neural networks(DNN)
     %TODO: popsat dep learnin při beat trackingu https://tempo beatdownbeat.github.io/tutorial/ch3_going_deep/overview.html
     %TODO: popsat postup (preprocessing, DNN, post processing)/(feature extraction, likelihood estimation, post processing)
   
@@ -542,10 +542,25 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
 \section{Chromavektory} \label{sec:Chroma_vektory}
 
 \section{Dostupná řešení}
+    Díky věděcké základně v oblasti music infromation retrieval vznikají open source knihovny umožňující snadné použití v programovacím jazyce python. Tyto knihovny jsou šířeny za účelem usnadnění práce v oblasti \acs{MIR}. Cílem některých knihoven je usnadnit přechod výzkumných týmů do programového jazyka Python a zakomponovat moderní praktiky softwarového vývoje. Díky tomu se staly tyto metody dostupné širší komunitě vědců.\cite{Librosa} V této kapitole je popsáno několik rozšířených knihoven poskytující metody z oblasti \acs{MIR}.
 
 \subsection{Librosa}
+    Knihovna Librosa vznikla v roce 2015 na základě potřeb vědecké komunity pro snadné použití metod z oblasti \acs{MIR} v jayzce python.
+    Publikován a popsána byla článkem Audio and Music Signal Analysis in Python \cite{Librosa} na SciPy 2015.
+    Jedná se o otevřenou knihovnu jejiž další vývoj probíhá zapomoci vědecké komunity na GitHubu kde je kladen důraz na kompatibilitu, řádnou dokumentaci obsahující popisy funkcí s příkladovými kódy, a testování funkčnosti. Knihovna obsahuje pokročilé metody pro detekci dob.
+
+    Librosa obsahuje funkce pro extrakci audio vlastností.
+    Pro tuto práci jsou důležitými funkcemi zejména Detekce tempa a taktů skladby, rozpoznání začátků tónů. Následně jsou v knihovně obsaženy nástroje pro vizualizaci získaných vlastností. Například zobrazerní spektrograma či grtafické zobrazení detekovaného taktu a tempa.
+
+    Funkce pro detekci tempa a taktu skladby jsou v knihovně Librosa zapsány dle kódu
+    %TODO: Vložit a správně odkázat na kód pro volání funkcí detekce tema a taktu.
+
+    
+
+    %TODO: Popsat princit funkce beat.beat_track ze článku Beat Tracking by Dynamic Programming (https://www.ee.columbia.edu/~dpwe/pubs/Ellis07-beattrack.pdf)
 \subsection{Madmom}
 \subsection{Aubio}
+\subsection{Hodnocení extrakce informací}
 
 \section{Systém Spectoda} \label{sec:Spectoda}
 
