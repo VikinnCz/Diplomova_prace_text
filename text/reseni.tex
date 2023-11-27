@@ -425,7 +425,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
     \label{fig:energy_based_novelty}
   \end{figure}
 
-  Pro názornější zobrazení se následně vypočítá derivace funkce lokální energie. V případě diskrétního signálu se derivace realizuje jako rozdíl dvou po sobě jdoucích vzorků. Protože pro detekci nástupů je důležitá zejména pozitivní změna energie nikoliv její pokles jsou ponechány pouze pozitivní rozdíly a negativní jsou zapsány jako nulové. V anglické literatuře je tneto proces známý také jako půlvlnné usměrnění \uv{half-wave rectification}. Vzorece jsou zapsány následovně 
+  Pro názornější zobrazení se následně vypočítá derivace funkce lokální energie. V případě diskrétního signálu se derivace realizuje jako rozdíl dvou po sobě jdoucích vzorků. Protože pro detekci nástupů je důležitá zejména pozitivní změna energie nikoliv její pokles jsou ponechány pouze pozitivní rozdíly a negativní jsou zapsány jako nulové. V anglické literatuře je tneto proces známý také jako půlvlnné usměrnění \uv{half-wave rectification}. Vzorce jsou zapsány následovně 
   \begin{equation}
     r = E_{wx}(n+1) - E_{wx}(n)
   \end{equation}
@@ -550,12 +550,42 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
     Jedná se o otevřenou knihovnu jejiž další vývoj probíhá zapomoci vědecké komunity na GitHubu kde je kladen důraz na kompatibilitu, řádnou dokumentaci obsahující popisy funkcí s příkladovými kódy, a testování funkčnosti. Knihovna obsahuje pokročilé metody pro detekci dob.
 
     Librosa obsahuje funkce pro extrakci audio vlastností.
-    Pro tuto práci jsou důležitými funkcemi zejména Detekce tempa a taktů skladby, rozpoznání začátků tónů. Následně jsou v knihovně obsaženy nástroje pro vizualizaci získaných vlastností. Například zobrazerní spektrograma či grtafické zobrazení detekovaného taktu a tempa.
+    Pro tuto práci jsou důležitými funkcemi zejména Detekce tempa a dob skladby, rozpoznání začátků tónů. Následně jsou v knihovně obsaženy nástroje pro vizualizaci získaných vlastností. Například zobrazerní spektrograma či grtafické zobrazení detekovaného tempa a dob.
+    Funkce pro detekci tempa a dob skladby pomocí dynamického programování je v knihovně zapsána:
 
-    Funkce pro detekci tempa a taktu skladby jsou v knihovně Librosa zapsány dle kódu
-    %TODO: Vložit a správně odkázat na kód pro volání funkcí detekce tema a taktu.
-
+    \begin{lstlisting}
+      tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+    \end{lstlisting}
     
+    Kde $ y $ je analyzovaný signál a $ sr $ je vzorkovací frekvence signálu.
+    Detekce dob je ve funkci $ brat_track() $ realizována pomocí dynamického programování. Proces je rozdělen na 3 etapy popsané Danielem P.W. Ellis ve článku Beat Tracking by Dynamic Programing \cite{Beat_tracking_by_dynamic_programing}. Jedná se o tyto kroky:
+
+    \smallskip
+
+    \begin{enumerate}
+      \item Výpočet obálky síly nástupů
+      \item Globální odhat tempa
+      \item Porovnání obálky síly nástupů s globálním tempem
+    \end{enumerate}
+
+    \smallskip
+
+    Při \textbf{výpočtu obálky síly nástupů} je vstupní sighnál převzorkován na 8 kHz. Poté je vypočítána \acs{STFT} s délkou okna 32 ms a 4 ms mezerou mezi okny. Vypočítaný spektogram je převeden na mel spektrogram o 40 mel pásmech. Mel stupnice je využívána ve snaze vyrovnat důležitost každého frekvenčního pásma v návaznosti na logaritmické vnímání frekvencí lidským uchem. Mel spektogram je převeden na dB a následně jsu počítány diferenciální rovnice prvního řádu podle času pro každé mel pásmo. Principem půlvnlného usměrnění jsou výsledné negativní hotnoty změněny na nulové. Hodnot kladné jsou v daném čase sečteny napříč všemi pásmy. Výsledný signál je filtrován horní propustí s mezní frekvencí 0,4 Hz a vyhlazen pomocí konvoluce s Gaussovy obálky s šířkou okolo 20 ms. Pomocí výše popsaného procesu je získána jednorozměrná obálka síly nástupů v závislosti na čase reprezentující proporcionální nárůst energie přibližně sečtené ve mel pásmech.
+
+    \textbf{Globální odhad tempa} je určen z obálky síly signálu $O(t)$ získané v předchozím kroku. Je počítána autokorelace mezi původní obálkou signálu $O(t)$ a jejími zpožděnými verzemi. Pro zpoždění ve kterých se potká velké množství vrcholů obálky nastává velká korelace. Tato korelace může nastat v celočíselných násobcích dané hodnoty zpoždění. Díky tomuto jevu je těžké určit který čas zpozdění představuje správné tempo skladby. Avšak lidmi vnímané tempo skladeb má sklon být kolem 120 \acs{BPM} jak bylo zjištěno ve výzkumu popsaném v článku Ambiguity in Tempo Perception: What Draws Listeners to Different Metrical Levels? \cite{Ambiguity_in_tempo_perception}. Proto je na výslednou autokorelaci aplikováno váhové okno snižující hodnotu autokorelace se vzdáleností od 120 BPM. Čas ve kterém autokorelace dosahuje největší hodnoty je čas hledaného tempa skladby.  
+
+    V posledním kroku dochází k \textbf{porovnání získaných informací}. Matematicky je tento krok fomulován rovnicí \ref{rov:Dynamic_programing_formula_for_beat_tracking} kde $ \{t_i\} $ je pole nalezených dob, $O(t)$ je obálka síly signálu, $\alpha$ je váhový koeficient určující důležitost mezi obálkou síly signálu a detekovaným tempem. Funkce $F(\Delta t, \tau_p)$ zapsaná rovnicí \ref{rov:actual_vs_ideal_time_spacing} měří konzistenci mezi skutečným časem od sebe vzdálených dob $\Delta t$ a ideálním časem mezi dobami $ \tau_p$ určeným cílovým tempem.
+
+    \begin{equation}
+      C(\{t_i\}) = \sum_{i = 1}^{N} O(t_i) + \alpha \sum_{i = 2}^{N} F(t_i - t_{i-1}, \tau_p)
+      \label{rov:Dynamic_programing_formula_for_beat_tracking}
+    \end{equation}
+
+    \begin{equation}
+      F(\Delta t, \tau) = -(log \frac{\Delta t}{\tau})^2
+      \label{rov:actual_vs_ideal_time_spacing}
+    \end{equation}
+
 
     %TODO: Popsat princit funkce beat.beat_track ze článku Beat Tracking by Dynamic Programming (https://www.ee.columbia.edu/~dpwe/pubs/Ellis07-beattrack.pdf)
 \subsection{Madmom}
