@@ -2,10 +2,50 @@
 
 
 
-\section{Výběr vhodných metod pro extrakci vlastností hudební nahrávky}
+\section{Výběr vhodných metod pro extrakci vlastností hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
 
-\subsection{Databáze pro evaluaci extrakce vlastností}
+Vědeská komunita nabízí několik volně šířících knihoven obsahující techniky z oborů MIR. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou použity jejich funkce získání potřebných parametrů hudební nahrávky potřebných pro navazující diplomovou práci. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
 
-Praktická část a výsledky studentské práce vhodně rozdělené do částí.
+\subsection{Detekce dob a tempa}
 
-\section{Návrh struktury algoritmu generujícího animace}
+
+
+\subsection{Analýza chromavektorů}
+
+
+
+\section{Návrh výsledného systému}
+
+Návrh popisuje komplexní systém skládající se z několika částí, uživatelské rozhraní algoritmů pro získání pamrametrů hudební nahrávky a algoritmu generujícího SpectodaCode na základě získaných parametrů. V této kapitole je podrobně popsán návrh jednotlivých částí systému. 
+
+\subsection{Uživatelské rozhraní}
+
+Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML} spolu s formátováním v jazyce CSS. Funkčnosto webové stránky je zajištěna funkcemi jazyce JavaScript. Javascript také vytváří propojovací můstek pro komunikaci s vnistřním systémem v jazyce Python.
+
+Jedná se o jednoduché webové rozhraní ve kterém uživatel nahraje hudební skladbu ve formátu .wav. Rozhranní obsahuje pole pro vložení cesty k hudební skladbě umožňující výběr ze souborů v uživatelově uložišti, 4 tlačítka pro výběr nálady
+\uv{mood}. Jedná se o tlačítka: \uv{chill}, \uv{feeling happy}, \uv{hang out} a \uv{dancing}. Pod tlačítky pro výběr nálady se nachází tlačítko pro spuštění procesu generování SpectodaCodu.
+ Poslední částí webového rozhraní je textové pole ve kterém se zobrazí vygenerovaný SpectodaCode.
+
+% TODO Jednoduché blokové schéma postupu uživatele od otevření stránky k získání kódu.
+
+Na blokovém schématu výše je zobrazen proces postupu uživatele skrze webové rozhraní. 
+
+\subsection{Parametry hudební nahrávky} \label{sec:Parametry_nahravky}
+
+Systém popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní data o hudební nahrávce. Tyto data jsou rozdělena 7 odlišných objektů. Každý z těchto objektů představuje určitou vlastnost analyzované nahrávky. Tyto vlastnosti jsou získány pomocí technik popsaných v bodě \ref{sec:Exktrakce_vlastnosti_metody}. Jednotlivé vlastnosti a jejich datové struktury jsou shrnuty v následujících bodech.
+
+\begin{description}
+    \item[Detekce dob] 
+    \item[Tempo skladby]
+    \item[Chromavektory]
+    \item[Spektrální tok]
+    \item[Periodicita]
+    \item[Žánr]
+    \item[Nálada]      
+\end{description}
+
+\subsection{Systém pro generování animací} \label{sec:System_generovani_animaci}
+
+Vstupními parametry systému jsou získané parametry jež jsou popsány v bodě \ref{sec:Parametry_nahravky} 
+
+% Možná lepší první popsat strukturu systému jak by se měly animace generovat a co k tomu budou potřeba za parametry. Následně teprve vytvořit sekci kde je popsán vzniklý kód pro analýzu jednotlivých parametrů. Také důležité jestli ukázaky kódu atd.. nebudou zahrnuty spíše v sekci Věběr vhodných metod pro extrakci vlastností hudební nahrávky. 
