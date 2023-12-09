@@ -10,9 +10,9 @@ Návrh popisuje komplexní systém skládající se z několika částí, uživa
 
 Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML} spolu s formátováním v jazyce CSS. Funkčnosto webové stránky je zajištěna funkcemi jazyce JavaScript. Javascript také vytváří propojovací můstek pro komunikaci s vnistřním systémem v jazyce Python.
 
-Jedná se o jednoduché webové rozhraní ve kterém uživatel nahraje hudební skladbu ve formátu .wav. Rozhranní obsahuje pole pro vložení cesty k hudební skladbě umožňující výběr ze souborů v uživatelově uložišti, 4 tlačítka pro výběr nálady
-\uv{mood}. Jedná se o tlačítka s názvy \uv{chill}, \uv{feeling happy}, \uv{hang out} a \uv{dancing}. Pod tlačítky pro výběr nálady se nachází tlačítko pro spuštění procesu generování SpectodaCodu.
- Poslední částí webového rozhraní je textové pole ve kterém se zobrazí vygenerovaný SpectodaCode.
+Jedná se o jednoduché webové rozhraní ve kterém uživatel nahraje hudební skladbu ve formátu .wav. Rozhranní obsahuje pole pro vložení cesty k hudební skladbě umožňující výběr ze souborů v uživatelově uložišti. Níže je posuvník s 4 základními hodnotami pro výběr nálady
+\uv{mood}. Jedná se hodnoty \uv{chill}, \uv{hang out}, \uv{feeling happy} a \uv{dancing}, které jsou v tomto pořadí na posuvníku. Uživatel může pomocí posouvání posuvníku vybrat pro jakou náladu chce vytvořit animaci. Pod posuvníkem pro výběr nálady se nachází tlačítko pro spuštění procesu generování SpectodaCodu.
+Poslední částí webového rozhraní je textové pole ve kterém se zobrazí vygenerovaný SpectodaCode.
 
  \begin{figure}[H]
     \centering
@@ -68,28 +68,28 @@ Systém popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní 
         BRIDGE      = 3
     \end{lstlisting}
 
-    \item[Žánr] představuju proměnou typu short vekteré je zapsáno číslo označující žánr skladby. Statické hodnoty žánrů jsou zapsány v úryvku kódu \ref{code:song_genre_variables}.
+    \item[Žánr] představuju proměnou $genre$ typu short vekteré je zapsáno číslo označující žánr skladby. Statické hodnoty žánrů jsou zapsány v úryvku kódu \ref{code:song_genre_variables}.
     \begin{lstlisting} [
         caption = {Hodnoty proměnné $genre$},
         captionpos=b,
         label = {code:song_genre_variables}]
         # Song genre variables
-        POP         = 0
-        ROCK        = 1
-        METAL       = 2
-        ELECTRONIC  = 3
-        FOLK        = 4
-        CLASSIC     = 5
+        CLASSIC     = 0
+        FOLK        = 1
+        POP         = 2
+        ROCK        = 3
+        METAL       = 4
+        ELECTRONIC  = 5
     \end{lstlisting}
-    \item[Nálada] stejně jako žánr představuje proměnou typu short s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}.
+    \item[Nálada] představuje proměnou $mood$ typu float s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}. Nálada může být i v rozmezí přednastavencýh hodnot. V tomto případě je výsledná hodnot lineráně závislá na vzdálenosti od přednastavených hodnot. 
     \begin{lstlisting}[
         caption = {Hodnoty proměnné $mood$},
         captionpos=b,
         label = {code:song_mood_variables}]
         # Song mood variables
         CHILL       = 0
-        HAPPY       = 1
-        HANG_OUT    = 2
+        HANG_OUT    = 1
+        HAPPY       = 2
         DANCING     = 3
     \end{lstlisting}
     
@@ -102,9 +102,37 @@ Systém pro generování animací představuje nejduležitější část práce.
 První částí systému je vstupní rozhraní, ve kterém jsou přijímány data obsahující paramery o hudební nahrávce. Struktura přijímaných dat je popsána v budě \ref{sec:Parametry_nahravky}. Každý ze zmíněných parametrů plňí důležitou funkci v rozhodovacím procesu skládání bloků animace. Níže jsou popsány rozhodovací funkce pro jednotlivé parametry.
 
 \begin{description}
-    \item[Žánr a nálada] jsou používány především pro výběr vhodného balíčku animací. Tyto balíčky jsou nazývány Datasety a jejich datová struktu je popsána v bodě \ref{sec:Database_structure}.
+    \item[Žánr a nálada] jsou používány pro výběr vhodného balíčku animací. Tyto balíčky jsou nazývány datasety a jejich datová struktu je popsána v bodě \ref{sec:Database_structure}. Źánr i nálada jsou zaznamenány jako předdefinovaná celočíslená hodnota. Postup výběru datasetu je následující. Každý dataset obsahuje seznam žánrů pro který je vhodný. Na základě proměnné $genre$ dochází k výběru všech datasetůch vhodných pro daný žánr. Následně na základě proměnné $mood$ ve které je uložená nálada je vabráno 5 datasetů s nejbližší hodnotou $mood\_characteristic$.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width = 1\linewidth]{obrazky/Dataset_selection_diagram.pdf}
+        \caption{Blokový diagram výběru datasetu.}
+        \label{fig:Dataset_selection_diagram}
+    \end{figure}
+
+    \item[Tempo skladby] je posledním parametrem při výběru vhodného datasetu. 
+    Hodnota proměné $speed\_suitability$ každého z 5 vybraných datasetů je porovnána s tempem skladby. Finální dataset je vybrán ten jehož hodnota $speed\_suitability$ je nejbližší hodnotě tempa skladby. Blokový diagram procesu je znázoprněn na obrázku \ref{fig:Dataset_selection_diagram}. Tempo skladby je také použito pro výpočet délky jednotlivých animací na které je přímo úměrná rychlost animace. Tento postup je více popsán níže. %TODO: připadt referenci na část kde je popsán výpočet délky animace.
+    \item[Segmentace] slouží pro detekci opakujících se částí nahrávky. Například nahrávka obsahuje více než jednu sloku či refrémů.Je kladen důraz aby v opakujících sesegmentec nahrávky byla animace stejného typu. Z toho plyne, že v každém refrému bude podobná animace.
+    \item[Detekce dob] je základní parametrem na základě kterého se nastaví začátky a konce animací tak, aby odpovídaly rytmu nahrávky.
+    \item[Chroma vektory] udávají tónovou strukturu skladby v průběhu času. Tento parametr je využit pro nastavení barevné škály animací. Chromavektory se analyzují a jsou vybrány 4 hlavní tóny nejčastěji se vyskytující v nahrávce. Keždému tónu je přiřazen barevný odstín. Poté je animaci v dané části skladby přiřazena barva dle tónu určeném chromavektorem daného času nahrávky.
+    %TODO:Blokové schéma?
+    \item[Efektivní hodnota signálu] pomáha procesu segmentace. Refrém a sloka se mohou lyšit hlasitostí která je zpjata se efektní hodnotou. Zároveň je použita pro výběr vhodného typu animace. Na základě velikosti efektivní hodnoty signálu v čase je vybrán typ animace. Vyžší hodnoty představují rychlejší a údernější animace. Nižší hodnoty naopak pomalejší a klidnější animace. Tento procej je zajištěn porovnáváním proměné $anim_characteristic$ obsažené v každém bloku animace s efektivní hodnotou mapovanou na určený rozsah.
+    %TODO: Vymyslet a pospat proces mapování efektivní hodnoty. 
+    %TODO: Popsat tak aby to odpovídalo struktuře anim_characteristic dle blokového diagramu.
 \end{description}
 
+\
+Druhá část systému tvoří samotnou logiku skládání blkoků animací. Tato rozhodovací struktura je zobrazena na blokovém diagramu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Logical_structure_diagram.pdf}
+    \caption{Blokový diagram rozhodovací struktury.}
+    \label{fig:Logical_structure_diagram}
+\end{figure}
+
+% Na začátku je zjištěno jestli se jedná o první blok animace. Pokud ano je nastaven čas začátku animace jako čas první doby v nahrávce. Jestli se nejedná o první blok animace, tak je nastaven čas začátku jako konec předchozího bloku animace. Tento proces v blokovém schématu \ref{} představuje proces s názvem \uv{Nastavení času začátku animace}. Druhým krokem je rozhodovací struktura jestli se vybraný čas začátku nachází v segmentu nahrávky který se opakuje. Pokud ano je nalezen blok animace ve stejném času předchozího segmentu a je zkontrolováno  
 
 
 \subsection{Databáze bloků animací} \label{sec:Database_structure}
