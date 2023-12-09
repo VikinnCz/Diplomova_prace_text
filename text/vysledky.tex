@@ -112,11 +112,10 @@ První částí systému je vstupní rozhraní, ve kterém jsou přijímány dat
     \end{figure}
 
     \item[Tempo skladby] je posledním parametrem při výběru vhodného datasetu. 
-    Hodnota proměné $speed\_suitability$ každého z 5 vybraných datasetů je porovnána s tempem skladby. Finální dataset je vybrán ten jehož hodnota $speed\_suitability$ je nejbližší hodnotě tempa skladby. Blokový diagram procesu je znázoprněn na obrázku \ref{fig:Dataset_selection_diagram}. Tempo skladby je také použito pro výpočet délky jednotlivých animací na které je přímo úměrná rychlost animace. Tento postup je více popsán níže. %TODO: připadt referenci na část kde je popsán výpočet délky animace.
+    Hodnota proměné $speed\_suitability$ každého z 5 vybraných datasetů je porovnána s tempem skladby. Finální dataset je vybrán ten jehož hodnota $speed\_suitability$ je nejbližší hodnotě tempa skladby. Blokový diagram procesu je znázoprněn na obrázku \ref{fig:Dataset_selection_diagram}. Tempo skladby je také použito pro výpočet délky jednotlivých animací na které je přímo úměrná rychlost animace. Tento postup je více popsán níže.
     \item[Segmentace] slouží pro detekci opakujících se částí nahrávky. Například nahrávka obsahuje více než jednu sloku či refrémů.Je kladen důraz aby v opakujících sesegmentec nahrávky byla animace stejného typu. Z toho plyne, že v každém refrému bude podobná animace.
     \item[Detekce dob] je základní parametrem na základě kterého se nastaví začátky a konce animací tak, aby odpovídaly rytmu nahrávky.
     \item[Chroma vektory] udávají tónovou strukturu skladby v průběhu času. Tento parametr je využit pro nastavení barevné škály animací. Chromavektory se analyzují a jsou vybrány 4 hlavní tóny nejčastěji se vyskytující v nahrávce. Keždému tónu je přiřazen barevný odstín. Poté je animaci v dané části skladby přiřazena barva dle tónu určeném chromavektorem daného času nahrávky.
-    %TODO:Blokové schéma?
     \item[Efektivní hodnota signálu] pomáha procesu segmentace. Refrém a sloka se mohou lyšit hlasitostí která je zpjata se efektní hodnotou. Zároveň je použita pro výběr vhodného typu animace. Na základě velikosti efektivní hodnoty signálu v čase je vybrán typ animace. Vyžší hodnoty představují rychlejší a údernější animace. Nižší hodnoty naopak pomalejší a klidnější animace. Tento procej je zajištěn porovnáváním proměné $anim_characteristic$ obsažené v každém bloku animace s efektivní hodnotou mapovanou na určený rozsah.
     %TODO: Vymyslet a pospat proces mapování efektivní hodnoty. 
     %TODO: Popsat tak aby to odpovídalo struktuře anim_characteristic dle blokového diagramu.
@@ -128,7 +127,7 @@ Druhá část systému tvoří samotnou logiku skládání blkoků animací. Tat
 \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/Logical_structure_diagram.pdf}
-    \caption{Blokový diagram rozhodovací struktury.}
+    \caption{Struktura tříd }
     \label{fig:Logical_structure_diagram}
 \end{figure}
 
@@ -136,10 +135,16 @@ Druhá část systému tvoří samotnou logiku skládání blkoků animací. Tat
 
 
 \subsection{Databáze bloků animací} \label{sec:Database_structure}
-Jak je popsáno v bodě \ref{sec:Spectoda}...
+Jak je popsáno v bodě \ref{sec:Spectoda}... jsou základní animace které jsou skládány dosebe a tak je možné vytvořit komplexní animace. Systém využívá již předsložených komplexních animací do bloků animací. Těmto blokům jsou přiřazeny parametry $code$, $characteristic$ a $length$ a jsou uloženy jako objekt datové třídy $AnimationBlock$.
 
-%TODO: Popsat Dataset atd...
+Z objektů tipu $AnimationBlock$ jsou dále tvořeny datasety zapsané datovou třídou $Dataset$. Tyto datasety obsahují 5 bloků animací a parametry $genre$, $speed_suitability$ a $mood_characteristic$. UML diagramy těchto tříd jsou zobrazeny na obrázku \ref{fig:UML_diagram_Dataset_AnimationBlock}.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.7\linewidth]{obrazky/UML_diagram_Dataset_and_AnimationBlock.pdf}
+    \caption{Blokové diagramy tříd $Dataset$, $AnimationBlock$}
+    \label{fig:UML_diagram_Dataset_AnimationBlock}
+\end{figure}
 
 \section{Výběr vhodných metod pro extrakci vlastností hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
 
