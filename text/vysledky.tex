@@ -81,7 +81,7 @@ Systém popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní 
         FOLK        = 4
         CLASSIC     = 5
     \end{lstlisting}
-    \item[Nálada] stejně jako žánr představuje proměno typu short s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}.
+    \item[Nálada] stejně jako žánr představuje proměnou typu short s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}.
     \begin{lstlisting}[
         caption = {Hodnoty proměnné $mood$},
         captionpos=b,
@@ -94,7 +94,24 @@ Systém popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní 
     \end{lstlisting}
     
 \end{description}
+
 \subsection{Systém pro generování animací} \label{sec:System_generovani_animaci}
+
+Systém pro generování animací představuje nejduležitější část práce. Jeho struktura udává vizuální kvalitu animací a schopnost přizpůsobit se daným skladbám růtzných žánrů. V této kapitole je popsána základní struktura systému. 
+
+První částí systému je vstupní rozhraní, ve kterém jsou přijímány data obsahující paramery o hudební nahrávce. Struktura přijímaných dat je popsána v budě \ref{sec:Parametry_nahravky}. Každý ze zmíněných parametrů plňí důležitou funkci v rozhodovacím procesu skládání bloků animace. Níže jsou popsány rozhodovací funkce pro jednotlivé parametry.
+
+\begin{description}
+    \item[Žánr a nálada] jsou používány především pro výběr vhodného balíčku animací. Tyto balíčky jsou nazývány Datasety a jejich datová struktu je popsána v bodě \ref{sec:Database_structure}.
+\end{description}
+
+
+
+\subsection{Databáze bloků animací} \label{sec:Database_structure}
+Jak je popsáno v bodě \ref{sec:Spectoda}...
+
+%TODO: Popsat Dataset atd...
+
 
 \section{Výběr vhodných metod pro extrakci vlastností hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
 
