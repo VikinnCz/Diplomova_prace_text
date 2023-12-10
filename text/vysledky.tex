@@ -68,7 +68,7 @@ Systém popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní 
         BRIDGE      = 3
     \end{lstlisting}
 
-    \item[Žánr] představuju proměnou $genre$ typu short vekteré je zapsáno číslo označující žánr skladby. Statické hodnoty žánrů jsou zapsány v úryvku kódu \ref{code:song_genre_variables}.
+    \item[Žánr] představuje proměnou $genre$ typu short vekteré je zapsáno číslo označující žánr skladby. Statické hodnoty žánrů jsou zapsány v úryvku kódu \ref{code:song_genre_variables}.
     \begin{lstlisting} [
         caption = {Hodnoty proměnné $genre$},
         captionpos=b,
@@ -122,12 +122,12 @@ První částí systému je vstupní rozhraní, ve kterém jsou přijímány dat
 \end{description}
 
 \
-Druhá část systému tvoří samotnou logiku skládání blkoků animací. Tato rozhodovací struktura je zobrazena na blokovém diagramu.
+Druhá část systému tvoří samotnou logiku skládání blkoků animací. Tato rozhodovací struktura je zobrazena na blokovém diagramu \ref{fig:Logical_structure_diagram}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/Logical_structure_diagram.pdf}
-    \caption{Struktura tříd }
+    \caption{Blokový diagram struktrury rozhodovacího procesu}
     \label{fig:Logical_structure_diagram}
 \end{figure}
 
@@ -146,17 +146,35 @@ Z objektů tipu $AnimationBlock$ jsou dále tvořeny datasety zapsané datovou t
     \label{fig:UML_diagram_Dataset_AnimationBlock}
 \end{figure}
 
-\section{Výběr vhodných metod pro extrakci vlastností hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
+\section{Výběr vhodných metod pro extrakci vlastností z hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
 
-Vědeská komunita nabízí několik volně šířících knihoven obsahující techniky z oborů MIR. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou použity jejich funkce získání potřebných parametrů hudební nahrávky potřebných pro navazující diplomovou práci. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
+Vědecká komunita vytvořila volně šířících knihovny obsahující techniky z oborů MIR. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou použity jejich funkce pro získání parametrů z hudební nahrávky potřebných pro navazující diplomovou práci. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
 
 \subsection{Detekce dob a tempa}
+Pro porování detekce dob jsou vybrány 3 funkce. Pro každoou knihovnu jedna funkce. První je z knihovny Librosa funkce $brat\_track$. Z knihovny Madmom je použit $BeatTrackingProcessor$ a z kinovny aubio funkce $tempo$.
+
+Funkce jsou porovnány na třech skladbách skupiny Beatles. Níže v grafu \ref{fig:Oh-Darling_beat_analysis} Je vidět úryvek skladby Oh-Darling!. Pro lepší zobrazení jsou osy grafu v rozsahu 55 - 65 s nahrávky. Na prvním z grafu je vidět melspektrogram vypočítán pomocí funkce $melspectrogram$ z knihovny Librosa. Grafy b) - d) zobrazují v pozadí obálku síly nástupů a vertikální pruhované čáry znázorňují detekované doby dané funkce a vertikální modrté tečkované čáry jsou referenční doby zaznamenané institucí Centre for digital music na univerzitě Queen Mary, University of London. tato databáze je dostupná online na Isophonics.net.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Oh-Darling_Beat_analysis_graphs.eps}
+    \caption{Porovnání metod detekce dob na úryvku skladby Oh-Darling!. \textbf{a)} Melspektrogram \textbf{b)}Detekce dob pomocí Librosa \textbf{c)} Detekce dob pomocí Madmom \textbf{d)} Detekce dob pomocí Aubio}
+    \label{fig:Oh-Darling_beat_analysis}
+\end{figure}
+
+Z grafu lze vidět, že funkce z knihoven Librosa a Madmon se nejvíce blřibližují referenčním dobám. Pro přesné hodnocení funkcí je využita knihovna Mir\_eval poskytující funkce pro hodnocení přesnosti detekce dob. Pomocí teto knihovny je počítáno Camgil skóré. Popis knihovny a výpočtu je zmíněn v bodě \ref{sec:Mir_eval}. Posledním hodnoceným parametrem je doba výpočtu. Výsledky Camgil skóré, a doby výpočtu pro jednotlivé skladby jsou zobrazeny na obrázku \ref{fig:Beat_tracking_time_and_cemgil}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Beat_tracking_time_and_cemgil_graphs.eps}
+    \caption{Porovnání přesnosti a času metod detekce dob na skladbách Oh-Darling!, Come Together a Here Comes The Sun. \textbf{a)} Čas výpočtu \textbf{b)}Cemgil skóré}
+    \label{fig:Beat_tracking_time_and_cemgil}
+\end{figure}
 
 \subsection{Analýza chromavektorů}
-
+    
 \subsection{Efektivní hodnota signálu}
-
-
+    
 Vstupními parametry systému jsou získané parametry jež jsou popsány v bodě \ref{sec:Parametry_nahravky} 
 
 % Možná lepší první popsat strukturu systému jak by se měly animace generovat a co k tomu budou potřeba za parametry. Následně teprve vytvořit sekci kde je popsán vzniklý kód pro analýzu jednotlivých parametrů. Také důležité jestli ukázaky kódu atd.. nebudou zahrnuty spíše v sekci Věběr vhodných metod pro extrakci vlastností hudební nahrávky. 
