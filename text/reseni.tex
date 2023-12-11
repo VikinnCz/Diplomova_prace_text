@@ -19,7 +19,6 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
     Music information retrieval je interdisciplinární vědní obor sostředící se na získávání infromací z hudebních nahrávek.
     Jsou zde kombinovány znalosti mnoha oborů jako jsou muzikologie, psychoakustika, strojové učení, zpracování signálů a další. 
     
-
     Výstupy jeho výzkumu jsou využívány v populárních technologických aplikacích. 
     Jednou z aplikací je personalizované doporučování hudebních skladeb, které se nachází v moderních streamovacích platformách.
     Další využítí je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky analýze tempa a klíčových částí skladby.
@@ -309,7 +308,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.8\linewidth]{obrazky/Spectrogam.eps}
-    \caption{Nahrávka piana \textbf{a)} Amplituda nahrávky \textbf{b)} Frekvenční spektrum nahrávky zobrazené pomocí spektrogramu}
+    \caption{Nahrávka piana \textbf{a)} Okamžitý výchylka nahrávky \textbf{b)} Frekvenční spektrum nahrávky zobrazené pomocí spektrogramu}
     \label{fig:Spectrogram}
   \end{figure}
    %TODO: vložit obrázek spektogramu.
@@ -354,12 +353,12 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   Například je barva popisována jako jasná, temná, ostrá, čistá, teplá, pestrá, nazální, tonální a další.
 
   Jedním z možných nástrojů pro analýzu barvy tónu je tvz. obálka tónu \uv{signálu}.
-  Obálku určuje amplituda signálu v čase viz obr. \ref{fig:ADSR_envelope_on_piano_tone}
+  Obálku určuje okamžitá výchylka signálu v čase viz obr. \ref{fig:ADSR_envelope_on_piano_tone}
   Je rozdělena na 4 fáze popsané z knihy Fundamentals of Music Processing \cite{fundamental_of_music_processing}.
   \textbf{Attack \uv{náběh}} určující začátek tónu. Například úder paličkou na blánu bubnu.
   V této fázi se nachází více ruchových složek z daného úderu a má velkou dynamiku.
   Následuje fáze s názvem \textbf{Decay \uv{útlum}}.
-  Po hlasitém úderu amplituda signálu klesá a začíná převládat tonální složka. Decay udává dobu za kterou se signál z jeho maxima sníží na hodnotu sustain.
+  Po hlasitém úderu okamžitá výchylka signálu klesá a začíná převládat tonální složka. Decay udává dobu za kterou se signál z jeho maxima sníží na hodnotu sustain.
   \textbf{Sustain \uv{podržení}} je fáze ve které je zřetelný tón a stálá hlasitost. Rezonující blána bubnu.
   Poslední fází je \textbf{Release \uv{uvolnění}} při kterám dochází k poklesu hlasitosti zdroje zvuku až k uplnému utlumení.
   Například přiložení tlumítka na rezonující strunu.
@@ -367,7 +366,7 @@ Struktura a možnosti systému Spectoda pro generování interaktivních světel
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.8\linewidth]{obrazky/ADSR.eps}
-    \caption{Tón A5 zahraný na klavír \textbf{a)} Amplituda tónu \textbf{b)} ADSR obálka tónu}
+    \caption{Tón A5 zahraný na klavír \textbf{a)} Okamžitá výchylka tónu \textbf{b)} ADSR obálka tónu}
     \label{fig:ADSR_envelope_on_piano_tone}
   \end{figure}
 
@@ -399,6 +398,8 @@ U některých nástrojů je však energie přenášená po celou dobu znění t�
 
 %TODO: doplnit obrázek obálka perkusivního zvuku a táhlého
 
+
+
 Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se například o polyfoní skladbu. Polyfoní skladbou rozumíme skladbu tvořenou více hlasy.
 Zároveň nemají určenou roli vedoucího a doprovodného hlasu \cite{6155601}.
 Takové uspořádání hlasů může vést k překrývání a nástupy mohou být maskovány. Díky jevu maskování je obtížné zaznamenat změny energie signálu. V tomto případě přichází potřeba po komplexnějších metodách detekce nástupů \cite{fundamental_of_music_processing}. Například pohled na krátkodobé změny ve spektru signálu pomocí využití \acs{STFT} popsané v bodě \ref{sec:STFT}.
@@ -421,7 +422,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.8\linewidth]{obrazky/Energy_based_novely.eps}
-    \caption{Detkte nástupů perikusivního zvuku \textbf{a)} Amplituda nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
+    \caption{Detkte nástupů perikusivního zvuku \textbf{a)} Okamžitá výchylka nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
     \label{fig:energy_based_novelty}
   \end{figure}
 
@@ -468,7 +469,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.9\linewidth]{obrazky/Spektralni_tok.eps}
-    \caption{Výpočet spektrálního toku pro nahrávku piana \textbf{a)} Amplituda nahrávky \textbf{b)} Spektogram narhávky \textbf{c)} Spektrální tok bez komprese \textbf{d)} Spektrální tok s kompresí spektra $\gamma = 1$}
+    \caption{Výpočet spektrálního toku pro nahrávku piana \textbf{a)} Okamžitá výchylka nahrávky \textbf{b)} Spektogram narhávky \textbf{c)} Spektrální tok bez komprese \textbf{d)} Spektrální tok s kompresí spektra $\gamma = 1$}
     \label{fig:Spectralni_tok}
   \end{figure}
   Pro dosažení přesnějších výsledků je možnost komprese spektrogramu. Funkce pro logaritmickou kompresi singálu je zapsána jako 
@@ -491,7 +492,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.8\linewidth]{obrazky/Mel_spektralni_tok.eps}
-    \caption{Výpočet spektrálního toku z mel spektrogramu pro nahrávku piana \textbf{a)} Amplituda nahrávky \textbf{b)} Mel spektogram narhávky \textbf{c)} Spektrální tok}
+    \caption{Výpočet spektrálního toku z mel spektrogramu pro nahrávku piana \textbf{a)} Okamžitá výchylka nahrávky \textbf{b)} Mel spektogram narhávky \textbf{c)} Spektrální tok}
     \label{fig:Mel_spectralni_tok}
   \end{figure}
 
@@ -544,7 +545,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
 \section{Dostupná řešení} \label{sec:Dostupna_reseni}
     Díky věděcké základně v oblasti music infromation retrieval vznikají open source knihovny umožňující snadné použití v programovacím jazyce python. Tyto knihovny jsou šířeny za účelem usnadnění práce v oblasti \acs{MIR}. Cílem některých knihoven je usnadnit přechod výzkumných týmů do programového jazyka Python a zakomponovat moderní praktiky softwarového vývoje. Díky tomu se staly tyto metody dostupné širší komunitě vědců.\cite{Librosa} V této kapitole je popsáno několik rozšířených knihoven poskytující metody z oblasti \acs{MIR}.
 
-\subsection{Librosa} \label{Librosa}
+\subsection{Librosa} \label{sec:Librosa}
     Knihovna Librosa vznikla v roce 2015 na základě potřeb vědecké komunity pro snadné použití metod z oblasti \acs{MIR} v jayzce python.
     Publikován a popsána byla článkem Audio and Music Signal Analysis in Python \cite{Librosa} na SciPy 2015.
     Jedná se o otevřenou knihovnu jejiž další vývoj probíhá zapomoci vědecké komunity na GitHubu kde je kladen důraz na kompatibilitu, řádnou dokumentaci obsahující popisy funkcí s příkladovými kódy, a testování funkčnosti. Knihovna obsahuje pokročilé metody pro detekci dob.

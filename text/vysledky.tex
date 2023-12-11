@@ -29,7 +29,7 @@ Systém popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní 
 
 \begin{description}
     \item[Detekce dob] představuje pole hodnot jehož délka je závislá na době trvání nahrávky. Jednotlivé hodnoty pak udávají časy hudební nahrávky, ve kterých se nacházejí doby.
-    \item[Tempo skladby] je číslo typu float s jednotkou \acs{BPM} vyjadřující počet úderů za minutu. Hodnota BPM se vztahuje k počtu čtvrťových not za minutu. Vybraný algoritmus s knihovny Librosa ovšem nedetekuje jestli se jedná o noty čtvrťové. Postup zjištění tempa je popsán v bodě \ref{Librosa}.
+    \item[Tempo skladby] je číslo typu float s jednotkou \acs{BPM} vyjadřující počet úderů za minutu. Hodnota BPM se vztahuje k počtu čtvrťových not za minutu. Vybraný algoritmus s knihovny Librosa ovšem nedetekuje jestli se jedná o noty čtvrťové. Postup zjištění tempa je popsán v bodě \ref{sec:Librosa}.
     \item[Chromavektory] jsou získány v podobě pole jehož počet řádků udává 12 půltónů rozdělujících 1 oktávu. Délka pole je závislá na délce nahrávky a velikosti okna  při výpočtu \acs{STFT}. K matici chromavektorů je přidáno pole o stejné délce. Hondonty v poli udávají čas konce okna, ve kterém jsou počítány chroma vlastonsti. Tyto dvě proměnné jsou zadány jako parametry třídy s názvem $ChromaVector$ jehož struktura je zobrazena v blokovém schématu \ref{fig:ChromaVector_class_diagram}.
 
     \begin{figure}[H]
@@ -112,7 +112,7 @@ První částí systému je vstupní rozhraní, ve kterém jsou přijímány dat
     \end{figure}
 
     \item[Tempo skladby] je posledním parametrem při výběru vhodného datasetu. 
-    Hodnota proměné $speed\_suitability$ každého z 5 vybraných datasetů je porovnána s tempem skladby. Finální dataset je vybrán ten jehož hodnota $speed\_suitability$ je nejbližší hodnotě tempa skladby. Blokový diagram procesu je znázoprněn na obrázku \ref{fig:Dataset_selection_diagram}. Tempo skladby je také použito pro výpočet délky jednotlivých animací na které je přímo úměrná rychlost animace. Tento postup je více popsán níže.
+    Hodnota proměné \textit{speed\_suitability} každého z 5 vybraných datasetů je porovnána s tempem skladby. Finální dataset je vybrán ten jehož hodnota \textit{speed\_suitability} je nejbližší hodnotě tempa skladby. Blokový diagram procesu je znázoprněn na obrázku \ref{fig:Dataset_selection_diagram}. Tempo skladby je také použito pro výpočet délky jednotlivých animací na které je přímo úměrná rychlost animace. Tento postup je více popsán níže.
     \item[Segmentace] slouží pro detekci opakujících se částí nahrávky. Například nahrávka obsahuje více než jednu sloku či refrémů.Je kladen důraz aby v opakujících sesegmentec nahrávky byla animace stejného typu. Z toho plyne, že v každém refrému bude podobná animace.
     \item[Detekce dob] je základní parametrem na základě kterého se nastaví začátky a konce animací tak, aby odpovídaly rytmu nahrávky.
     \item[Chroma vektory] udávají tónovou strukturu skladby v průběhu času. Tento parametr je využit pro nastavení barevné škály animací. Chromavektory se analyzují a jsou vybrány 4 hlavní tóny nejčastěji se vyskytující v nahrávce. Keždému tónu je přiřazen barevný odstín. Poté je animaci v dané části skladby přiřazena barva dle tónu určeném chromavektorem daného času nahrávky.
@@ -136,8 +136,7 @@ Druhá část systému tvoří samotnou logiku skládání blkoků animací. Tat
 
 \subsection{Databáze bloků animací} \label{sec:Database_structure}
 Jak je popsáno v bodě \ref{sec:Spectoda}... jsou základní animace které jsou skládány dosebe a tak je možné vytvořit komplexní animace. Systém využívá již předsložených komplexních animací do bloků animací. Těmto blokům jsou přiřazeny parametry $code$, $characteristic$ a $length$ a jsou uloženy jako objekt datové třídy $AnimationBlock$.
-
-Z objektů tipu $AnimationBlock$ jsou dále tvořeny datasety zapsané datovou třídou $Dataset$. Tyto datasety obsahují 5 bloků animací a parametry $genre$, $speed_suitability$ a $mood_characteristic$. UML diagramy těchto tříd jsou zobrazeny na obrázku \ref{fig:UML_diagram_Dataset_AnimationBlock}.
+Z objektů tipu \textit{AnimationBlock} jsou dále tvořeny datasety zapsané datovou třídou \textit{Dataset}. Tyto datasety obsahují 5 bloků animací a parametry \textit{genre}, \textit{speed\_suitability} a \textit{mood\_characteristic}. UML diagramy těchto tříd jsou zobrazeny na obrázku \ref{fig:UML_diagram_Dataset_AnimationBlock}.
 
 \begin{figure}[H]
     \centering
@@ -151,7 +150,7 @@ Z objektů tipu $AnimationBlock$ jsou dále tvořeny datasety zapsané datovou t
 Vědecká komunita vytvořila volně šířících knihovny obsahující techniky z oborů MIR. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou použity jejich funkce pro získání parametrů z hudební nahrávky potřebných pro navazující diplomovou práci. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
 
 \subsection{Detekce dob a tempa}
-Pro porování detekce dob jsou vybrány 3 funkce. Pro každoou knihovnu jedna funkce. První je z knihovny Librosa funkce $brat\_track$. Z knihovny Madmom je použit $BeatTrackingProcessor$ a z kinovny aubio funkce $tempo$.
+Pro porování detekce dob jsou vybrány 3 funkce. Pro každoou knihovnu jedna funkce. První je z knihovny Librosa funkce $beat\_track$. Z knihovny Madmom je použit $BeatTrackingProcessor$ a z kinovny aubio funkce $tempo$.
 
 Funkce jsou porovnány na třech skladbách skupiny Beatles. Níže v grafu \ref{fig:Oh-Darling_beat_analysis} Je vidět úryvek skladby Oh-Darling!. Pro lepší zobrazení jsou osy grafu v rozsahu 55 - 65 s nahrávky. Na prvním z grafu je vidět melspektrogram vypočítán pomocí funkce $melspectrogram$ z knihovny Librosa. Grafy b) - d) zobrazují v pozadí obálku síly nástupů a vertikální pruhované čáry znázorňují detekované doby dané funkce a vertikální modrté tečkované čáry jsou referenční doby zaznamenané institucí Centre for digital music na univerzitě Queen Mary, University of London. tato databáze je dostupná online na Isophonics.net.
 
@@ -172,9 +171,34 @@ Z grafu lze vidět, že funkce z knihoven Librosa a Madmon se nejvíce blřibli�
 \end{figure}
 
 \subsection{Analýza chromavektorů}
+
+Hodnocení vhodné funkce pro výpočet chromavektorů je realizováno zejména vizuálně na zobrazených grafech referenčních skladeb. Tyto grafy lze vidět na obrázku \ref{fig:Chroma_analysis}. Porovnávány jsou 4 funkce z knihvny librosa $chroma\_stft$, $chroma\_cqt$, $chroma\_cens$ a čtvrtou je opět funkce $chroma\_cqt$ jen s přiřazením předzpracování signálu a filtrací výsledných chromavektorů. Principy výpočtů jednotlivých funkcí jsou popsány v bodě \ref{sec:Librosa}. Z knihovny Madmom je použitafunkce \textit{DeepChromaProcessor}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Oh-Darling_chroma_analysis_graphs.eps}
+    \caption{Porovnání výpočtu chromavektorů na skladbě Oh-Darling! v čase 0 - 60 s.}
+    \label{fig:Chroma_analysis}
+\end{figure}
+
+Z obrázku \ref{fig:Chroma_analysis} lze vidět patrný rozdíl v přístupu výpočetu chromavektorů. U grafů \textit{a)}, \textit{b)} a \textit{c)} lze vidět velké množství šumu. U grafu \textit{d)} je šum vyfíltrován. Na grafu \textit{e)} lze vidět, že knihovna Madmom a z ní použitý $DeepChromaProcessor$ přistupuje k výpočtu chromavektorů odlišně. Je využito delší časové okno pro transformaci do frekvenční oblasti. Z toho je patrné, že v časovém měřítku údaj není natolik přesný jako u knihovny Librosa. Pro následné použití v algoritmu pro generování animací je však tento výsledek mnohem stálejší. 
+
+Dalším hodnoceným parametrem je délka výpočtu chromavektorů. Ta je závislá na složitosti algoritmů jež funkce využívají k výpočtu. Porovnání je zobrazeno na obrázku \ref{fig:Chroma_calculation_time}. Z obrázku je patrné, že pomocné metody pro předzpracování a filtraci chromavektorů z funkce \textit{chroma\_cqt} je výpočetně náročné oproti samotnému výpočtu chromavektorů.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Chroma_analysis_times_comparison.eps}
+    \caption{Porovnání délky výpočetu chromavektorů}
+    \label{fig:Chroma_calculation_time}
+\end{figure}
     
 \subsection{Efektivní hodnota signálu}
-    
-Vstupními parametry systému jsou získané parametry jež jsou popsány v bodě \ref{sec:Parametry_nahravky} 
 
-% Možná lepší první popsat strukturu systému jak by se měly animace generovat a co k tomu budou potřeba za parametry. Následně teprve vytvořit sekci kde je popsán vzniklý kód pro analýzu jednotlivých parametrů. Také důležité jestli ukázaky kódu atd.. nebudou zahrnuty spíše v sekci Věběr vhodných metod pro extrakci vlastností hudební nahrávky. 
+Výpočet efektivní hodnoty signálu je raalizován pomocí funkce z knihovy Librosa. Pro výpočet je použito okno o délce 2048 vzorků. Hodnoty jsou vycentrovány na střed rozsahu okna tedy 1024 vzorků. Získaná křivka je uhlazena pomocí výpočtu klouzavého průměru. Počet vzroků ze kterých se klouzavý průměr vypočítá tvoří 7,5 s signálu a je závyslý na jeho vzorkovací frekvenci. Získané informnace sou zobrazy na obrázku \ref{fig:RMS_calculation}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Belly_dancer_RMS.eps}
+    \caption{Zobrazení efektivní hodnoty skladby Belly dancer}
+    \label{fig:RMS_calculation}
+\end{figure}
