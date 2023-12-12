@@ -197,3 +197,15 @@ Výpočet efektivní hodnoty signálu je raalizován pomocí funkce z knihovy Li
     \caption{Zobrazení efektivní hodnoty skladby Belly dancer}
     \label{fig:RMS_calculation}
 \end{figure}
+
+\section{Návrhy na zlepšení}
+V této kapitole jsou v odrážkách popsány body a návrehy pro realizaci a zlepšení výsledného systému. 
+
+\begin{itemize}
+    \item Prozkoumat oblasti automatické detekce hudebních žánrů a následně realizovat vhodné řešení. Tento parametry je důležitý pro výběr vhodného datasetu. 
+    \item Vhodně realizovat segmentaci skladby na jednotlivé části popsané v návrhu segmentace v bodě. \ref{sec:Parametry_nahravky}
+    \item Zajímavým bodem pro prozkoumání je porovnání efektivní hodnoty signálu s hlasitostí vypočítanou v jednoce LUFS stanovenou normami EBU R 128 \cite{EBU_R_128}. 
+    \item Pro vhodnější výběr bloků animací je možné použít obálku síly nástupů. Na základě které lze určitě sílu daného nástupu a předpokládat významnost doby.
+\end{itemize}
+
+% Domyslení procesu přiřazování palety barev a který z chromavektrů bude využit.
