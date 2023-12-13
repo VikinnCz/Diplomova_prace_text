@@ -174,17 +174,17 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
 
   \textbf{Fourierovy transformace} zkráceně definována jako transformace převádějící signál mezi časovou a fekvenční oblastní pomcí harmonických signálů jež popisují funkce sinus a cosinus \cite{bracewell1978fourier}. Funkce sinus a cosinus představují komplexní exponenciály.
   \begin{equation}
-    e^{\mathrm{i} \alpha t} = \cos(\alpha t) + \mathrm{i} \sin(\alpha t)
+    e^{\imag \alpha t} = \cos(\alpha t) + \imag \sin(\alpha t)
   \end{equation}
   Fourierova transformace pro \textbf{ spojitý neperiodický signál} je pak zapsána jako
   \begin{equation}
-    X(f) = \int_{-\infty}^{\infty} x(t) e^{-\mathrm{i}\omega t} dt
+    X(f) = \int_{-\infty}^{\infty} x(t) e^{-\imag\omega t} dt
   \end{equation}
-  kde $\omega = 2\pi f$ a udává uhlovou frekvenci. Magnituda $|X(f)|$ je potom funkcí sudou \cite{sneddon1995fourier}.
+  kde $\omega = 2\uppi f$ a udává uhlovou frekvenci. Magnituda $|X(f)|$ je potom funkcí sudou \cite{sneddon1995fourier}.
 
   Pro signál který je \textbf{spojitý a periodický} se definují Fourierovy řady a integrální funkce je počítaná pouze pro jednu periodu signálu
   \begin{equation}
-    c[f_k] = \frac{1}{T_0} \int_{0}^{T_0} x(t) e^{-\mathrm{i} k \omega_0 t} dt
+    c[f_k] = \frac{1}{T_0} \int_{0}^{T_0} x(t) e^{-\imag k \omega_0 t} dt
   \end{equation}
   kde $f_k = k \times f_0$ a $k \in (\mathbb{Z}; 0, \pm 1, \pm 2, \dots)$. Vypočítané spektrum je diskrétní a neperiodické \cite{sneddon1995fourier}. Pokud je vstupní signál diskrétní hovoříme o Diskrétní Fourierově transformaci která je více popsána v následujícím bodě \ref{sec:DFT}.
 
@@ -208,23 +208,23 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   Opět jsou dány odlišné definice pro signál diskrétní neperiodický a diskrétní periodický. Protože se jedná o signál diskrétní, tak zde odpadají integrální funkce.
   Pokud se jedná o signál \textbf{diskrétní neperiodický} jeho výsledné spektrum bude spojité a hovoříme o Fourierově transformaci diskrétní v čase. Matematicky je zapsána v následujícím tvaru
   \begin{equation}
-    X(f) = \sum_{n = -\infty}^{\infty} x[n] e^{-\mathrm{i} \Omega n}
+    X(f) = \sum_{n = -\infty}^{\infty} x[n] e^{-\imag \Omega n}
     \label{rov:DTFT}
   \end{equation}
   kde
   \begin{equation}
-    \Omega = 2 \pi (f/f_s)
+    \Omega = 2 \uppi (f/f_s)
   \end{equation}
   a $f_s$ je vzorkovací frekvence signálu.
 
   Protože v praxi signál není nikdy nekonečně dlouhý, tak je možné jej poskládat za sebe a vytvořit tak signál periodický. Pro periodické signály je výpočet \acs{DFT} zapsán ve tvaru
   \begin{equation}
-    X[f_k] = \sum_{n = 1}^{N_0} x[n] e^{-\mathrm{i}\Omega_k n}
+    X[f_k] = \sum_{n = 1}^{N_0} x[n] e^{-\imag\Omega_k n}
     \label{rov:DFT}
   \end{equation}
   kde
   \begin{equation}
-    \Omega_k = 2 \pi \frac{f_k}{f_s}
+    \Omega_k = 2 \uppi \frac{f_k}{f_s}
   \end{equation}
   \begin{equation}
     f_k = \frac{k f_s}{N_0}
@@ -242,7 +242,6 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   Například při použití vzorků $N = 2^{10} = 1024$. \acs{FFT} vyžaduje $N\log_2N = 10240 $ operací namísto $N^2 = 1048576$ operací při použití \acs{DFT}. Jak je vidět snížení výpočetní náročnosti je velké a exponenciálně roste s větším počtem vzorků $N$.
   Vynález \acs{FFT} změnil odvětví zpracování signálů a je dnes využíván v miliardách telekomunikačních zařízeních. Stejně tak i ve zpracování a analýze zvukových signálů hraje důležitou roli \cite{fundamental_of_music_processing}.
 
-
   
   \subsection{STFT -- Short-time Fourier transform} \label{sec:STFT}
 
@@ -256,7 +255,7 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/STFT.eps}
-    \caption{Signál o délce $1 s$ s počáteční frekvencí $10 Hz$ a koncovou frekvencí $30 Hz$ \textbf{a)} Původní signál \textbf{b)} Signál s okénkem od $0,2 s$ do $0,5 s$ \textbf{c)} Signál s okénkem od $0,35 s$ do $0,65 s$ \textbf{d)} Signál s okénkem od $0,5 s$ do $0,8 s$ \cite{fundamental_of_music_processing}}
+    \caption{Signál o délce 1 s s počáteční frekvencí 10 Hz a koncovou frekvencí 30 Hz \textbf{a)} Původní signál \textbf{b)} Signál s okénkem od 0,2 s do 0,5 s \textbf{c)} Signál s okénkem od 0,35 s do 0,65 s \textbf{d)} Signál s okénkem od 0,5 s do 0,8 s \cite{fundamental_of_music_processing}}
     \label{fig:STFT}
   \end{figure}
 
