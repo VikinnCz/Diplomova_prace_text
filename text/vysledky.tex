@@ -147,12 +147,12 @@ Z objektů tipu \textit{AnimationBlock} jsou dále tvořeny datasety zapsané da
 Díky vědecké komunitě vznikly volně dostupné knihovny obsahující techniky z oborů MIR. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou použity jejich funkce pro získání parametrů z hudební nahrávky potřebných pro navazující diplomovou práci. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
 
 \subsection{Detekce dob a tempa}
-Pro porování detekce dob jsou vybrány 3 funkce. Pro každoou knihovnu jedna funkce. První je z knihovny Librosa funkce $beat\_track$. Z knihovny Madmom je použit $BeatTrackingProcessor$ a z kinovny Aubio funkce $tempo$. Funkce jsou porovnány na třech skladbách skupiny Beatles. Níže v grafu \ref{fig:Oh-Darling_beat_analysis} je vidět úryvek skladby Oh-Darling!. Pro lepší zobrazení jsou osy grafu v rozsahu 55 - 65 s nahrávky. Na prvním z grafů je vyobrazen melspektrogram vypočítán pomocí funkce $melspectrogram$ z knihovny Librosa. Grafy b), c) a d) zobrazují v pozadí obálku síly nástupů a vertikální pruhované čáry znázorňují detekované doby dané funkce. Vertikální modrté tečkované čáry jsou referenční doby zaznamenané institucí Centre for digital music na univerzitě Queen Mary, University of London \cite{Isophonic}. 
+Pro porování detekce dob jsou vybrány 3 funkce. Pro každoou knihovnu jedna funkce. První je z knihovny Librosa funkce $beat\_track$. Z knihovny Madmom je použit $BeatTrackingProcessor$ a z kinovny Aubio funkce $tempo$. Funkce jsou porovnány na třech skladbách skupiny Beatles. Níže v grafu \ref{fig:Oh-Darling_beat_analysis} je vidět úryvek skladby Oh-Darling!. Pro lepší zobrazení jsou osy grafu v rozsahu 55 - 65 s nahrávky. Na prvním z grafů je vyobrazen mels pektrogram vypočítán pomocí funkce $melspectrogram$ z knihovny Librosa. Grafy b), c) a d) zobrazují v pozadí obálku síly nástupů a vertikální pruhované čáry znázorňují detekované doby dané funkce. Vertikální modrté tečkované čáry jsou referenční doby zaznamenané institucí Centre for digital music na univerzitě Queen Mary, University of London \cite{Isophonic}. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/Oh-Darling_Beat_analysis_graphs.eps}
-    \caption{Porovnání metod detekce dob na úryvku skladby Oh-Darling!. \textbf{a)} Melspektrogram \textbf{b)}Detekce dob pomocí Librosa \textbf{c)} Detekce dob pomocí Madmom \textbf{d)} Detekce dob pomocí Aubio}
+    \caption{Porovnání metod detekce dob na úryvku skladby Oh-Darling!. \textbf{a)} Mel spektrogram \textbf{b)}Detekce dob pomocí Librosa \textbf{c)} Detekce dob pomocí Madmom \textbf{d)} Detekce dob pomocí Aubio}
     \label{fig:Oh-Darling_beat_analysis}
 \end{figure}
 
