@@ -2,20 +2,35 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{Úvod}
 
+Práce se zabývá přípravou teoretických podkladů a průzkumem vhodných metod pro úspěšnou realizaci navazující diplomové práce v oblasti tvorby světelných animací na základě parametrizace hudební nahrávky. Získané znalosti jsou v semstrální práci využity pro výběr vhodných parametrů a návrh struktury výsledného systému. Tento systém bude generovat kód jež je následně převáděn na světelnou animaci pomocí řešení od společnosti Spectoda. Práce je rozdělena na 3 nasebe navazující cíle.
 
-Úvod studentské práce, např\,\dots
+%TODO: Doplnit informace o tom, že se jedné o animace zobrazované na ledpáscích řízených systémem SpecToda atd..
 
-Nečíslovaná kapitola Úvod obsahuje \uv{seznámení} čtenáře s~problematikou práce.
-Typicky se zde uvádí:
-(a) do jaké tematické oblasti práce spadá, (b) co jsou hlavní cíle celé práce a (c) jakým způsobem jich bylo dosaženo.
-Úvod zpravidla nepřesahuje jednu stranu.
-Poslední odstavec Úvodu standardně představuje základní strukturu celého dokumentu.
+\begin{description}
+    \item[Prvním cílem] je teoretický průzkum a vybudování dostatečné báze znalostí. Problematikou získávání informací z hudebních nahrávek se celosvětově zabývá vědní obor Music information retrieval zkráceně \acs{MIR}. V této oblasti je zapotřebí prozkoumat existující vhodná řešení a zjistit jakými postupy jsou realizovány. 
+    \item[Druhým cílem] je ze získaných znalostí navrhnout strukturu výsledného programu pro generování SpectodaCode, který je následně převáděn na světelné animace. Jsou prozkoumány a vybrány parametry hudebních děl potřebné pro realizaci systému. Při návrhu systému je nutné dbát aby byl realizovatelný, pro uživatele jednoduchý na použití a výpočetně nenáročný. Zároveň je kladen důraz na kvalitu generovaných animací.
+    \item[Třetím cílem] je praktická realizace získávání parametrů. Je nutné vyzkoušet dostupné metody pro analýzu vybraných parametrů, porovnat je mezi sebou na základě stanovených kritérií a určit jejich vhodnost pro použití ve struktuře výsledného systmu. Z průzkumu vzniknou návrhy pro zlepšení a úpravu vybraných parametrů. 
+\end{description}
 
-Tato práce se věnuje oblasti \acs{DSP} (\acl{DSP}), zejména jevům, které nastanou při nedodržení Nyquistovy podmínky pro \ac{symfvz}.%
-\footnote{Tato věta je pouze ukázkou použití příkazů pro sazbu zkratek.}
 
-Šablona je nastavena na \emph{dvoustranný tisk}.
-Nebuďte překvapeni, že ve vzniklém PDF jsou volné stránky.
-Je to proto, aby důležité stránky jako např.\ začátky kapitol začínaly po vytisknutí a svázání vždy na pravé straně.
-%
-Pokud máte nějaký závažný důvod sázet (a~zejména tisknout) jednostranně, nezapomeňte si přepnout volbu \texttt{twoside} na \texttt{oneside}!
+% V rámci semestrální práce jsou popsány možnosti pro dolování parametrů z hudebních nahrávek a jejich analýzu.
+% Tyto techniky jsou využity pro získání potřebných informací o skladbě.
+% Například data o tempu a rozmístění dob, žánr a tónové či spektrální rozložení skladby.
+% Dále je navržena struktura algoritmu sloužícího pro převod získaných parametrů na sekvence animací kompatibilních se systémem Spectoda.
+
+% Práce je rozložena do tří na sebe navazujících cílů.
+% Prvním z cílů je průzkum vědních oborů soustředících se na danou problematiku. Například \acs{MIR} (\acl{MIR}).
+% Z existujícíh výzkumů jsou vybrány postupy analýzy hudebních signálů vyhovující pro použití v rámci výsledného algoritmu.
+
+% Druhým cílem práce je navrhnout vnitřní strukuturu výsledného algoritmu převádějícího získané parametry na sekvence animací pro systém Spectoda.
+% Důležitým úkolem je vymyslet jak bude docházet k takovému přenosu a co dané parametry ovlivní v rámci generování unikátních sekvencí animace.
+
+% Poslední třetí cíl se zaobývá vytvořením funkčního systému pro získávání parametrů z hudební nahrávky.
+% Důraz je kladen na využití dostupných moderních metod analýzy hudebních signálu.
+
+
+% 3 cíle
+
+% 1. Teoretický průzkum
+% 2. Návrh struktruy výsledného systému
+% 3. Výběr vhodných metod pro získání parametrů jejich realizace a porovnání

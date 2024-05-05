@@ -2,4 +2,17 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{Závěr}
 
-Shrnutí studentské práce.
+%Shrnutí studentské práce co jsem dělal a musí zaznít co budu dělat v diplomové práci a jak toho dosáhnu.
+V rámci semestrální práce byly splněny v úvodu stanovené cíle. Byla prozkoumána vědní oblast \acs{MIR}, metody vzniklé v rámci výzkumů v této oblasti a možnost jejich využití pro navazující diplomovou práci. Komunita soustředící se kolem oblasti \acs{MIR} vytvořila pro vědecké účely volně dostupné knihovny. Tyto knihovny jsou lehce implementovatelné v programovacím jazyce python a obsahují pokročilé mteody pro analýzu a práci s hudebními nahrávkami v časové i frekvenční oblasti.
+
+V části \ref{sec:Teorie} je popsána teorie základních principů práce s hudební nahrávkou v digitální formě. Od metod využívajícíh základní principy zpracování signálů po moderní řešení s využitím strojového učení. Dále jsou v této části v bodech \ref{sec:Librosa} až \ref{sec:Mir_eval} popsány víše zmíněné dostupné knihovny jejich metody pro extrakci parametrů, potřebných pro navazující diplomovou práci, a principy jak jsou tyto metody realizovány. Zde je zapotřebí v rámci diplomové práce řádně doplnit popis knihoven Madmom, Aubio a Mir\_eval.
+
+Třetím cílem semestrální práce byl návrh systému pro generování SpectodaCodu na základě parametrů nahrávky. SpectodaCod je následně nahrán do Spectoda zařízení, které kód převádějí na světelné animace. Návrh systému je rozdělen na několik částí. Uživatelské rozhraní popsané v bodě \ref{sec:User_interface}, parametry potřebné pro realizaci funkčního procesu generování animací a popis jejich datové struktury je v bodě \ref{sec:Parametry_nahravky}. Popis jak by celý proces generování měl v principu fungovat a jeho struktura je popsána v bodě \ref{sec:System_generovani_animaci}.
+
+Posledním bodem práce byla samotná extrakce vybraných parametrů z hudební nahrávky. Jsou prozkoumány dostupné metody a vytvořeny Jupyter notebooky, jež jsou k nalezení v příloze práce, obsahují porovnání těchto metod na základě přesnosti a rychlosti výpočtů. Hodnocena je také vhodnost pro výsledný systému. Tato část práce je popsána v bodě \ref{sec:Exktrakce_vlastnosti_metody}.
+
+V rámci navazující diplomové práce dojde k realizaci výsledného systému a jeho uvedení do funkčního stavu. Bude naprogramováno uživatelské rozhraní popsané v bodě \ref{sec:User_interface} a realizována rozhodovací struktura zobrazena v bodě \ref{sec:System_generovani_animaci}. Tato struktura bude následně testována a upravena, aby bylo dosaženo funkčního generování vizuálně zajímavých animací. Na základě existence rozhodovací struktury dojde k přezkoumání vhodnosti získaných parametrů a jejich úprava pro lepší výsledky při generování animací. Budou také doplněny body, které se nezdařilo realizovat v rámci semsetrální práce. Jedná se o teorii a realizaci automatické klasifikace žánrů. Popis knihoven Madmom, Aubio a Mir\_eval.
+
+
+%Není zde popsána segmentace, která zatím není realizována stejně jako přidělování žánrů. 
+% --Segmentace a přidělování žándrů zahrnout v rámci kapitoly zlepšení
