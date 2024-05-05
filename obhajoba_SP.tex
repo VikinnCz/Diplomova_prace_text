@@ -93,44 +93,47 @@
 % 3. Výběr vhodných metod pro získání parametrů jejich realizace a porovnání
 
 	\frametitle{Cíle práce}
-	\begin{itemize}
+	\begin{block}{Návrh struktruy algoritmu pro generování světelných animací}
+		\begin{itemize}
 			\item Teoretický průzkum	
-				\begin{itemize}
-					\item Výzkumů v oblasti Music information retrieval
-					\item Možností analýzy parametrů hudební nahrávky
-					\item Dostupná řešení extrakce parametrů z hudební nahrávky
-				\end{itemize}
-			\item Návrh
-				\begin{itemize}
-					\item Výběr vhodných parametrů
-					\item Návrh postupu generování animací na zákaldě vybraných parametrů
-				\end{itemize}
-			\item Realizace
-				\begin{itemize}
-					\item Extrakce parametrů pomocí dostupných metod
-					\item Porovnání získaných parametrů a zhodnocení metod
-				\end{itemize}
-	\end{itemize}
+			\begin{itemize}
+				\item Výzkumů v oblasti Music information retrieval
+				\item Možností analýzy parametrů hudební nahrávky
+				\item Dostupná řešení extrakce parametrů z hudební nahrávky
+			\end{itemize}
+			\item Výběr vhodných parametrů
+			\item Návrh postupu generování animací na zákaldě vybraných parametrů
+		\end{itemize}
+	\end{block}
+	\begin{block}{Realizace}
+		\begin{itemize}
+			\item Extrakce parametrů pomocí dostupných metod
+			\item Porovnání získaných parametrů a zhodnocení metod
+		\end{itemize}
+	\end{block}
 \end{frame}
 
 %%%%%%%%%%%%%
 \begin{frame} 
 	\frametitle{Úvod do problematiky}
+	\begin{itemize}
+		\item Automatické generování animací s dostatečným množstvím času.
+	\end{itemize}
 
-	\begin{block}{Generování světelnýc animací}
-		\begin{itemize}
-			\item Z pohledu času
-			\begin{itemize}
-				\item V minulosti
-				\item V reálném čase
-			\end{itemize}
-			\item Z pohledu způsobu
-			\begin{itemize}
-				\item navržené člověkem
-				\item navržené strojem
-			\end{itemize}
-		\end{itemize}
-	\end{block}
+	% \begin{block}{Generování světelných animací}
+	% 	\begin{itemize}
+	% 		\item Z pohledu času
+	% 		\begin{itemize}
+	% 			\item V minulosti
+	% 			\item V reálném čase
+	% 		\end{itemize}
+	% 		\item Z pohledu způsobu
+	% 		\begin{itemize}
+	% 			\item navržené člověkem
+	% 			\item navržené strojem
+	% 		\end{itemize}
+	% 	\end{itemize}
+	% \end{block}
 
 	\begin{block}{Parametry}
 		\begin{itemize}
@@ -197,6 +200,11 @@
 	\end{block}
 \end{frame}
 
+% \begin{frame}
+% 	\frametitle{}
+% 	\includegraphics[width = 0.4\columnwidth]{obrazky/Logical_structure_diagram.pdf}
+% \end{frame}
+
 \begin{frame}
 	\frametitle{Extrakce}
 	\begin{block}{Využité knihovny}
@@ -228,25 +236,28 @@
 
 \begin{frame}
 	\frametitle{}
-
-	\begin{columns}[T]
-		\begin{column}{0.2\textwidth}
-			Srovnání funkcí pro detekci dob:
-		\end{column}
-		\begin{column}{0.8\textwidth}
-			\includegraphics[width = 0.9\columnwidth]{obrazky/Beat_tracking_time_and_cemgil_graphs.eps}
-		\end{column}
-	\end{columns}
+	\centering
+	\includegraphics[width = 1\columnwidth]{obrazky/Beat_track_presentation.eps}
 \end{frame}
 
 \begin{frame}
 	\frametitle{}
-	Srovnání funkcí pro analýzu chromavektorů:
-
-	\vspace{1.3cm}
-	\includegraphics[width = 1\columnwidth]{obrazky/Chroma_analysis_times_comparison.eps}
-
+	\centering
+	\includegraphics[width = 0.75\columnwidth]{obrazky/Beat_tracking_time_and_cemgil_graphs.eps}
 \end{frame}
+
+\begin{frame}
+	\frametitle{}
+	\centering
+	\includegraphics[width = 1\columnwidth]{obrazky/Chromavector_presentation.eps}
+\end{frame}
+
+\begin{frame}
+	\frametitle{}
+	\centering
+	\includegraphics[width = 1\columnwidth]{obrazky/Belly_dancer_RMS.eps}
+\end{frame}
+
 
 % Shrnutí (přídána obálka síly nástupu)
 
@@ -261,7 +272,6 @@
 	\end{block}
 	\begin{block}{Diplomová práce a návrhy na zlepšení}
 		\begin{itemize}
-			\item Doplnit teorii
 			\item Segmentace nahrávky
 			\item Rozpoznávání žánrů
 			\item Využití obálky síly nástupů

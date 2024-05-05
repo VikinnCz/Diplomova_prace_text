@@ -285,6 +285,7 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   \subsection{Dynamika hlasitost a intenzita} \label{sec:Dynamika}
   
 %TODO: Informace o hlasitosti v češtině MPC-ELE2 přednáška 7 slide 64
+%TODO: Doplnit informace o hlasitosti v LUFS
 
   V češtině se pojem hlasitost využívá pro reprezentaci subjektivního vnímání akustického tlaku definovanou například jednotkou phon\footnote{Phon - logaritmická jednotka vyjadřující individuální vnímání hlasitosti. Vnímání hlasitosti lidského ucha je závislé na křivce prahu slyšení a může se lišit pro každý tón \cite{tumarkin_1950}.}. 
   Stejně tak je hlasitost využívána, hovoří li se o měřené hlasitosti vyjádřené například hladinou intenzity zvuku popsanou níže nebo efektivní hodnotou signálu.
@@ -360,7 +361,6 @@ V této fázi začíná tělo rezonovat a konečně dochází k ustálení tóno
 U některých nástrojů je však energie přenášená po celou dobu znění tónu konstantně a dochází k pomalému jemnému náběhu tónu například u určitých technik hry na smyčcové nástroje nebo u dechových nástrojů. Fáze náběhu je pak pomalá a dlouhá a plynule přechází do fáze podržení. Pro tyto jemné zvuky se stává obtížné určit skutečnou pozici začátku noty.
 
 %TODO: doplnit obrázek obálka perkusivního zvuku a táhlého
-
 
 
 Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se například o polyfoní skladbu. Polyfoní skladbou rozumíme skladbu tvořenou více hlasy.
@@ -557,10 +557,28 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
 
 \section{Systém Spectoda} \label{sec:Spectoda}
 
-Systém Spectoda je vytvořen a spravován společností Light Seekres s.r.o. sýdlící v Praze. Spectodu představují jako nový komunikační protokol pro bezdrátové ovládání světelncýh produktů \cite{Spectoda}. Pro převod digitálních příkazů v podobě Spectodakódu na světelné animace je využíváno procesorů ESP32 a jeich varianty umístěné ve vlastních obvodech speciálně navržených pro různé problematiky využití. 
+Systém Spectoda je vytvořen a spravován společností Light Seekres s.r.o. sýdlící v Praze. Spectodu představují jako nový komunikační protokol pro bezdrátové ovládání světelncýh produktů \cite{Spectoda}. Pro převod digitálních příkazů v podobě Spectodakódu na světelné animace je využíváno procesorů ESP32 a jeich varianty umístěné ve vlastních obvodech speciálně navržených pro různé problematiky využití. Procesory následně ovládají připojené světelné zdroja nejčastěji pak adresovatelné led pásky osazené čipy WS2812B nebo WS2815.
 
 Spectoda kód představující animaci je zároveň uložen na plošené desce. Proto v případě ztráty signálu se zdrojem kódu, může světelné zařízení nadále pracovat. Tím se systém stává výhodnější oproti rozšířenému protokolu DMX\footnote{Digital Multiplexer - Protokol pro digitální přenos informací a řízení scénických světel \cite{DMX}.}, u kterého je nutný nepřetržitý tok příkazů. 
 
-Systém spectoda využívá pro generování animací několik základní animací. Tyto animace následně mohou být mezi sebou odčítány sčítány a skládány do bloků animací. Animace i bloky je možné posouvat a skládat zasebe či přes sebe v čase.
+Systém spectoda využívá pro generování animací několik základních animací. Tyto animace následně mohou být mezi sebou odčítány sčítány a skládány do bloků animací. Animace i bloky je možné posouvat a skládat zasebe či přes sebe v čase. Typickým příkladem jsou animace pro led pásky tvořící unikátní efekty v rámci architektonického osvětlení či přenosných světel. Animace je možné synchronizovat s hudebním podkladem, takže se hodí také pro scénické osvětlení v rámci kreativních vystoupení. 
+
+\subsection{Tvorba animace}
+
+Pro tvorbu animací je vytvořeno Spectoda studio \cite{Spectoda} dostupné ve webovém prohlížeči. V rámci Spectoda studia jsou dostupné nástroje pro tvorbu animací, jejich následné nahrání do fyzického kontroleru a přehrání animace. Tvorba animace probíhá pomocí blokového programování. Animace vzniká skládáním základních bloků. Bloky je možné skládat do komplexních struktur a kombinovat mezi sebou. Z bloků je generován Spectoda Code, který je kompilátorem kompilován do řad hexadecimálních čísel. Základními bloky jsou:
+
+\begin{description}
+  \item [\uv{solid color}]
+  \item [\uv{rainbow cycle}]
+  \item [\uv{transition}]
+  \item [\uv{shot}]
+  \item [\uv{loading}]
+  \item [\uv{color cycle}]
+  \item [\uv{gradient}]
+\end{description}
+
+
+
+Práce s led pásky
  
 %\section{Hudební signál jako animace}
