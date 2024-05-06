@@ -2,9 +2,11 @@
 
 % Referenční skladby http://isophonics.net/about
 
+
 \section{Návrh výsledného systému}
 
-Návrh popisuje komplexní systém skládající se z několika částí, uživatelské rozhraní, algoritmů pro získání pamrametrů hudební nahrávky a algoritmu generujícího SpectodaCode na základě získaných parametrů. V této kapitole je podrobně popsán návrh jednotlivých částí systému. 
+
+V kapitole je popsán výsledný návrh výsledného systému. Systém se skládá z několika částí: uživatelské rozhraní, algoritmů pro získání pamrametrů hudební nahrávky, algoritmu generujícího SpectodaCode na základě získaných parametrů a databáze bloků. Podkapitoly pak podrobně popisují návrh každé z části systému.
 
 \subsection{Uživatelské rozhraní} \label{sec:User_interface}
 
@@ -143,7 +145,7 @@ Z objektů tipu \textit{AnimationBlock} jsou dále tvořeny datasety zapsané da
     \label{fig:UML_diagram_Dataset_AnimationBlock}
 \end{figure}
 
-\section{Výběr vhodných metod pro extrakci vlastností z hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
+\section{Výběr vhodných metod pro extrakci parametrů z hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
 Díky vědecké komunitě vznikly volně dostupné knihovny obsahující techniky z oborů MIR. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou použity jejich funkce pro získání parametrů z hudební nahrávky potřebných pro navazující diplomovou práci. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
 
 \subsection{Detekce dob a tempa}
@@ -190,6 +192,7 @@ Dalším hodnoceným parametrem je délka výpočtu chromavektorů. Ta je závis
 % TODO: Triadické míchání barev v rámci chroma features
     
 \subsection{Efektivní hodnota signálu}
+TODO: Hlasitost v LUFS
 
 Výpočet efektivní hodnoty signálu je raalizován pomocí funkce z knihovy Librosa. Pro výpočet je použito okno o délce 2048 vzorků. Hodnoty jsou vycentrovány na střed rozsahu okna tedy 1024 vzorků. Získaná křivka je uhlazena pomocí výpočtu klouzavého průměru. Počet vzroků ze kterých se klouzavý průměr vypočítá odpovídá délce signálu 7,5 s a je závyslý na jeho vzorkovací frekvenci. Získané informnace jsou zobrazy na obrázku \ref{fig:RMS_calculation}.
 
@@ -200,15 +203,17 @@ Výpočet efektivní hodnoty signálu je raalizován pomocí funkce z knihovy Li
     \label{fig:RMS_calculation}
 \end{figure}
 
-\section{Návrhy na zlepšení}
-V této kapitole jsou v odrážkách popsány body a návrehy pro realizaci a zlepšení výsledného systému. 
 
-\begin{itemize}
-    \item Prozkoumat oblasti automatické detekce hudebních žánrů a následně realizovat vhodné řešení. Tento parametry je důležitý pro výběr vhodného datasetu. 
-    \item Vhodně realizovat segmentaci skladby na jednotlivé části popsané v návrhu segmentace v bodě. \ref{sec:Parametry_nahravky}
-    \item Zajímavým bodem pro prozkoumání je porovnání efektivní hodnoty signálu s hlasitostí vypočítanou v jednoce LUFS stanovenou normami EBU R 128 \cite{EBU_R_128}. 
-    \item Pro vhodnější výběr bloků animací je možné použít obálku síly nástupů. Na základě které lze určitě sílu daného nástupu a předpokládat významnost doby.
-\end{itemize}
+
+    % \section{Návrhy na zlepšení}
+    % V této kapitole jsou v odrážkách popsány body a návrehy pro realizaci a zlepšení výsledného systému. 
+
+    % \begin{itemize}
+    % \item Prozkoumat oblasti automatické detekce hudebních žánrů a následně realizovat vhodné řešení. Tento parametry je důležitý pro výběr vhodného datasetu. 
+    % \item Vhodně realizovat segmentaci skladby na jednotlivé části popsané v návrhu segmentace v bodě. \ref{sec:Parametry_nahravky}
+    % \item Zajímavým bodem pro prozkoumání je porovnání efektivní hodnoty signálu s hlasitostí vypočítanou v jednoce LUFS stanovenou normami EBU R 128 \cite{EBU_R_128}. 
+    % \item Pro vhodnější výběr bloků animací je možné použít obálku síly nástupů. Na základě které lze určitě sílu daného nástupu a předpokládat významnost doby.
+    % \end{itemize}
 
 % Domyslení procesu přiřazování palety barev a který z chromavektrů bude využit.
 

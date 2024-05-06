@@ -9,7 +9,7 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
     Výstupy jeho výzkumu jsou využívány v populárních technologických aplikacích. 
     Jednou z aplikací je personalizované doporučování hudebních skladeb, které se nachází v moderních streamovacích platformách.
     Další využítí je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky analýze tempa a klíčových částí skladby.
-    Tyto technologie se nachází v mnoha dalších aplikacích a s rozširováním digitálního audia jejich důležitost stále roste.
+    Tyto technologie se nachází v mnoha dalších aplikacích a s rozširováním digitálního audia jejich důležitost stále roste. %TODO: Citace
     
     \subsection{Historie}
     V tomto bodě je napsán souhrn historie MIR z knihy A New Companion to Digital Humanities \cite{a_new_companion_to_digital_humanities}.
@@ -482,29 +482,21 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
 
     Při detekci periodicity je možné využít také banky rezonátorů hřebenového filtru s konstantním poločasem \cite{Tempo_and_beat_analysis_of_acoustic_musical_signals} nebo fázově blokující rezonátory \cite{Resonance_and_the_perciption_of_musical_meter}.
 
-    %TODO: popsat autokorelační funkci a její využití pro detekci tempa (periodicity)
+    %TODO:  * popsat autokorelační funkci a její využití pro detekci tempa (periodicity) [Kdzby zbyl čas]
 
-  % \subsection{Vzužití neuronových sítí}  -----Zatím přeskakuju než najdu vhodné zdroje---
-  %   Deep neural networks(DNN)
-    %TODO: popsat dep learnin při beat trackingu https://tempo beatdownbeat.github.io/tutorial/ch3_going_deep/overview.html
-    %TODO: popsat postup (preprocessing, DNN, post processing)/(feature extraction, likelihood estimation, post processing)
-  
-  % \subsection{Více vrstvé perceptronové sítě}
-
-  % \subsection{Konvoluční neuronové sítě}
-  %   Temporal Convolutional networks
-
-  % \subsection{Rekurentní neuronové sítě}
-  %   Gated recurent units
-  %   Bi-directional models
-
-  % \subsection{Hybridní architektury}
-
-\section{Klasifikace žánrů a nálady} \label{sec:Klasifikace_zanru}
-
-% https://dspace.cvut.cz/bitstream/handle/10467/65310/F3-BP-2016-Bartos-Jaroslav-detekce_hudebnich_zanru_pro_ucely_masteringu_gramofonovych_desek.pdf?sequence=1&isAllowed=y
 
 \section{Analýza chroma vlastností} \label{sec:Chroma_vektory}
+
+    %TODO: Poppast deep learning systém který využívá Madmom
+
+\section{Segmentace} \label{sec:Segmentace}
+
+
+
+\section{Klasifikace žánrů a nálady} \label{sec:Klasifikace_zanru}
+% https://dspace.cvut.cz/bitstream/handle/10467/65310/F3-BP-2016-Bartos-Jaroslav-detekce_hudebnich_zanru_pro_ucely_masteringu_gramofonovych_desek.pdf?sequence=1&isAllowed=y
+
+
 
 \section{Dostupná řešení} \label{sec:Dostupna_reseni}
     Díky věděcké základně v oblasti music infromation retrieval vznikají volně šířitelné knihovny umožňující snadné použití v programovacím jazyce python. Tyto knihovny jsou publikovány za účelem usnadnění práce v oblasti \acs{MIR}. Cílem některých knihoven je usnadnit přechod výzkumných týmů do programového jazyka Python a zakomponovat moderní praktiky softwarového vývoje. Díky tomu se staly tyto metody dostupné širší komunitě vědců \cite{Librosa}. V této kapitole je popsáno několik rozšířených knihoven poskytující metody z oblasti \acs{MIR}.
@@ -567,6 +559,7 @@ Systém spectoda využívá pro generování animací několik základních anim
 
 Pro tvorbu animací je vytvořeno Spectoda studio \cite{Spectoda} dostupné ve webovém prohlížeči. V rámci Spectoda studia jsou dostupné nástroje pro tvorbu animací, jejich následné nahrání do fyzického kontroleru a přehrání animace. Tvorba animace probíhá pomocí blokového programování. Animace vzniká skládáním základních bloků. Bloky je možné skládat do komplexních struktur a kombinovat mezi sebou. Z bloků je generován Spectoda Code, který je kompilátorem kompilován do řad hexadecimálních čísel. Základními bloky jsou:
 
+TODO: Místo tohoto seznamu obrázek ze studia
 \begin{description}
   \item [\uv{solid color}]
   \item [\uv{rainbow cycle}]
