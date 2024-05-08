@@ -5,16 +5,13 @@
 
 \section{Návrh výsledného systému}
 
-
 V kapitole je popsán výsledný návrh výsledného systému. Systém se skládá z několika částí: uživatelské rozhraní, algoritmů pro získání pamrametrů hudební nahrávky, algoritmu generujícího SpectodaCode na základě získaných parametrů a databáze bloků. Podkapitoly pak podrobně popisují návrh každé z části systému.
 
 \subsection{Uživatelské rozhraní} \label{sec:User_interface}
 
-Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML} spolu s formátováním v jazyce CSS. Funkčnost webové stránky je zajištěna funkcemi v jazyce JavaScript. Javascript také tvoří propojovací můstek pro komunikaci s vnitřním systémem v jazyce Python.
-
-Jedná se o jednoduché webové rozhraní, ve kterém uživatel nahraje hudební skladbu ve formátu .wav. Rozhranní obsahuje pole pro vložení cesty k hudební skladbě umožňující výběr ze souborů v uživatelově uložišti. Níže je posuvník s 4 základními hodnotami pro výběr nálady
+Jedná se o jednoduché webové rozhraní, ve kterém uživatel nahraje hudební skladbu ve formátu .wav nebo mp3. Rozhraní obsahuje pole pro vložení cesty k hudební skladbě umožňující výběr ze souborů v uživatelově úložišti. Níže je posuvník s 4 základními hodnotami pro výběr nálady
 \uv{mood}. Jedná se hodnoty \uv{chill}, \uv{hang out}, \uv{feeling happy} a \uv{dancing}, které jsou v tomto pořadí na posuvníku. Uživatel může pomocí posouvání posuvníku vybrat pro jakou náladu chce vytvořit animaci. Pod posuvníkem pro výběr nálady se nachází tlačítko spouštějící proces generování SpectodaCodu.
-Poslední částí webového rozhraní je textové pole ve kterém se zobrazí vygenerovaný SpectodaCode. Na blokovém schématu \ref{fig:User_interaction_diagram} je zobrazen proces postupu uživatele skrze webové rozhraní. 
+Poslední částí webového rozhraní je textové pole, ve kterém se zobrazí vygenerovaný kód. Na blokovém schématu \ref{fig:User_interaction_diagram} je zobrazen proces postupu uživatele skrze webové rozhraní. 
 
  \begin{figure}[H]
     \centering
@@ -25,68 +22,45 @@ Poslední částí webového rozhraní je textové pole ve kterém se zobrazí v
 
 \subsection{Parametry hudební nahrávky} \label{sec:Parametry_nahravky}
 
-Systém popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní data o hudební nahrávce. Tyto data jsou rozdělena na 7 parametrů. Každý z parametrů představuje vlastnost analyzované nahrávky. Tyto vlastnosti jsou získány pomocí technik popsaných v bodě \ref{sec:Exktrakce_vlastnosti_metody}. Jednotlivé vlastnosti a jejich datové struktury jsou shrnuty v následujících bodech.
+Systém pro generování SpectodaCode popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní data o hudební nahrávce. Tyto data jsou rozdělena na 7 parametrů. Každý z parametrů představuje vlastnost analyzované nahrávky. Tyto vlastnosti jsou získány pomocí technik popsaných v bodě \ref{sec:Exktrakce_vlastnosti_metody}. Jednotlivé vlastnosti a jejich datové struktury jsou shrnuty v následujících bodech.
 
 \begin{description}
-    \item[Detekce dob] představuje pole hodnot jehož délka je závislá na době trvání nahrávky. Jednotlivé hodnoty pak udávají časy hudební nahrávky, ve kterých se nacházejí doby.
-    \item[Tempo skladby] je číslo typu float s jednotkou \acs{BPM} vyjadřující počet úderů za minutu. Hodnota BPM se vztahuje k počtu čtvrťových not za minutu. Vybraný algoritmus z knihovny Librosa ovšem nedetekuje jestli se jedná o noty čtvrťové. Postup zjištění tempa je popsán v bodě \ref{sec:Librosa}.
-    \item[Chromavektory] jsou získány v podobě pole jehož počet řádků udává 12 půltónů rozdělujících 1 oktávu. Délka pole je závislá na délce nahrávky a velikosti okna  při výpočtu \acs{STFT}. K matici chromavektorů je přidáno pole o stejné délce. Hondonty v poli udávají čas konce okna, ve kterém jsou počítány chroma vlastonsti. Tyto dvě proměnné jsou zadány jako parametry třídy s názvem \textit{ChromaVector} jehož struktura je zobrazena v blokovém schématu \ref{fig:ChromaVector_class_diagram}.
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagram_ChromaVector.pdf}
-        \caption{Struktura třídy \textit{ChromaVector}}
-        \label{fig:ChromaVector_class_diagram}
-    \end{figure}
-
-    \item[Efektivní hodnota signálu] je zapsána třídou $Loudness$ obsahující dva atributy. Prvním z nich je pole $rms$ jehož délka je závislá na délce signálu a obsahuje efektivní hodnoty signálu v časech uložených v druhém atributu $times$.
+    \item[Detekce dob] představuje pole hodnot jehož délka je závislá na době trvání nahrávky. Jednotlivé hodnoty pak udávají časy hudební nahrávky, ve kterých se doby nacházejí.
     
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagram_Loudness.pdf}
-        \caption{Struktura třídy $Loudness$}
-        \label{fig:Loudness_class_diagram}
-    \end{figure}
+    \item[Tempo skladby] je číslo typu float s jednotkou \acs{BPM} vyjadřující počet úderů za minutu. Hodnota BPM se typicky vztahuje k počtu čtvrťových not za minutu \cite{Harvard_dictionary_of_music}. Vybraný algoritmus z knihovny Librosa neumožňuje rozeznat o jaké doby se jedné. Tempo je určeno jako počet detekovaných úderů za minutu. Postup zjištění tempa je popsán v bodě \ref{sec:Librosa}.
 
-    \item[Segmentace] je zapsána jako pole objektů tířdy $Segment$. Tato třída obshahuje 3 atributy $type$, $start\_time$ a $end\_time$. Proměnná $type$ obsahuje statickou hodnotu označující o jakou část skladby se jedná. Tyto hodnoty jsou vypsány v úryvku kódu \ref{code:song_segments_variables}.
-    Proměnné $start\_time$ a $end\_time$ označují začátek a konec segmentu v nahrávce. 
+    \item[Chromavektory] jsou získány v podobě 2D pole. Počet řádků pole je dán 12 půltóny. Délka pole je závislá na délce nahrávky a velikosti okna při výpočtu \acs{STFT}. Z chromavektorů je spočítána paleta barev dané nahrávky. Paleta barev je uložena jako pole dvanácti hodnot. Pro každý půltón jedna barva. Generování barev je popsáno více v bodech \ref{sec:Color_palete} a \ref{sec:Parameter_extraction}.
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagram_Segment.pdf}
-        \caption{Struktura třídy $Segment$}
-        \label{fig:Loudness_Segment_diagram}
-    \end{figure}
-    \begin{lstlisting} [
-        caption = {Hodnoty proměnné $type$},
-        captionpos=b,
-        label = {code:song_segments_variables}]
-        # Song segments variables
-        SILENT      = 0
-        REFRAIN     = 1
-        STROPHE     = 2
-        BRIDGE      = 3
-    \end{lstlisting}
+    \item[Hlasitost] představuje normalizovanou vnímanou úroveň hlasitosti skladby s ohledem na vlastnosti lidského ucha popsané psychoakustikou. Je počítána buď pro celou skladbu, nebo její část/segment a je značena v jednotkách \acs{LUFS} Metoda výpočtu hlasitosti je popsána v bodě \ref{sec:Dynamika}.
 
-    \item[Žánr] představuje proměnou $genre$ typu short ve které je zapsáno číslo označující žánr skladby. Statické hodnoty žánrů jsou zapsány v úryvku kódu \ref{code:song_genre_variables}.
+    \item[Segmentace] rozděluje nahranou skladbu do 12 segmentů ve kterých se objevují stejné hudební tvary. Segmenty jsou uloženy jako pole časů hranic segmentů. Kde hranice představuje konec jednoho segmentu a začátek druhého.
+
+    \item[Žánr] je pro zvolenou nahrávku uložen v proměnné $genre$ pomocí slovníku 10 žánrů, ke kterým je přiřazena jejich pravděpodobnost. Protože se v hudbě vyskytuje velké množství žánrů, které se mezi sebou prolínají nejde s přesnou jistotou zařadit každou nahrávku přesně k jednomu žánru. Proto je použita metoda pravděpodobností. Použité žánry jsou popsány v úryvku kódu \ref{code:song_genre_variables}.
+    
     \begin{lstlisting} [
         caption = {Hodnoty proměnné $genre$},
         captionpos=b,
         label = {code:song_genre_variables}]
-        # Song genre variables
-        CLASSIC     = 0
-        FOLK        = 1
-        POP         = 2
-        ROCK        = 3
-        METAL       = 4
-        ELECTRONIC  = 5
+        # Song genre constants
+        BLUES       = "blues"
+        CLASSICAL   = "classical"
+        COUNTRY     = "country"
+        DISCO       = "disco"
+        HIPHOP      = "hiphop"
+        JAZZ        = "jazz"
+        METAL       = "metal"
+        POP         = "pop"
+        REGGAE      = "reggae"
+        ROCK        = "rock"
     \end{lstlisting}
-    \item[Nálada] představuje proměnou $mood$ typu float s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}. Nálada může být i v rozmezí přednastavencýh hodnot. V tomto případě je výsledná hodnota lineráně závislá na vzdálenosti od přednastavených hodnot. 
+
+    \item[Nálada] představuje proměnou $mood$ typu float s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}. Náladu zadává uživatel při nahrávání zvolené skladby.  
+    
     \begin{lstlisting}[
         caption = {Hodnoty proměnné $mood$},
         captionpos=b,
         label = {code:song_mood_variables}]
-        # Song mood variables
+        # Song mood constants
         CHILL       = 0
         HANG_OUT    = 1
         HAPPY       = 2
@@ -116,6 +90,8 @@ První částí systému je vstupní rozhraní, ve kterém jsou přijímány dat
     \item[Segmentace] slouží pro detekci opakujících se částí nahrávky. Například nahrávka obsahuje více než jednu sloku či refrém. Je kladen důraz aby v opakujících se segmentec nahrávky byla animace stejného typu. Z toho plyne, že v každém refrému bude podobná animace.
     \item[Detekce dob] je parametrem na základě kterého se nastaví začátky a konce animací tak, aby odpovídaly rytmu nahrávky.
     \item[Chroma vektory] udávají tónovou strukturu skladby v průběhu času. Tento parametr je využit pro nastavení barevné škály animací. Chromavektory se analyzují a jsou vybrány 4 hlavní tóny nejčastěji se vyskytující v nahrávce. Keždému tónu je přiřazen barevný odstín. Poté je animaci v dané části skladby přiřazena barva dle tónu určeného chromavektorem daného času nahrávky.
+
+    %TODO: Hlasitost
     \item[Efektivní hodnota signálu] pomáha procesu segmentace. Refrém a sloka se mohou lyšit hlasitostí, která je zpjata s efektní hodnotou. Zároveň je použita pro výběr vhodného typu animace. Na základě velikosti efektivní hodnoty signálu v čase je vybrán typ animace. Vyžší hodnoty představují rychlejší a údernější animace. Nižší hodnoty naopak pomalejší a klidnější animace. Tento proces je zajištěn porovnáváním proměnné \textit{anim\_characteristic} obsažené v každém bloku animace s efektivní hodnotou mapovanou na určený rozsah.
     %TODO: Vymyslet a pospat proces mapování efektivní hodnoty. 
     %TODO: Popsat tak aby to odpovídalo struktuře anim_characteristic dle blokového diagramu.
@@ -202,6 +178,37 @@ Výpočet efektivní hodnoty signálu je raalizován pomocí funkce z knihovy Li
     \caption{Zobrazení efektivní hodnoty skladby Belly dancer}
     \label{fig:RMS_calculation}
 \end{figure}
+
+\section{Realzace} \label{sec:Realizacr}
+
+\subsection{Uživatelské rozhraní}
+
+Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML} spolu s formátováním v jazyce CSS.
+Funkčnost a propojení se systémem je řešeno pomocí framworku Flask 
+
+\subsection{Extrakce parametrů} \label{sec:Parameter_extraction}
+Pro získání všech potřebných paramtrů z nahraného audio souboru jsou naprogramovány čtyři třídy. Tyto třídy poskytují veškeré potřebné parametry.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagram_ChromaFeatures.pdf}
+        \caption{Struktura třídy \textit{ChromaFeatures}}
+        \label{fig:ChromaFeatures_class_diagram}
+    \end{figure}
+
+
+Pro práci se segmenty je definována třída \textit{Segmentation} a její struktura je zobrazena na obrázku \ref{fig:Segmentation_diagram}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagram_Segmentation.pdf}
+    \caption{Struktura třídy $Segment$}
+    \label{fig:Segmentation_diagram}
+\end{figure}
+
+%TODO: Zde popíšu kompletní strukturu tříd a procesy v nich probíhající. 
+
+\subsection{Přiřazení barev} \label{sec:Color_palete}
 
 
 
