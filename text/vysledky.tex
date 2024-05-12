@@ -7,7 +7,7 @@
 
 V kapitole je popsán výsledný návrh výsledného systému. Systém se skládá z několika částí: uživatelské rozhraní, algoritmů pro získání pamrametrů hudební nahrávky, algoritmu generujícího SpectodaCode na základě získaných parametrů a databáze bloků. Podkapitoly pak podrobně popisují návrh každé z části systému.
 
-%TODO: Blokové schéma rozdělení systému na jednotlivé části.
+%TODO: Předělat všechny proměnné značené $$ na \texttt{}
 
 \subsection{Uživatelské rozhraní} \label{sec:User_interface}
 
@@ -35,44 +35,46 @@ Systém pro generování SpectodaCode popsaný v bodě \ref{sec:System_generovan
 
     \item[Hlasitost] představuje normalizovanou vnímanou úroveň hlasitosti skladby s ohledem na vlastnosti lidského ucha popsané psychoakustikou. Je počítána buď pro celou skladbu, nebo její část/segment a je značena v jednotkách \acs{LUFS} Metoda výpočtu hlasitosti je popsána v bodě \ref{sec:Dynamika}.
 
-    \item[Segmentace] rozděluje nahranou skladbu do 12 segmentů ve kterých se objevují stejné hudební tvary. Segmenty jsou uloženy jako pole časů hranic segmentů. Kde hranice představuje konec jednoho segmentu a začátek druhého.
+    \item[Segmentace] rozděluje nahranou skladbu do 12 segmentů ve kterých se objevují stejné hudební tvary. Segmenty jsou uloženy jako pole časů hranic segmentů. Kde hranice představuje konec jednoho segmentu a začátek druhého. 
 
     \item[Žánr] je pro zvolenou nahrávku uložen v proměnné $genre$ pomocí slovníku 10 žánrů, ke kterým je přiřazena jejich pravděpodobnost. Protože se v hudbě vyskytuje velké množství žánrů, které se mezi sebou prolínají nejde s přesnou jistotou zařadit každou nahrávku přesně k jednomu žánru. Proto je použita metoda pravděpodobností. Použité žánry jsou popsány v úryvku kódu \ref{code:song_genre_variables}.
-    
-    \begin{lstlisting} [
-        caption = {Hodnoty proměnné $genre$},
-        captionpos=b,
-        label = {code:song_genre_variables}]
-        # Song genre constants
-        BLUES       = "blues"
-        CLASSICAL   = "classical"
-        COUNTRY     = "country"
-        DISCO       = "disco"
-        HIPHOP      = "hiphop"
-        JAZZ        = "jazz"
-        METAL       = "metal"
-        POP         = "pop"
-        REGGAE      = "reggae"
-        ROCK        = "rock"
-    \end{lstlisting}
+    \begin{figure}[H]
+        \begin{lstlisting} [
+            caption = {Hodnoty proměnné $genre$},
+            captionpos=b,
+            label = {code:song_genre_variables}]
+            # Song genre constants
+            BLUES       = "blues"
+            CLASSICAL   = "classical"
+            COUNTRY     = "country"
+            DISCO       = "disco"
+            HIPHOP      = "hiphop"
+            JAZZ        = "jazz"
+            METAL       = "metal"
+            POP         = "pop"
+            REGGAE      = "reggae"
+            ROCK        = "rock"
+        \end{lstlisting}
+    \end{figure}
 
     \item[Nálada] představuje proměnou $mood$ typu float s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}. Náladu zadává uživatel při nahrávání zvolené skladby.  
-    
-    \begin{lstlisting}[
-        caption = {Hodnoty proměnné $mood$},
-        captionpos=b,
-        label = {code:song_mood_variables}]
-        # Song mood constants
-        CHILL       = 0
-        HANG_OUT    = 1
-        HAPPY       = 2
-        DANCING     = 3
-    \end{lstlisting}
+    \begin{figure}[H]        
+        \begin{lstlisting}[
+            caption = {Hodnoty proměnné $mood$},
+            captionpos=b,
+            label = {code:song_mood_variables}]
+            # Song mood constants
+            CHILL       = 0
+            HANG_OUT    = 1
+            HAPPY       = 2
+            DANCING     = 3
+        \end{lstlisting}
+    \end{figure}
     
 \end{description}
 
 \subsection{Databáze bloků animací} \label{sec:Database_structure}
-Jak je popsáno v bodě \ref{sec:Spectoda} systém Spectoda obsahuje základní animace, které jsou skládány do bloků a tím vznikají komplexní animace. Systém využívá již připravených bloků animací, které jsou uloženy jako objekty. Těmto objektům jsou přiřazeny parametry $code$, $characteristics$, $length$ a $colors$. Jejich struktura je zapsaná datovou třídou $AnimationBlock$. Z objektů tipu třídy jsou dále tvořeny datasety zapsané datovou třídou $Dataset$. Tyto instance obsahují 5 bloků animací a parametry $genre$, $tempo$ a $mood$. UML diagramy tříd jsou zobrazeny na obrázku \ref{fig:UML_diagram_Dataset_AnimationBlock}.
+Jak je popsáno v bodě \ref{sec:Spectoda} systém Spectoda obsahuje základní animace, které jsou skládány do bloků a tím vznikají komplexní struktury. Systém využívá již připravených bloků animací, které jsou uloženy jako objekty. Těmto objektům jsou přiřazeny parametry $code$, $characteristics$, $length$ a $colors$. Jejich struktura je zapsaná datovou třídou $AnimationBlock$. Z objektů třídy jsou dále tvořeny datasety zapsané třídou $Dataset$. Tyto instance obsahují 5 bloků animací a parametry $genre$, $tempo$ a $mood$. UML diagramy tříd jsou zobrazeny na obrázku \ref{fig:UML_diagram_Dataset_AnimationBlock}.
 
 \begin{figure}[H]
     \centering
@@ -81,7 +83,29 @@ Jak je popsáno v bodě \ref{sec:Spectoda} systém Spectoda obsahuje základní 
     \label{fig:UML_diagram_Dataset_AnimationBlock}
 \end{figure}
 
-TODO: Popis charakteristiky bloků jejich statické hodnoty a vysvětlení co která hodnota znamená. 
+Jak bylo zmíněno bloky animací mají proměnou $characteristic$, které je rozděluje do 5 kategorií. Každá kategorie má svůj specifický význam: 
+
+\begin{itemize}
+    \item BANG -- Vhodné pro začátek krátkých segmentů. Velmi úderné a rychlé.
+    \item SHOT -- Rychlé animace pro kratší segmenty.
+    \item PULL -- Úderné animace, které vtáhnou do děje na začátku delších segmentů.
+    \item THEME -- Primární animace pro delší segmenty obsahuje hlavní téma.
+    \item FLOW -- Dlouhé pomalé animace pro vyplnění klidných částí skladby.
+\end{itemize}
+
+\begin{figure}[H]
+    \begin{lstlisting}[
+        caption = {Hodnoty proměnné $characteristics$},
+        captionpos=b,
+        label = {code:anim_characteristic_constants}]
+        # Animation characteristics constants
+        BANG        = 0
+        SHOT        = 1
+        PULL        = 2
+        THEME       = 3
+        FLOW        = 4
+    \end{lstlisting}
+\end{figure}
 
 \subsection{Systém pro generování animací} \label{sec:System_generovani_animaci}
 
@@ -112,23 +136,54 @@ První částí systému je vstupní rozhraní, ve kterém jsou přijímány dat
     \item[Hlasitost] pomáhá procesu segmentace. Refrén a sloka se mohou lišit hlasitostí. Hlasitost je počítána pro celou skladbu a následně pro segmenty. Při výběru vhodného bloku animace dochází k porovnání hlasitosti segmentu vůči hlasitosti nahrávky. Na základě porovnání je určeno jak výrazné mají být animace v daném segmentu. Vyšší hodnoty představují rychlejší a údernější animace. Nižší hodnoty naopak pomalejší a klidnější animace.
 \end{description}
 
-\
-Druhá část systému tvoří samotnou logiku skládání blkoků animací. Tato rozhodovací struktura je zobrazena na blokovém diagramu \ref{fig:Logical_structure_diagram}.
+
+Druhá část systému tvoří samotnou logiku skládání bloků animací. Rozhodovací struktura lze zjednodušit na několik po sobě jdoucích kroků znázorněných blokovým diagramem na obrázku \ref{fig:diagram_procesu_generovani_animaci}. V bodech níže jsou postupně popsány všechny kroky.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = 1\linewidth]{obrazky/Logical_structure_diagram.pdf}
-    \caption{Blokový diagram struktrury rozhodovacího procesu}
-    \label{fig:Logical_structure_diagram}
+    \includegraphics[width = 1\linewidth]{obrazky/UML_diagramy_anim_generation_process.pdf}
+    \caption{Blokový diagram procesu generování animací}
+    \label{fig:diagram_procesu_generovani_animaci}
 \end{figure}
+
+\begin{itemize}
+    \item  
+    Prvním z bloků je přiřazení času začátku animace. Pokud se jedná o počáteční animaci ve skladbě je automaticky přiřazen jako začátek čas, ve kterém se nachází první doba. Pro každou další animaci je volen čas začátku jako konec animace předchozí. 
+    \item 
+    Druhým krokem je nalezení segmentu, ve kterém se začátek animace nachází. Segment je vyjádřen jako jeho hranice začátku a konce. Tyto hranice jsou nalezeny v poli hranic segmentů jako nejbližší nižší a nejbližší vyšší čas k času začátku animace. Funkce pro vyhledání segmentu je zobrazena v úryvku kódu \ref{code:Find_segment}. 
+
+    \item 
+    Třetím krokem v pořadí je výběr vhodného bloku animace. Výběr vhodného bloku je důležitý pro výsledný pocit z konečné animace. Ze získaných parametrů o nahrávce je vypočítáno dalších 7 hodnot. Na získané hodnoty jsou aplikovány váhy a poté jso mezi sebou porovnány. Výsledkem procesu jsou 3 proměnné typu boolean představující otázky: Je segment dlouhý? Je segment hlasitý? Je doba začátku animace důležitá v segmentu? Je doba začátku animace důležitá v nahrávce? Pro lepší představu je struktura procesu zobrazená na blokovém diagramu \ref{fig:Logical_structure_diagram}. Na základě získaných logických proměnných je pomocí rozhodovací struktury vybrána vhodná charakteristika animace. Výběr charakteristiky je zobrazen v úryvku kódu \ref{code:Char_selection}. Struktura je tvořena dvěma kroky a v každém kroku jsou 4 řešení. Výsledný počet řešení je tedy $2^4 = 16$. První je porovnávánao jestli je segment dlouhý a hlasitý. Kombinace těchto dvou stavů (ano/ne) tvoří první čtyři zmíněné řešení. Ve druhém kroku je porovnávána důležitost počáteční doby animace v segmentu a skladbě. Toto porovnání nabývá také 4 možných řešení.  
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width = 1\linewidth]{obrazky/UML_diagramy_anim_bock_selection _part_1.pdf}
+        \caption{Blokový diagram procesu výpočtu parametrů pro výběr animace}
+        \label{fig:Anim_block_param_selection_diagram}
+    \end{figure}
+
+    \item Poté co je vybrán vhodný blok animace je důležité upravit její délku tak, aby končila opět době. Každý blok má nastavenou doporučenou délku uloženou v proměnné \texttt{anim\_length}. Nejprve je vypočítán čas konce animace jako součet začátku animace a její doporučené délky. Pomocí funkce \texttt{Find\_nearest\_beat} zobrazené v úryvku kódu \ref{code:Find_nearest_beat} je nalezena doba, která má nejmenší časový rozdíl od vypočítaného konce animace. Nyní je známa doba na které bude animace konči, ještě je ale potřeba vypočítat modifikátor, který upraví délku animace tak, aby na ní skutečně skončila. Modifikátor je číslo, kterým je násobena doporučená délka animace tak aby odpovídala délce mezi vybranou počáteční dobou a koncovou dobou. Výpočet je znázorněn rovnicemi \ref{rov:time_modifier}, kde $M$ je modifikátor, $T_a$ je doporučený čas animace, $T_n$ je nový čas animace, $T_{eb}$ je čas ve kterém se nachází konečná doba animace a $T_{sb}$ je čas ve kterém se nachází počáteční doba animace.
+    
+    \begin{equation}
+        M = \frac{T_a}{T_n} = \frac{T_a}{T_{eb} - T_{sb}}
+        \label{rov:time_modifier}
+    \end{equation}
+    
+    \item Nyní je možné vybrat barvy s palety barev dané nahrávky. Nejprve jsou z chromavektorů vypočítány tóny, které zní nejdéle v časovém rozmezí bloku animace. Z proměné \texttt{anim\_color} uložené v bloku animace zjistíme kolik je potřeba barev. Na základě zjištěného počtu je vybráno z palety barev vybráno n barev, které odpovídají nejvíce znělým tónům v dané části skladby. 
+
+    \item Šestým krokem je vygenerování kódu animace. Zdrojový kód je uložen v proměnné \texttt{anim\_code} vybraného bloku. Do něj je potřeba na předpřipravená místa vložit získané informace o začátku, konci, rychlosti a barvě. Po vložení těchto informací je v textovém řetězci uložen do pole jako další hotová animace. 
+    
+    \item Posledním bodem cyklu je kontrola jestli je konec animace poslední dobou v skladbě. Pokud není cyklus se opakuje stále dokola než je vygenerován kód pro všechny části nahrávky. Po dokončení tohoto procesu je pole vygenerovaných zdrojových kódů sečteno do jednoho dlouhého řetězce jako finální kód animace a je připraven k nahrání do Spectoda zařízení. 
+    
+\end{itemize}
 
 % Na začátku je zjištěno jestli se jedná o první blok animace. Pokud ano je nastaven čas začátku animace jako čas první doby v nahrávce. Jestli se nejedná o první blok animace, tak je nastaven čas začátku jako konec předchozího bloku animace. Tento proces v blokovém schématu \ref{} představuje proces s názvem \uv{Nastavení času začátku animace}. Druhým krokem je rozhodovací struktura jestli se vybraný čas začátku nachází v segmentu nahrávky který se opakuje. Pokud ano je nalezen blok animace ve stejném času předchozího segmentu a je zkontrolováno  
 
-\section{Výběr vhodných metod pro extrakci parametrů z hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
-Díky vědecké komunitě vznikly volně dostupné knihovny obsahující techniky z oborů MIR. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou použity jejich funkce pro získání parametrů z hudební nahrávky potřebných pro navazující diplomovou práci. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
+\section{Metody extrakce parametrů z hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
+Díky vědecké komunitě vznikly volně dostupné knihovny obsahující techniky z oborů \acs{MIR}. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou porovnány jejich funkce pro získání parametrů z hudební nahrávky. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
 
 \subsection{Detekce dob a tempa}
-Pro porování detekce dob jsou vybrány 3 funkce. Pro každoou knihovnu jedna funkce. První je z knihovny Librosa funkce $beat\_track$. Z knihovny Madmom je použit $BeatTrackingProcessor$ a z kinovny Aubio funkce $tempo$. Funkce jsou porovnány na třech skladbách skupiny Beatles. Níže v grafu \ref{fig:Oh-Darling_beat_analysis} je vidět úryvek skladby Oh-Darling!. Pro lepší zobrazení jsou osy grafu v rozsahu 55 - 65 s nahrávky. Na prvním z grafů je vyobrazen mels pektrogram vypočítán pomocí funkce $melspectrogram$ z knihovny Librosa. Grafy b), c) a d) zobrazují v pozadí obálku síly nástupů a vertikální pruhované čáry znázorňují detekované doby dané funkce. Vertikální modrté tečkované čáry jsou referenční doby zaznamenané institucí Centre for digital music na univerzitě Queen Mary, University of London \cite{Isophonic}. 
+Pro porovnání detekce dob jsou vybrány 3 funkce. Pro každou knihovnu jedna funkce. První je z knihovny Librosa funkce \texttt{beat\_track}. Z knihovny Madmom je použit \texttt{BeatTrackingProcessor} a z knihovny Aubio funkce \texttt{tempo}. Funkce jsou porovnány na třech skladbách skupiny Beatles. Níže v grafu \ref{fig:Oh-Darling_beat_analysis} je vidět úryvek skladby Oh-Darling!. Pro lepší zobrazení jsou osy grafu v rozsahu 55 - 65 sekund nahrávky. Na prvním z grafů je vyobrazen mel spektrogram vypočítán pomocí funkce \texttt{melspectrogram} z knihovny Librosa. Grafy b), c) a d) zobrazují v pozadí obálku síly nástupů a vertikální pruhované čáry znázorňují detekované doby dané funkce. Vertikální modré tečkované čáry jsou referenční doby zaznamenané institucí Centre for digital music na univerzitě Queen Mary, University of London \cite{Isophonic}. 
 
 \begin{figure}[H]
     \centering
@@ -137,18 +192,18 @@ Pro porování detekce dob jsou vybrány 3 funkce. Pro každoou knihovnu jedna f
     \label{fig:Oh-Darling_beat_analysis}
 \end{figure}
 
-Z grafu lze vidět, že funkce z knihoven Librosa a Madmon se nejvíce přibližují referenčním dobám. Pro přesné hodnocení funkcí je využita knihovna Mir\_eval poskytující funkce pro hodnocení přesnosti detekce dob. Pomocí teto knihovny je počítáno Camgil skóré. Popis knihovny a výpočtu je zmíněn v bodě \ref{sec:Mir_eval}. Posledním hodnoceným parametrem je doba výpočtu. Výsledky Camgil skóré, a doby výpočtu pro jednotlivé skladby jsou zobrazeny na obrázku \ref{fig:Beat_tracking_time_and_cemgil}.
+Z grafu lze vidět, že funkce z knihoven Librosa a Madmom se nejvíce přibližují referenčním dobám. Pro přesné hodnocení funkcí je využita knihovna Mir\_eval poskytující funkce pro hodnocení přesnosti detekce dob. Pomocí teto knihovny je počítáno Camgil skóre. Popis knihovny a výpočtu je zmíněn v bodě \ref{sec:Mir_eval}. Posledním hodnoceným parametrem je doba výpočtu. Výsledky Camgil skóre, a doby výpočtu pro jednotlivé skladby jsou zobrazeny na obrázku \ref{fig:Beat_tracking_time_and_cemgil}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/Beat_tracking_time_and_cemgil_graphs.eps}
-    \caption{Porovnání přesnosti a času metod detekce dob na skladbách Oh-Darling!, Come Together a Here Comes The Sun. \textbf{a)} Čas výpočtu \textbf{b)}Cemgil skóré}
+    \caption{Porovnání přesnosti a času metod detekce dob na skladbách Oh-Darling!, Come Together a Here Comes The Sun. \textbf{a)} Čas výpočtu \textbf{b)}Cemgil skóre}
     \label{fig:Beat_tracking_time_and_cemgil}
 \end{figure}
 
 \subsection{Analýza chromavektorů}
 
-Hodnocení vhodné funkce pro výpočet chromavektorů je realizováno zejména vizuálně na zobrazených grafech referenčních skladeb. Tyto grafy lze vidět na obrázku \ref{fig:Chroma_analysis}. Porovnávány jsou 4 funkce z knihvny librosa $chroma\_stft$, $chroma\_cqt$, $chroma\_cens$ a čtvrtou je funkce $chroma\_cqt$ c řetězci s předzpracováním signálu a filtrací výsledných chromavektorů. Principy výpočtů jednotlivých funkcí jsou popsány v bodě \ref{sec:Librosa}. Z knihovny Madmom je použit \textit{DeepChromaProcessor}.
+Hodnocení vhodné funkce pro výpočet chromavektorů je realizováno zejména vizuálně na zobrazených grafech referenčních skladeb. Tyto grafy lze vidět na obrázku \ref{fig:Chroma_analysis}. Porovnávány jsou 4 funkce z knihovny librosa \texttt{chroma\_stft}, \texttt{chroma\_cqt}, \texttt{chroma\_cens} a čtvrtou je funkce \texttt{chroma\_cqt} s řetězci předzpracování signálu a filtrací výsledných chromavektorů. Principy výpočtů jednotlivých funkcí jsou popsány v bodě \ref{sec:Librosa}. Z knihovny Madmom je použit \textit{DeepChromaProcessor}.
 
 \begin{figure}[H]
     \centering
@@ -157,23 +212,19 @@ Hodnocení vhodné funkce pro výpočet chromavektorů je realizováno zejména 
     \label{fig:Chroma_analysis}
 \end{figure}
 
-Z obrázku \ref{fig:Chroma_analysis} lze vidět patrný rozdíl v přístupu výpočetu chromavektorů. U grafů \textit{b)}, \textit{c)} a \textit{d)} lze vidět velké množství šumu. U grafu \textit{e)} je šum vyfíltrován přidanými metodami. Na grafu \textit{f)} lze vidět, že knihovna Madmom a z ní použitý $DeepChromaProcessor$ přistupuje k výpočtu chromavektorů odlišně. Je využito delší časové okno pro transformaci do frekvenční oblasti. Z toho je patrné, že v časovém měřítku údaj není natolik přesný jako u knihovny Librosa. Pro následné použití v algoritmu pro generování animací je však tento výsledek mnohem stálejší. 
+Z obrázku \ref{fig:Chroma_analysis} lze vidět patrný rozdíl v přístupu výpočtu chromavektorů. U grafů \textit{b)}, \textit{c)} a \textit{d)} lze vidět velké množství šumu. U grafu \textit{e)} je šum vyfiltrován přidanými metodami. Na grafu \textit{f)} lze vidět, že knihovna Madmom a z ní použitý \texttt{DeepChromaProcessor} přistupuje k výpočtu chromavektorů odlišně. Je využito delší časové okno pro transformaci do frekvenční oblasti. Z toho je patrné, že v časovém měřítku údaj není natolik přesný jako u knihovny Librosa. Pro následné použití v algoritmu pro generování animací je však tento výsledek mnohem stálejší. 
 
 Dalším hodnoceným parametrem je délka výpočtu chromavektorů. Ta je závislá na složitosti algoritmů jež funkce využívají k výpočtu. Porovnání je zobrazeno na obrázku \ref{fig:Chroma_calculation_time}. Z obrázku je zřejmé, že pomocné metody pro předzpracování a filtraci chromavektorů z funkce \textit{chroma\_cqt} přidaly značné množství výpočetního času oproti samotnému výpočtu chromavektorů.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/Chroma_analysis_times_comparison.eps}
-    \caption{Porovnání délky výpočetu chromavektorů}
+    \caption{Porovnání délky výpočtu chromavektorů}
     \label{fig:Chroma_calculation_time}
 \end{figure}
-
-% TODO: Triadické míchání barev v rámci chroma features
     
 \subsection{Efektivní hodnota signálu}
-TODO: Hlasitost v LUFS
-
-Výpočet efektivní hodnoty signálu je raalizován pomocí funkce z knihovy Librosa. Pro výpočet je použito okno o délce 2048 vzorků. Hodnoty jsou vycentrovány na střed rozsahu okna tedy 1024 vzorků. Získaná křivka je uhlazena pomocí výpočtu klouzavého průměru. Počet vzroků ze kterých se klouzavý průměr vypočítá odpovídá délce signálu 7,5 s a je závyslý na jeho vzorkovací frekvenci. Získané informnace jsou zobrazy na obrázku \ref{fig:RMS_calculation}.
+Výpočet efektivní hodnoty signálu je realizován pomocí funkce z knihovy Librosa. Pro výpočet je použito okno o délce 2048 vzorků. Hodnoty jsou vycentrovány na střed rozsahu okna tedy 1024 vzorků. Získaná křivka je uhlazena pomocí výpočtu klouzavého průměru. Počet vzorků ze kterých se klouzavý průměr vypočítá odpovídá délce signálu $7,5 s$ a je závislý na jeho vzorkovací frekvenci. Získané křivky jsou zobrazeny na obrázku \ref{fig:RMS_calculation}.
 
 \begin{figure}[H]
     \centering
@@ -182,15 +233,21 @@ Výpočet efektivní hodnoty signálu je raalizován pomocí funkce z knihovy Li
     \label{fig:RMS_calculation}
 \end{figure}
 
-\section{Realzace} \label{sec:Realizace}
+\subsection{Hlasitost}
+Pro výpočet hlasitosti skladby nebo jejich částí je použita knihovna \texttt{Pyloudnorm} \cite{Pyloudnorm}. Tato knihovna implementuje standardizovaný algoritmus ITU-R BS.1770 \cite{BS.1770}. Který je více popsaný v bodě \ref{sec:Dynamika}. Výstupní hodnotou funke je číselná hodnota udávající hlasitost skladby nebo jejich částí v jednotkách LUFS. 
+
+\section{Realizace} \label{sec:Realizace}
+
+Kapitola popisuje jakým způsobem bylo dosaženo funkčního prototypu systému pro generování animací na základě parametrů hudební nahrávky. Jsou zde popsány použité programovací jazyky, metody a algoritmy. Podrobně je popsáno programové řešení jednotlivých částí systému. 
 
 \subsection{Uživatelské rozhraní}
 
-Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML} spolu s formátováním v jazyce CSS.
-Funkčnost a propojení se systémem je řešeno pomocí framworku Flask 
+Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML}\footnote{HTML -- Hypertext markup language. Je značkovací jazyk používaný pro tvorbu webových stránek.} spolu s formátováním v jazyce \acs{CSS}\footnote{CSS -- Cascading style sheets. Je jazyk popisující styl zobrazení HTML elementů\cite{CSS}.}. Aby bylo možné k webové stránce přistupovat veřejně je nasazena serveru služby PythonAnywhere. Která poskytuje cloudové řešení pro realizaci python aplikací. Funkčnost a propojení webového rozhraní s python systémem pracujícím na pozadí je řešeno pomocí frameworku Flask. Flask umožňuje jednoduchou interakci webové stránky s python aplikací běžící na pozadí pomocí protokolu HTTP\footnote{HTTP -- Hypertext transfer protocol. Je protokol navržen pro komunikaci mezi klientem a serverem.}. V rámci webové aplikace je využito pouze metod \texttt{GET} a \texttt{POST}. Kde metoda \texttt{POST} slouží pro odeslání dat s přiřazenou nahrávkou a vybranou náladou.
 
 \subsection{Extrakce parametrů} \label{sec:Parameter_extraction}
-Pro získání všech potřebných paramtrů z nahraného audio souboru jsou naprogramovány čtyři třídy. Tyto třídy poskytují veškeré potřebné parametry.
+Pro získání všech potřebných paramtrů z nahraného audio souboru jsou naprogramovány čtyři třídy. Tyto třídy poskytují veškeré potřebné parametry. V textu níže je postupně popsána jejich vnitřní struktura a funkce které obstarávají. 
+
+První třída \texttt{BeatTracking} je zaměřená na detekci síly nástupů, dob a tempa. Je tvořena s .... parametrů a obsahuje metody pro ...  
 
 \begin{figure}[H]
     \centering
@@ -211,8 +268,9 @@ Pro práci se segmenty je definována třída \textit{Segmentation} a její stru
 
 %TODO: Zde popíšu kompletní strukturu tříd a procesy v nich probíhající. 
 
-\subsection{Přiřazení barev} \label{sec:Color_palete}
+\subsection{Paleta barev} \label{sec:Color_palete}
     Barvy jsou zadány v souřadnicích \acs{HSV} a každá
+    % TODO: Triadické míchání barev v rámci chroma features
 
 \subsection{Výběr datasetu} \label{sec:Vyber_datasetu}
 

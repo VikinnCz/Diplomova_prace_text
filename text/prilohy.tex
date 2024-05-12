@@ -1,3 +1,136 @@
+\chapter{Ukázky zdrojových kódů}
+
+\begin{minipage}{\linewidth}
+	\begin{lstlisting}[
+		breaklines = true,
+		frame=single,
+		numbers=left,
+		caption={Zdrojový kód funkce \texttt{Find\_segment}},
+		label={code:Find_segment}]
+		def Find_segment(y : list, beat_time):
+		"""
+		Function that finds segment from provided list in which is located the beat_time.
+
+		Parameters
+		----------
+		y : list
+			List of times where the segments boundaries are located
+		beat_time : float
+			Time of the beat which is wanted to locate.
+
+		Returns
+		----------
+		start_segment : float
+			Time where the located segment starts.
+		end_segment : float
+			Time where the located segment ends.
+		"""
+
+		y = np.asarray(y)
+		idx = np.abs((y - beat_time)).argmin()
+
+		if y[idx] > beat_time:
+			idx -= 1
+
+		start_segment = y[idx]
+		try:
+			end_segment = y[idx+1]
+		except IndexError:
+			end_segment = None
+
+		return start_segment, end_segment
+
+	\end{lstlisting}
+\end{minipage}
+
+	\begin{lstlisting}[
+		breaklines = true,
+		frame=single,
+		numbers=left,
+		caption={Zdrojový kód funkce \texttt{Char\_selection}},
+		label={code:Char_selection}]
+		def Char_selection(is_long,
+							is_loud,
+							is_important_in_audion,
+							is_important_in_segment):
+		match [is_long, is_loud]:
+			case[False, True]:
+				#Krátké úderné
+				match[is_important_in_audion,is_important_in_segment]:
+					case[False, True]:
+						return cns.SHOT
+					case[False, False]:
+						return cns.PULL
+					case[True, True]:
+						return cns.BANG
+					case[True, False]:
+						return cns.SHOT
+						
+			case[False, False]:
+				#Krátké pohodové
+				match[is_important_in_audion,is_important_in_segment]:
+					case[False, True]:
+						return cns.PULL
+					case[False, False]:
+						return cns.THEMA
+					case[True, True]:
+						return cns.SHOT
+					case[True, False]:
+						return cns.PULL
+			case[True, True]:
+				#Dlouhé úderné
+				match[is_important_in_audion,is_important_in_segment]:
+					case[False, True]:
+						return cns.PULL
+					case[False, False]:
+						return cns.THEMA
+					case[True, True]:
+						return cns.SHOT
+					case[True, False]:
+						return cns.PULL
+			case[True, False]:
+				#Dlouhé táhnoucí se
+				match[is_important_in_audion,is_important_in_segment]:
+					case[False, True]:
+						return cns.FLOW
+					case[False, False]:
+						return cns.FLOW
+					case[True, True]:
+						return cns.PULL
+					case[True, False]:
+						return cns.THEMA
+	\end{lstlisting}
+
+	\begin{minipage}{\linewidth}
+		\begin{lstlisting}[
+			breaklines = true,
+			frame=single,
+			numbers=left,
+			caption={Zdrojový kód funkce \texttt{Find\_nearest\_beat}},
+			label={code:Find_nearest_beat}]
+			def Find_nearest_beat(y : list, time):
+			"""
+			This function finds the nearest beat in given list.
+		
+			Parameters
+			----------
+			y : list
+				List of times where the beats are located.
+			time : float
+				Time around that is searching for the nearest beat.
+		
+			Returns 
+			----------
+			idx : int
+				Index of finded beat in the list.
+			"""
+			y = np.asarray(y)
+			idx = np.abs((y - time)).argmin() 
+			return idx
+	
+		\end{lstlisting}
+	\end{minipage}
+
 \chapter{Některé příkazy balíčku \texttt{thesis}}
 
 \section{Příkazy pro sazbu veličin a jednotek}
@@ -58,7 +191,7 @@ Všechny symboly jsou určeny pro matematický mód, vyjma \verb|\mikro|, jenž 
 
 \begin{figure}[!h]
   \begin{center}
-    \includegraphics[scale=0.5]{obrazky/ZlepseneWilsonovoZrcadloNPN}
+    \includegraphics[scale=0.5]{obrazky/Chroma_analysis_times_comparison.eps}
   \end{center}
   \caption[Alenčino zrcadlo]{Zlepšené Wilsonovo proudové zrcadlo.}
 \end{figure}
@@ -75,7 +208,7 @@ Pro vyzkoušení je možné použít programy QTikz nebo TikzEdt.
 \section{Balíček \texttt{listings}}
 
 Pro vysázení zdrojových souborů je možné použít balíček \href{https://www.ctan.org/pkg/listings}{\texttt{listings}}.
-Balíček zavádí nové prostředí \texttt{lstlisting} pro sazbu zdrojových kódů, jako například:
+Balíček zavádí nové prostředí \texttt{lstlisting} $lstlisting$ pro sazbu zdrojových kódů, jako například:
 %
 \begin{lstlisting}[language={[LaTeX]TeX}]
 \section{Balíček lstlistings}
@@ -164,12 +297,13 @@ end
 \end{matlab}
 
 \noindent
+
 \begin{minipage}{\linewidth}
-
-
 %\section{Výpis kódu jazyka C}
-
-\begin{lstlisting}[frame=single,numbers=right,caption={Příklad implementace první kanonické formy v~jazyce C.},label=lst:priklad.vypis.kodu.C,basicstyle=\ttfamily\small, keywordstyle=\color{black}\bfseries\underbar,]
+\begin{lstlisting}[
+	frame=single,
+	numbers=right,
+	caption={Příklad implementace první kanonické formy v~jazyce C.},label=lst:priklad.vypis.kodu.C,basicstyle=\ttfamily\small, keywordstyle=\color{black}\bfseries\underbar,]
 // první kanonická forma
 short fxdf2t( short coef[][5], short sample)
 {
