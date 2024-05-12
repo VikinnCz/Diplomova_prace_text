@@ -245,18 +245,27 @@ Kapitola popisuje jakým způsobem bylo dosaženo funkčního prototypu systému
 Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML}\footnote{HTML -- Hypertext markup language. Je značkovací jazyk používaný pro tvorbu webových stránek.} spolu s formátováním v jazyce \acs{CSS}\footnote{CSS -- Cascading style sheets. Je jazyk popisující styl zobrazení HTML elementů\cite{CSS}.}. Aby bylo možné k webové stránce přistupovat veřejně je nasazena serveru služby PythonAnywhere. Která poskytuje cloudové řešení pro realizaci python aplikací. Funkčnost a propojení webového rozhraní s python systémem pracujícím na pozadí je řešeno pomocí frameworku Flask. Flask umožňuje jednoduchou interakci webové stránky s python aplikací běžící na pozadí pomocí protokolu HTTP\footnote{HTTP -- Hypertext transfer protocol. Je protokol navržen pro komunikaci mezi klientem a serverem.}. V rámci webové aplikace je využito pouze metod \texttt{GET} a \texttt{POST}. Kde metoda \texttt{POST} slouží pro odeslání dat s přiřazenou nahrávkou a vybranou náladou.
 
 \subsection{Extrakce parametrů} \label{sec:Parameter_extraction}
-Pro získání všech potřebných paramtrů z nahraného audio souboru jsou naprogramovány čtyři třídy. Tyto třídy poskytují veškeré potřebné parametry. V textu níže je postupně popsána jejich vnitřní struktura a funkce které obstarávají. 
+Pro získání všech potřebných parametrů z nahraného audio souboru jsou naprogramovány čtyři třídy. Tyto třídy analyzují veškeré potřebné parametry. V textu níže je postupně popsána jejich vnitřní struktura a funkce které obstarávají. Vypočítané vlastnosti jsou pak dostupné jako property dané třídy. Property v pythonu nahrazují jinde typické funkce typu Getter a Setter.
 
-První třída \texttt{BeatTracking} je zaměřená na detekci síly nástupů, dob a tempa. Je tvořena s .... parametrů a obsahuje metody pro ...  
+První třída \texttt{BeatTracking} je zaměřená na detekci síly nástupů, dob a tempa. Je tvořena s 6 parametrů a obsahuje metody pro výpočet jednotlivých dob, jejich síly, tempa a časů ve kterých se nacházejí. Doby, tempo a jejich časy jsou určeny pomocí funkce \texttt{Calc\_beats} a veškerá výpočty obstarává knihovna Librosa. Výpočet síly dob probíhá ve funkci \texttt{Calc\_strength} kde se v okolí každé nalezené doby vezme 7 vzorků z obálky síly nástupů a z těchto vzorků je vráceno nejvyšší nalezené číslo. Díky tomu je docíleno, že je dané době přidělena největší vzorek obálky síly nástupů v jejim blízkém okolí. Zdrojový kód je zobrazen v příloze \ref{code:Calc_strength}.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagramy_BeatTracking.pdf}
+        \caption{Struktura třídy \textit{BeatTracking}}
+        \label{fig:BeatTracking_class_diagram}
+\end{figure}
+
+Druhá třída s názvem \texttt{ChromaFeatures} je navržena pro získání chroma vlastností dané nahrávky. Obsahuje 4 atributy a 5 metod. Její struktura je zobrazena na diagramu \ref{fig:ChromaFeatures_class_diagram}. Pomocí funkcí jsou vypočteny chroma vektory a paleta barev analyzované skladby. Pro výpočet chroma vlastností jsou používány dvě funkce. První je \texttt{Calc\_chroma\_librosa} využívající algoritmus \texttt{chroma\_cqt} s přídavným předzpracováním signálu a filtrací výsledného pole. Zmíněný výpočet je používán při zvolené náladě \texttt{mood} na hodnoty \uv{HAPPY} a \uv{DANCING}. Pro hodnoty \uv{CHILL} a \uv{HANG\_OUT} je využíváno výpočtu pomocí knihovny madmom ve funkci \texttt{Calc\_chroma\_madmom}. Postup stanovení palety barev, který je naprogramován pomocí funkcí \texttt{Calc\_color\_palete}, \texttt{Generate\_triadic\_colors} a \texttt{Color\_shift} je podrobně popsán v sekci \ref{sec:Color_palete}.
 
 \begin{figure}[H]
     \centering
         \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagram_ChromaFeatures.pdf}
         \caption{Struktura třídy \textit{ChromaFeatures}}
         \label{fig:ChromaFeatures_class_diagram}
-    \end{figure}
+\end{figure}
 
-
+%TODO: Popsat segmentaci
 Pro práci se segmenty je definována třída \textit{Segmentation} a její struktura je zobrazena na obrázku \ref{fig:Segmentation_diagram}.
 
 \begin{figure}[H]
@@ -266,15 +275,24 @@ Pro práci se segmenty je definována třída \textit{Segmentation} a její stru
     \label{fig:Segmentation_diagram}
 \end{figure}
 
-%TODO: Zde popíšu kompletní strukturu tříd a procesy v nich probíhající. 
+%TODO: Popsat klasifikaci žánrů.
 
 \subsection{Paleta barev} \label{sec:Color_palete}
-    Barvy jsou zadány v souřadnicích \acs{HSV} a každá
-    % TODO: Triadické míchání barev v rámci chroma features
+
+Paleta barev znázorňuje 12 půltónů s přiřazenými barevnými hodnotami. Barvy jsou stanoveny ve dvou krocích. Jako první jsou určeny 3 základní barvy, které tvoří triadické barevné uspořádání. Celý proces generování probíhá pomocí modelu \acs{HSV}\footnote{HSV -- Hue, Saturation, Value. HSV je barevný model pro uložení informací o barvě pomocí tří hodnot tón, sytost a jas).} U základní barvy je náhodně vygenerovaná hodnota odstínu v rozmezí 0 až 360. Hodnoty sytosti a jasu jsou přednastavené pro všechny barvy stejně. Ve funkci \texttt{Generate\_ triadic\_colors} jsou následně vygenerovány zbývající dvě barvy tak, že je hodnota odstínu posunuta vždy o 120 stupňů aby barvy odpovídaly triadickému uspořádání. Vygenerované. Aby bylo možné základní barvy přiřadit tónům je nejprve potřeba zjistit které tři tóny v nahrávce znějí nejčastěji. Matice chromavektorů je převedena na binární. Hodnoty větší nebo rovny 0,6 jsou zapsány jako 1 hodnoty nižší jsou zapsány jako 0. Následně jsou řádky matice sečteny. Pro každý tón je tedy získána hodnota jak často se vyskytuje. Třem tónům s nejvyšší hodnotou jsou přiřazeny základní barvy. Příklad získaných a přiřazených barev lze vidět na obrázku \ref{fig:Color_palete} a). Zbylé barvy jsou následně odvozeny od barvy základní pomocí posunutí hodnoty odstínu o $15*i$ stupňů, kde $i$ je počet půltónů od tónu se základní barvou.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Color_palete.eps}
+    \caption{Postup generování barevné palety \uv{a)} Barvy základní, \uv{b)} Barvy zbylé}
+    \label{fig:Color_palete}
+\end{figure}
 
 \subsection{Výběr datasetu} \label{sec:Vyber_datasetu}
 
 \subsection{Výběr bloku animace} \label{sec:Vyber_bloku_animace}
+
+
 
 
     % \section{Návrhy na zlepšení}

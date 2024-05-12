@@ -5,7 +5,7 @@
 		breaklines = true,
 		frame=single,
 		numbers=left,
-		caption={Zdrojový kód funkce \texttt{Find\_segment}},
+		caption={Zdrojový kód funkce \texttt{Find\_segment} v jazyce Python},
 		label={code:Find_segment}]
 		def Find_segment(y : list, beat_time):
 		"""
@@ -43,93 +43,127 @@
 	\end{lstlisting}
 \end{minipage}
 
+\begin{lstlisting}[
+	breaklines = true,
+	frame=single,
+	numbers=left,
+	caption={Zdrojový kód funkce \texttt{Char\_selection} v jazyce Python},
+	label={code:Char_selection}]
+	def Char_selection(is_long,
+						is_loud,
+						is_important_in_audion,
+						is_important_in_segment):
+	match [is_long, is_loud]:
+		case[False, True]:
+			#Krátké úderné
+			match[is_important_in_audion,is_important_in_segment]:
+				case[False, True]:
+					return cns.SHOT
+				case[False, False]:
+					return cns.PULL
+				case[True, True]:
+					return cns.BANG
+				case[True, False]:
+					return cns.SHOT
+					
+		case[False, False]:
+			#Krátké pohodové
+			match[is_important_in_audion,is_important_in_segment]:
+				case[False, True]:
+					return cns.PULL
+				case[False, False]:
+					return cns.THEMA
+				case[True, True]:
+					return cns.SHOT
+				case[True, False]:
+					return cns.PULL
+		case[True, True]:
+			#Dlouhé úderné
+			match[is_important_in_audion,is_important_in_segment]:
+				case[False, True]:
+					return cns.PULL
+				case[False, False]:
+					return cns.THEMA
+				case[True, True]:
+					return cns.SHOT
+				case[True, False]:
+					return cns.PULL
+		case[True, False]:
+			#Dlouhé táhnoucí se
+			match[is_important_in_audion,is_important_in_segment]:
+				case[False, True]:
+					return cns.FLOW
+				case[False, False]:
+					return cns.FLOW
+				case[True, True]:
+					return cns.PULL
+				case[True, False]:
+					return cns.THEMA
+\end{lstlisting}
+
+\begin{minipage}{\linewidth}
 	\begin{lstlisting}[
 		breaklines = true,
 		frame=single,
 		numbers=left,
-		caption={Zdrojový kód funkce \texttt{Char\_selection}},
-		label={code:Char_selection}]
-		def Char_selection(is_long,
-							is_loud,
-							is_important_in_audion,
-							is_important_in_segment):
-		match [is_long, is_loud]:
-			case[False, True]:
-				#Krátké úderné
-				match[is_important_in_audion,is_important_in_segment]:
-					case[False, True]:
-						return cns.SHOT
-					case[False, False]:
-						return cns.PULL
-					case[True, True]:
-						return cns.BANG
-					case[True, False]:
-						return cns.SHOT
-						
-			case[False, False]:
-				#Krátké pohodové
-				match[is_important_in_audion,is_important_in_segment]:
-					case[False, True]:
-						return cns.PULL
-					case[False, False]:
-						return cns.THEMA
-					case[True, True]:
-						return cns.SHOT
-					case[True, False]:
-						return cns.PULL
-			case[True, True]:
-				#Dlouhé úderné
-				match[is_important_in_audion,is_important_in_segment]:
-					case[False, True]:
-						return cns.PULL
-					case[False, False]:
-						return cns.THEMA
-					case[True, True]:
-						return cns.SHOT
-					case[True, False]:
-						return cns.PULL
-			case[True, False]:
-				#Dlouhé táhnoucí se
-				match[is_important_in_audion,is_important_in_segment]:
-					case[False, True]:
-						return cns.FLOW
-					case[False, False]:
-						return cns.FLOW
-					case[True, True]:
-						return cns.PULL
-					case[True, False]:
-						return cns.THEMA
-	\end{lstlisting}
-
-	\begin{minipage}{\linewidth}
-		\begin{lstlisting}[
-			breaklines = true,
-			frame=single,
-			numbers=left,
-			caption={Zdrojový kód funkce \texttt{Find\_nearest\_beat}},
-			label={code:Find_nearest_beat}]
-			def Find_nearest_beat(y : list, time):
-			"""
-			This function finds the nearest beat in given list.
-		
-			Parameters
-			----------
-			y : list
-				List of times where the beats are located.
-			time : float
-				Time around that is searching for the nearest beat.
-		
-			Returns 
-			----------
-			idx : int
-				Index of finded beat in the list.
-			"""
-			y = np.asarray(y)
-			idx = np.abs((y - time)).argmin() 
-			return idx
+		caption={Zdrojový kód funkce \texttt{Find\_nearest\_beat} v jazyce Python},
+		label={code:Find_nearest_beat}]
+		def Find_nearest_beat(y : list, time):
+		"""
+		This function finds the nearest beat in given list.
 	
-		\end{lstlisting}
-	\end{minipage}
+		Parameters
+		----------
+		y : list
+			List of times where the beats are located.
+		time : float
+			Time around that is searching for the nearest beat.
+	
+		Returns 
+		----------
+		idx : int
+			Index of finded beat in the list.
+		"""
+		y = np.asarray(y)
+		idx = np.abs((y - time)).argmin() 
+		return idx
+
+	\end{lstlisting}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+	\begin{lstlisting}[
+		breaklines = true,
+		frame=single,
+		numbers=left,
+		caption={Zdrojový kód funkce \texttt{Calc\_strength} v jazyce Python},
+		label={code:Calc_strength}]
+		def __Calc_strength(self, onset_env):
+		"""
+		Calculate strength of beats.
+
+		The function calculate beats strength based on onset envelope in time of the beat. Function also check range around the beat if there is some bigger value in onset envelope.
+
+		Parameters
+		----------
+		onset_env : ndarray
+			Onset envelope
+		"""
+		self.__strength = np.ones(len(self.__beats)) # Declaration of ones ndarray.
+		i = 0
+
+		for beat in self.__beats:
+			try:
+				index = np.where(self.__times == beat)[0] # Getting a timestamp of the beat.
+				self.__strength[i] = self.__Max_of_range(int(index), onset_env) # Gets a biggest onset value in range around the timestamp of beat.
+			except ValueError:
+				self.__strength[i] = 0
+			i += 1
+
+		self.__strength = librosa.util.normalize(self.__strength) # The beat strength normalization between values 0-1.
+	
+	\end{lstlisting}
+\end{minipage}
 
 \chapter{Některé příkazy balíčku \texttt{thesis}}
 
