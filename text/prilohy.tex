@@ -165,6 +165,54 @@
 	\end{lstlisting}
 \end{minipage}
 
+\begin{minipage}{\linewidth}
+	\begin{lstlisting}[
+		breaklines = true,
+		frame=single,
+		numbers=left,
+		caption={Zdrojový kód funkce \texttt{Dataset\_selection} v jazyce Python},
+		label={code:Dataset_selection}]
+		def Dataset_selection(dataset_database : list[Dataset], genre_classification : GenreClassification, beat_tracking : BeatTracking, mood : int):
+
+		# Get parameters 
+		genre_predictions = genre_classification.genres_predictions
+		tempo = beat_tracking.tempo
+	
+		genres_difs = []
+	
+		# Browsing thru all datasets
+		for i, dataset in enumerate(dataset_database):
+			genre_dif = 0
+			d_genres_prediction = dataset.genre
+			for key in d_genres_prediction:
+				genre_dif += d_genres_prediction[key] - genre_predictions[key]
+	
+			genres_difs.append(np.abs(genre_dif))
+		genre_pass_datasets = []
+	
+		# Get five datasets with smallest genre difference
+		for i in range(5):
+			index_of_min = int(np.argmin(genres_difs))
+			genre_pass_datasets.append( dataset_database[index_of_min])
+			genres_difs[index_of_min] = 255
+	
+		this_tempo_dif = 100
+		selected_dataset = Dataset
+		
+		# Get dataset with same mood an smallest tempo diference
+		for dataset in genre_pass_datasets:
+			if dataset.mood == mood:
+				new_tempo_dif = abs(dataset.tempo - tempo)
+				if this_tempo_dif > new_tempo_dif:
+					this_tempo_dif = new_tempo_dif
+					selected_dataset = dataset
+	
+		return selected_dataset
+	\end{lstlisting}
+\end{minipage}
+
+
+
 \chapter{Některé příkazy balíčku \texttt{thesis}}
 
 \section{Příkazy pro sazbu veličin a jednotek}
