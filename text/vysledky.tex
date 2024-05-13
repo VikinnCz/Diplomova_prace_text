@@ -153,7 +153,7 @@ Druhá část systému tvoří samotnou logiku skládání bloků animací. Rozh
     Druhým krokem je nalezení segmentu, ve kterém se začátek animace nachází. Segment je vyjádřen jako jeho hranice začátku a konce. Tyto hranice jsou nalezeny v poli hranic segmentů jako nejbližší nižší a nejbližší vyšší čas k času začátku animace. Funkce pro vyhledání segmentu je zobrazena v úryvku kódu \ref{code:Find_segment}. 
 
     \item 
-    Třetím krokem v pořadí je výběr vhodného bloku animace. Výběr vhodného bloku je důležitý pro výsledný pocit z konečné animace. Ze získaných parametrů o nahrávce je vypočítáno dalších 7 hodnot. Na získané hodnoty jsou aplikovány váhy a poté jso mezi sebou porovnány. Výsledkem procesu jsou 3 proměnné typu boolean představující otázky: Je segment dlouhý? Je segment hlasitý? Je doba začátku animace důležitá v segmentu? Je doba začátku animace důležitá v nahrávce? Pro lepší představu je struktura procesu zobrazená na blokovém diagramu \ref{fig:Logical_structure_diagram}. Na základě získaných logických proměnných je pomocí rozhodovací struktury vybrána vhodná charakteristika animace. Výběr charakteristiky je zobrazen v úryvku kódu \ref{code:Char_selection}. Struktura je tvořena dvěma kroky a v každém kroku jsou 4 řešení. Výsledný počet řešení je tedy $2^4 = 16$. První je porovnávánao jestli je segment dlouhý a hlasitý. Kombinace těchto dvou stavů (ano/ne) tvoří první čtyři zmíněné řešení. Ve druhém kroku je porovnávána důležitost počáteční doby animace v segmentu a skladbě. Toto porovnání nabývá také 4 možných řešení.  
+    Třetím krokem v pořadí je výběr vhodného bloku animace. Výběr vhodného bloku je důležitý pro výsledný pocit z konečné animace. Ze získaných parametrů o nahrávce je vypočítáno dalších 7 hodnot. Na získané hodnoty jsou aplikovány váhy a poté jso mezi sebou porovnány. Výsledkem procesu jsou 3 proměnné typu boolean představující otázky: Je segment dlouhý? Je segment hlasitý? Je doba začátku animace důležitá v segmentu? Je doba začátku animace důležitá v nahrávce? Pro lepší představu je struktura procesu zobrazená na blokovém diagramu \ref{fig:Anim_block_param_selection_diagram}. Na základě získaných logických proměnných je pomocí rozhodovací struktury vybrána vhodná charakteristika animace. Výběr charakteristiky je zobrazen v úryvku kódu \ref{code:Char_selection}. Struktura je tvořena dvěma kroky a v každém kroku jsou 4 řešení. Výsledný počet řešení je tedy $2^4 = 16$. První je porovnáváno jestli je segment dlouhý a hlasitý. Kombinace těchto dvou stavů (ano/ne) tvoří první čtyři zmíněné řešení. Ve druhém kroku je porovnávána důležitost počáteční doby animace v segmentu a skladbě. Toto porovnání nabývá také 4 možných řešení.  
 
     \begin{figure}[H]
         \centering
@@ -231,7 +231,7 @@ Výpočet efektivní hodnoty signálu je realizován pomocí funkce z knihovy Li
     \label{fig:RMS_calculation}
 \end{figure}
 
-\subsection{Hlasitost}
+\subsection{Hlasitost} \label{sec:Pyloudnorm}
 Pro výpočet hlasitosti skladby nebo jejich částí je použita knihovna \texttt{Pyloudnorm} \cite{Pyloudnorm}. Tato knihovna implementuje standardizovaný algoritmus ITU-R BS.1770 \cite{BS.1770}. Který je více popsaný v bodě \ref{sec:Dynamika}. Výstupní hodnotou funke je číselná hodnota udávající hlasitost skladby nebo jejich částí v jednotkách LUFS. 
 
 \section{Realizace} \label{sec:Realizace}
@@ -300,14 +300,34 @@ Paleta barev znázorňuje 12 půltónů s přiřazenými barevnými hodnotami. B
 
 \subsection{Výběr datasetu} \label{sec:Vyber_datasetu}
 
-Blokový diagram jak probíhá výběr datasetu je zobrazen výše na obrázku \ref{fig:Dataset_selection_diagram}. Naprogramovaná funkce je pak k nalezení v příloze \ref{code:Dataset_selection}. Funkce má 4 parametry, které jsou důležité pro proces nalezení datasetu. Jedná se o objekt třídy \texttt{GenreClassification}, který poskytuje slovník deseti žánrů s hodnotami pravděpodobnosti pro vloženou skladbu, objekt třídy \texttt{BeatTracking}, sloužící pro zjištění tempa skladby, a hodnotu nálady zvolenou uživatelem. Posledním parametrem je samotná databáze, která představuje list objektů tipu \texttt{Dataset}. Tento list je vždy při spuštění generování načten z přiloženého textového dokumentu, kde je uložen ve formátu \acs{JSON}\footnote{JSON - Je způsob zápisu dat nezávislý na platformě.\cite{JSON}}. Výběr se skládá ze pěti cyklů. V prvním cyklu jsou procházeny všechny datasety. Pro každý dataset je vnořen další cyklus který postupně projde všechny hodnoty slovníků s žánry a vypočítá rozdíl jejich hodnot s hodnoty získané z klasifikace žánrů. Tento rozdíl je vždy přičten k celkové hodnotě rozdílu daného datasetu a následně na konec pole \texttt{genres\_difs} obsahujícího hodnoty rozdílů pro zbývající datasety. Po dokončení prvního cyklu pole \texttt{genres\_difs} obsahuje rozdíly v žánrech pro všechny datasety. Následuje druhý cyklus, který v pěti krocích ze zmíněného pole vybere 5 datasetů z nejnižší hodnotou rozdílu žánrů. V posledním cyklu je nejprve probíhá kontrola zdali dataset odpovídá zvolené náladě. Pokud podmínku splní je vypočítána hodnota rozdílu tempa mezi doporučeným tempem pro daný dataset a odhadovaným tempem pro vybranou nahrávku. Dataset s nejmenším rozdílem tempa je pak funkcí vrácen jako vybraný dataset pro vložený audio soubor. 
+Blokový diagram jak probíhá výběr datasetu je zobrazen výše na obrázku \ref{fig:Dataset_selection_diagram}. Naprogramovaná funkce je pak k nalezení v příloze \ref{code:Dataset_selection}. Funkce má 4 parametry, které jsou důležité pro proces nalezení datasetu. Jedná se o objekt třídy \texttt{GenreClassification}, který poskytuje slovník deseti žánrů s hodnotami pravděpodobnosti pro vloženou skladbu, objekt třídy \texttt{BeatTracking}, sloužící pro zjištění tempa skladby, a hodnotu nálady zvolenou uživatelem. Posledním parametrem je samotná databáze, která představuje list objektů tipu \texttt{Dataset}. Tento list je vždy při spuštění generování načten z přiloženého textového dokumentu, kde je uložen ve formátu \acs{JSON}\footnote{JSON - Je způsob zápisu dat nezávislý na platformě.\cite{JSON}}. Proces se skládá z pěti cyklů. V prvním cyklu jsou procházeny všechny datasety. Pro každý dataset je vnořen další cyklus který postupně projde všechny hodnoty slovníků s žánry a vypočítá rozdíl jejich hodnot s hodnoty získané z klasifikace žánrů. Tento rozdíl je vždy přičten k celkové hodnotě rozdílu daného datasetu a následně na konec pole \texttt{genres\_difs} obsahujícího hodnoty rozdílů pro zbývající datasety. Po dokončení prvního cyklu pole \texttt{genres\_difs} obsahuje rozdíly v žánrech pro všechny datasety. Následuje druhý cyklus, který v pěti krocích ze zmíněného pole vybere 5 datasetů z nejnižší hodnotou rozdílu žánrů. V posledním cyklu je nejprve probíhá kontrola zdali dataset odpovídá zvolené náladě. Pokud podmínku splní je vypočítána hodnota rozdílu tempa mezi doporučeným tempem pro daný dataset a odhadovaným tempem pro vybranou nahrávku. Dataset s nejmenším rozdílem tempa je pak funkcí vrácen jako vybraný dataset pro vložený audio soubor. 
 
 \subsection{Výběr bloku animace} \label{sec:Vyber_bloku_animace}
 
+Řešení vychází ze čtyřech získaných hodnot o audio souboru.
+
+\begin{description}
+    \item[Délka audia] je celkovou délku audio souboru vyjádřenou v sekundách. A je vypočítána dle rovnice \ref{rov:Cas_nahravky} kde $N$ je počet vzorků a $f_{vz}$ je vzorkovací frekvence. 
+
+    \begin{equation}
+        t_{a} = \frac{N}{f_{vz}}
+        \label{rov:Cas_nahravky}
+    \end{equation}
+
+    \item[Délka segmentu] je vypočítána jako rozdíl času konce segmentu a začátku segmentu. Jednotkou jsou sekundy. 
+    \item[Hlasitost audia] je vypočítána z knihovny \texttt{Pyloudnorm} popsané v bodě \ref{sec:Pyloudnorm}. Hlasitost je dána v jednotkách LUFS.
+    \item[Hlasitost segmentu] využívá stejnou funkci jako hlasitost audia akorát jsou do ní vloženy vzorky pouze z času segmentu. 
+    \item[Síla počáteční doby] udává hodnotu síly nástupu doby a je více popsána v bodě \ref{sec:Parameter_extraction}
+    \item[Medián síly dob ve skladbě] je stanoven jako medián síly všech dob v nahrávce. 
+    \item[Medián síly dob v segmentu] je stanoven jako medián  síly všech dob v segmentu. 
+\end{description}
+Tyto doby jso následně mezi sebou porovnány ve čtyřech blocích. Každý blok se skládá z hodnoty váhy a funkce když. Dva bloky jsou zaměřené na daný segment a určují jak je segment dlouhý a hlasitý v porovnání s celou skladbou. Hodnoty délka a hlasitost skladby jsou před porovnáváním váhovány. Tyto váhy vytváří hranice. Následně jsou mezi sebou hodnoty porovnány pomocí dvou funkcí když. A výsledkem jsou proměnné boolean označující jestli je segment tichý/hlasitý (\texttt{is\_loud}) a dlouhý/krátký (\texttt{is\_long}). Zbylé dva bloky jsou zaměřeny na sílu počáteční doby animace. Tato síla je porovnána z váhovanými hodnotami mediánu síly dob ve skladbě a mediánu síly dob v segmentu. Jejich výstupy udávají označují významnost doby. 
+
+V posledním kroku jsou 4 získané boolean odpovědi porovnány mezi sebou ve funkci \texttt{Char\_selection}. Logika porovnání naprogramovány funkcemi switch a case, v pythonu psané jako \texttt{match} a \texttt{case}. První primární blok porovnává proměnné \texttt{is\_long} a \texttt{is\_loud}. Tento blok má 4 možná řešení. V každém řešení je opět vnořena funkce \texttt{match} s dalšími čtyřmi možnými výsledky. Ve vnořeném bloku jsou porovnávány hodnoty významnosti počáteční doby animace \texttt{is\_important\_in\_audio} a \texttt{is\_important\_in\_segment}. Díky takto zvolené struktuře vzniká šestnáct možných řešení. Každé z řešení představuje hodnotu charakteristiky animace na základě které je vybrán blok animace. 
+
+\subsection{Slabé stránky systému a návrhy na zlepšení}
 
 
-
-    % \section{Návrhy na zlepšení}
     % V této kapitole jsou v odrážkách popsány body a návrehy pro realizaci a zlepšení výsledného systému. 
 
     % \begin{itemize}
