@@ -177,8 +177,6 @@ Druhá část systému tvoří samotnou logiku skládání bloků animací. Rozh
     
 \end{itemize}
 
-% Na začátku je zjištěno jestli se jedná o první blok animace. Pokud ano je nastaven čas začátku animace jako čas první doby v nahrávce. Jestli se nejedná o první blok animace, tak je nastaven čas začátku jako konec předchozího bloku animace. Tento proces v blokovém schématu \ref{} představuje proces s názvem \uv{Nastavení času začátku animace}. Druhým krokem je rozhodovací struktura jestli se vybraný čas začátku nachází v segmentu nahrávky který se opakuje. Pokud ano je nalezen blok animace ve stejném času předchozího segmentu a je zkontrolováno  
-
 \section{Metody extrakce parametrů z hudební nahrávky} \label{sec:Exktrakce_vlastnosti_metody}
 Díky vědecké komunitě vznikly volně dostupné knihovny obsahující techniky z oborů \acs{MIR}. V této části práce jsou prozkoumány 3 knihovny zmíněné v bodě \ref{sec:Dostupna_reseni}. Jsou porovnány jejich funkce pro získání parametrů z hudební nahrávky. Tyto funkce jsou mezi sebou porovnány z hlediska přesnosti výsledků, rychlosti výpočtů, jednoduchosti použití a možnosti využití pro komerční účely. 
 
@@ -256,7 +254,7 @@ První třída \texttt{BeatTracking} je zaměřená na detekci síly nástupů, 
         \label{fig:BeatTracking_class_diagram}
 \end{figure}
 
-Druhá třída s názvem \texttt{ChromaFeatures} je navržena pro získání chroma vlastností dané nahrávky. Obsahuje 4 atributy a 5 metod. Její struktura je zobrazena na diagramu \ref{fig:ChromaFeatures_class_diagram}. Pomocí funkcí jsou vypočteny chroma vektory a paleta barev analyzované skladby. Pro výpočet chroma vlastností jsou používány dvě funkce. První je \texttt{Calc\_chroma\_librosa} využívající algoritmus \texttt{chroma\_cqt} s přídavným předzpracováním signálu a filtrací výsledného pole. Zmíněný výpočet je používán při zvolené náladě \texttt{mood} na hodnoty \uv{HAPPY} a \uv{DANCING}. Pro hodnoty \uv{CHILL} a \uv{HANG\_OUT} je využíváno výpočtu pomocí knihovny madmom ve funkci \texttt{Calc\_chroma\_madmom}. Postup stanovení palety barev, který je naprogramován pomocí funkcí \texttt{Calc\_color\_palete}, \texttt{Generate\_triadic\_colors} a \texttt{Color\_shift} je podrobně popsán v sekci \ref{sec:Color_palete}.
+Druhá třída s názvem \texttt{ChromaFeatures} je navržena pro získání chroma vlastností dané nahrávky. Obsahuje 4 atributy a 5 metod. Její struktura je zobrazena na diagramu \ref{fig:ChromaFeatures_class_diagram}. Pomocí funkcí jsou vypočteny chroma vektory a paleta barev analyzované skladby. Pro výpočet chroma vlastností jsou používány dvě funkce. První je \texttt{Calc\_chroma\_librosa} využívající algoritmus \texttt{chroma\_cqt} s přídavným předzpracováním signálu a filtrací výsledného pole. Zmíněný výpočet je používán při zvolené náladě \texttt{mood} na hodnoty \uv{happy} a \uv{dancing}. Pro hodnoty \uv{chill} a \uv{hang\_out} je využíváno výpočtu pomocí knihovny madmom ve funkci \texttt{Calc\_chroma\_madmom}. Postup stanovení palety barev, který je naprogramován pomocí funkcí \texttt{Calc\_color\_palete}, \texttt{Generate\_triadic\_colors} a \texttt{Color\_shift} je podrobně popsán v sekci \ref{sec:Color_palete}.
 
 \begin{figure}[H]
     \centering
@@ -265,21 +263,33 @@ Druhá třída s názvem \texttt{ChromaFeatures} je navržena pro získání chr
         \label{fig:ChromaFeatures_class_diagram}
 \end{figure}
 
-%TODO: Popsat segmentaci
-Pro práci se segmenty je definována třída \textit{Segmentation} a její struktura je zobrazena na obrázku \ref{fig:Segmentation_diagram}.
+Pro práci se segmenty je vytvořena třída \textit{Segmentation} a její struktura je zobrazena na obrázku \ref{fig:Segmentation_diagram}. Je využíváno již vypočítaných chromavektorů, které jsou vstupními parametry funkce z knihovny Librosa využívající hierarchického aglomerativního shlukování popsaného v bodě \ref{sec:Librosa}. Pro výpočet je nutné stanovit počet segmentů na které mají být data rozděleny. Pro vytvářený systém je stanoveno 12 segmentů. 
+
+%TODO: Sem by se mohl ještě vložit obrázek ukazující rozdělení skladby na 3 různé počty segmentů. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagram_Segmentation.pdf}
-    \caption{Struktura třídy $Segment$}
+    \caption{Struktura třídy \texttt{Segment}}
     \label{fig:Segmentation_diagram}
 \end{figure}
 
-%TODO: Popsat klasifikaci žánrů.
+Metody pro klasifikaci žánrů jsou ve třídě \texttt{GenreClassification}. Ta se skládá ze třech parametrů a třech funkcí. Stanovení žánrů probíhá pomocí naučené neuronové sítě o struktuře .... Pro její vytvoření je využito balíčků TensorFlow a Keras. Pro neuronovou síť je nutné aby jí byly předloženy vstupní data vždy o stejné velikosti. Nejprve tedy probíhá předzpracování vstupních dat. K tomu slouží funkce \texttt{Data\_preparation} a \texttt{Calc\_melspec}. V prvním kroku jsou vzorky nahrávky oříznuty na délku 25 s při vzorkovací frekvenci 22050 Hz. Počet vstupních vzorků tedy je $25 * 22050 = 551250$ vzorků. Zkrácená část skladby je následně přepočtena na mel spektrogram s šířkou okna 1024 vzorků. Předzpracovaný signál je nutné převést na tenzory a poté je možné jej vložit do neuronové sítě. Výstupem modelu je tenzor o deseti hodnotách v rozmezí 0-1. Každá hodnota predikuje pravděpodobnost daného žánru. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.3\linewidth]{obrazky/UML_diagramy_GenreClassification.pdf}
+    \caption{Struktura třídy \texttt{GenreClassification}}
+    \label{fig:GenreClassification_diagram}
+\end{figure}
+
+Model pro klasifikaci žánrů je vytvořen pomocí návodu \uv{Music Classification Using Deep Learning | Python} \cite{Music_classification_using_deep_learning}, který vychází z článku \cite{Music_genre_classification_paper} a teoreticky je popsán v kapitole \ref{sec:Klasifikace_zanru}. 
+
+%TODO: Pokud bude čas přidat postup učení modelu. 
 
 \subsection{Paleta barev} \label{sec:Color_palete}
 
-Paleta barev znázorňuje 12 půltónů s přiřazenými barevnými hodnotami. Barvy jsou stanoveny ve dvou krocích. Jako první jsou určeny 3 základní barvy, které tvoří triadické barevné uspořádání. Celý proces generování probíhá pomocí modelu \acs{HSV}\footnote{HSV -- Hue, Saturation, Value. HSV je barevný model pro uložení informací o barvě pomocí tří hodnot tón, sytost a jas).} U základní barvy je náhodně vygenerovaná hodnota odstínu v rozmezí 0 až 360. Hodnoty sytosti a jasu jsou přednastavené pro všechny barvy stejně. Ve funkci \texttt{Generate\_ triadic\_colors} jsou následně vygenerovány zbývající dvě barvy tak, že je hodnota odstínu posunuta vždy o 120 stupňů aby barvy odpovídaly triadickému uspořádání. Vygenerované. Aby bylo možné základní barvy přiřadit tónům je nejprve potřeba zjistit které tři tóny v nahrávce znějí nejčastěji. Matice chromavektorů je převedena na binární. Hodnoty větší nebo rovny 0,6 jsou zapsány jako 1 hodnoty nižší jsou zapsány jako 0. Následně jsou řádky matice sečteny. Pro každý tón je tedy získána hodnota jak často se vyskytuje. Třem tónům s nejvyšší hodnotou jsou přiřazeny základní barvy. Příklad získaných a přiřazených barev lze vidět na obrázku \ref{fig:Color_palete} a). Zbylé barvy jsou následně odvozeny od barvy základní pomocí posunutí hodnoty odstínu o $15*i$ stupňů, kde $i$ je počet půltónů od tónu se základní barvou.
+Paleta barev znázorňuje 12 půltónů s přiřazenými barevnými hodnotami. Barvy jsou stanoveny ve dvou krocích. Jako první jsou určeny 3 základní barvy, které tvoří triadické barevné uspořádání. Celý proces generování probíhá pomocí modelu \acs{HSV}\footnote{HSV -- Hue, Saturation, Value. HSV je barevný model pro uložení informací o barvě pomocí tří hodnot tón, sytost a jas).} U základní barvy je náhodně vygenerovaná hodnota odstínu v rozmezí 0 až 360. Hodnoty sytosti a jasu jsou přednastavené pro všechny barvy stejně. Ve funkci \texttt{Generate\_ triadic\_colors} jsou vygenerovány zbývající dvě barvy tak, že je hodnota odstínu posunuta vždy o 120 stupňů aby barvy odpovídaly triadickému uspořádání. Vygenerované. Aby bylo možné základní barvy přiřadit tónům je nejprve potřeba zjistit které tři tóny v nahrávce znějí nejčastěji. Matice chromavektorů je převedena na binární. Hodnoty větší nebo rovny 0,6 jsou zapsány jako 1 hodnoty nižší jsou zapsány jako 0. Následně jsou řádky matice sečteny. Pro každý tón je tedy získána hodnota jak často se vyskytuje. Třem tónům s nejvyšší hodnotou jsou přiřazeny základní barvy. Příklad získaných a přiřazených barev lze vidět na obrázku \ref{fig:Color_palete} a). Zbylé barvy jsou odvozeny od barvy základní pomocí posunutí hodnoty odstínu o $15*i$ stupňů, kde $i$ je počet půltónů od tónu se základní barvou.
 
 \begin{figure}[H]
     \centering
