@@ -37,7 +37,7 @@ Systém pro generování SpectodaCode popsaný v bodě \ref{sec:System_generovan
 
     \item[Segmentace] rozděluje nahranou skladbu do 12 segmentů ve kterých se objevují stejné hudební tvary. Segmenty jsou uloženy jako pole časů hranic segmentů. Kde hranice představuje konec jednoho segmentu a začátek druhého. 
 
-    \item[Žánr] je pro zvolenou nahrávku uložen v proměnné $genre$ pomocí slovníku 10 žánrů, ke kterým je přiřazena jejich pravděpodobnost. Protože se v hudbě vyskytuje velké množství žánrů, které se mezi sebou prolínají nejde s přesnou jistotou zařadit každou nahrávku přesně k jednomu žánru. Proto je použita metoda pravděpodobností. Použité žánry jsou popsány v úryvku kódu \ref{code:song_genre_variables}.
+    \item[Žánr] je pro zvolenou nahrávku uložen v proměnné \texttt{genre} pomocí slovníku 10 žánrů, ke kterým je přiřazena jejich pravděpodobnost. Protože se v hudbě vyskytuje velké množství žánrů, které se mezi sebou prolínají nejde s přesnou jistotou zařadit každou nahrávku přesně k jednomu žánru. Proto je použita metoda pravděpodobností. Použité žánry jsou popsány v úryvku kódu \ref{code:song_genre_variables}.
     \begin{figure}[H]
         \begin{lstlisting} [
             caption = {Hodnoty proměnné $genre$},
@@ -57,10 +57,10 @@ Systém pro generování SpectodaCode popsaný v bodě \ref{sec:System_generovan
         \end{lstlisting}
     \end{figure}
 
-    \item[Nálada] představuje proměnou $mood$ typu float s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}. Náladu zadává uživatel při nahrávání zvolené skladby.  
+    \item[Nálada] představuje proměnou \texttt{mood} typu float s přednastavenými statickými hodnotami zobrazenými v části kódu \ref{code:song_mood_variables}. Náladu zadává uživatel při nahrávání zvolené skladby.  
     \begin{figure}[H]        
         \begin{lstlisting}[
-            caption = {Hodnoty proměnné $mood$},
+            caption = {Hodnoty proměnné \texttt{mood}},
             captionpos=b,
             label = {code:song_mood_variables}]
             # Song mood constants
@@ -74,16 +74,16 @@ Systém pro generování SpectodaCode popsaný v bodě \ref{sec:System_generovan
 \end{description}
 
 \subsection{Databáze bloků animací} \label{sec:Database_structure}
-Jak je popsáno v bodě \ref{sec:Spectoda} systém Spectoda obsahuje základní animace, které jsou skládány do bloků a tím vznikají komplexní struktury. Systém využívá již připravených bloků animací, které jsou uloženy jako objekty. Těmto objektům jsou přiřazeny parametry $code$, $characteristics$, $length$ a $colors$. Jejich struktura je zapsaná datovou třídou $AnimationBlock$. Z objektů třídy jsou dále tvořeny datasety zapsané třídou $Dataset$. Tyto instance obsahují 5 bloků animací a parametry $genre$, $tempo$ a $mood$. UML diagramy tříd jsou zobrazeny na obrázku \ref{fig:UML_diagram_Dataset_AnimationBlock}.
+Jak je popsáno v bodě \ref{sec:Spectoda} systém Spectoda obsahuje základní animace, které jsou skládány do bloků a tím vznikají komplexní struktury. Systém využívá již připravených bloků animací, které jsou uloženy jako objekty. Těmto objektům jsou přiřazeny parametry\texttt{code},\texttt{characteristics},\texttt{length} a\texttt{colors}. Jejich struktura je zapsaná datovou třídou\texttt{AnimationBlock}. Z objektů třídy jsou dále tvořeny datasety zapsané třídou\texttt{Dataset}. Tyto instance obsahují 5 bloků animací a parametry\texttt{genre},\texttt{tempo} a\texttt{mood}. UML diagramy tříd jsou zobrazeny na obrázku \ref{fig:UML_diagram_Dataset_AnimationBlock}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width = 0.7\linewidth]{obrazky/UML_diagram_Dataset_and_AnimationBlock.pdf}
-    \caption{Blokové diagramy tříd $Dataset$, $AnimationBlock$}
+    \caption{Blokové diagramy tříd\texttt{Dataset},\texttt{AnimationBlock}}
     \label{fig:UML_diagram_Dataset_AnimationBlock}
 \end{figure}
 
-Jak bylo zmíněno bloky animací mají proměnou $characteristic$, které je rozděluje do 5 kategorií. Každá kategorie má svůj specifický význam: 
+Jak bylo zmíněno bloky animací mají proměnou\texttt{characteristic}, které je rozděluje do 5 kategorií. Každá kategorie má svůj specifický význam: 
 
 \begin{itemize}
     \item BANG -- Vhodné pro začátek krátkých segmentů. Velmi úderné a rychlé.
@@ -95,7 +95,7 @@ Jak bylo zmíněno bloky animací mají proměnou $characteristic$, které je ro
 
 \begin{figure}[H]
     \begin{lstlisting}[
-        caption = {Hodnoty proměnné $characteristics$},
+        caption = {Hodnoty proměnné \texttt{characteristics}},
         captionpos=b,
         label = {code:anim_characteristic_constants}]
         # Animation characteristics constants
@@ -114,7 +114,7 @@ Systém pro generování animací je jádrem práce. Jeho struktura udává vizu
 První částí systému je vstupní rozhraní, ve kterém jsou přijímány data obsahující vlastnosti hudební nahrávky. Struktura přijímaných dat je popsána v bodě \ref{sec:Parametry_nahravky}. Každý ze zmíněných parametrů plní důležitou funkci v rozhodovacím procesu skládání bloků animace. Níže jsou popsány rozhodovací funkce pro jednotlivé parametry.
 
 \begin{description}
-    \item[Žánr a nálada] jsou používány pro výběr vhodného balíčku animací. Tyto balíčky jsou nazývány datasety a jejich datová struktura je popsána v bodě \ref{sec:Database_structure}. Postup výběru datasetu je následující. Každý dataset obsahuje konstantní hodnotu nálady $mood$ a seznam všech deseti používaných žánrů. Ke každému žánru je přiřazeno racionální číslo udávající hodnotu jak moc je dataset pro daný žánr vhodný. Kde 1 je nejvíce vhodný a 0 nejméně. Na základě seznamu $genre$ dochází k postupnému seřazení všech, datasetů dle jejich vhodnosti pro nahraný audio soubor, a výběru 5 nejvíce se hodících. V dalším kroku jsou vyřazeny všechny datasety, které neodpovídají zvolené náladě $mood$. Programové řešení výběru vhodného datasetu je popsáno v bodě \ref{sec:Vyber_datasetu}
+    \item[Žánr a nálada] jsou používány pro výběr vhodného balíčku animací. Tyto balíčky jsou nazývány datasety a jejich datová struktura je popsána v bodě \ref{sec:Database_structure}. Postup výběru datasetu je následující. Každý dataset obsahuje konstantní hodnotu nálady \texttt{mood} a seznam všech deseti používaných žánrů. Ke každému žánru je přiřazeno racionální číslo udávající hodnotu jak moc je dataset pro daný žánr vhodný. Kde 1 je nejvíce vhodný a 0 nejméně. Na základě seznamu \texttt{genre} dochází k postupnému seřazení všech, datasetů dle jejich vhodnosti pro nahraný audio soubor, a výběru 5 nejvíce se hodících. V dalším kroku jsou vyřazeny všechny datasety, které neodpovídají zvolené náladě \texttt{mood}. Programové řešení výběru vhodného datasetu je popsáno v bodě \ref{sec:Vyber_datasetu}
     
     \begin{figure}[H]
         \centering
@@ -131,7 +131,7 @@ První částí systému je vstupní rozhraní, ve kterém jsou přijímány dat
 
     \item[Obálka síly nástupů] z anglického pojmu onset strength envelope je hodnota na základě které je určena významnost jednotlivých dob. Tato významnost je brána jako nejvyšší hodnota obálky síly nástupů v okolí dané doby.
      
-    \item[Chroma vektory] udávají tónovou strukturu skladby v průběhu času. Tento parametr je využit pro nastavení barev animace. Chromavektory se analyzují a jsou vybrány 3 hlavní tóny nejčastěji se znějící v nahrávce. Každému z tónů je přiřazen barevný odstín tak, aby se jednalo o barvy triadické. Zbývajícím tónům jsou přiřazeny odstíny těchto barev a jsou uloženy jako barevná paleta nahrávky. U jednotlivých animací jsou na základě počtu barev v údaji $colors$ z chromavektorů vypočítány nejvíce se vyskytující tóny. Na základě těchto tónů jsou animaci přiřazeny barvy z palety barev. Celý proces generování a přiřazování barev je popsán v bodě \ref{sec:Color_palete}.
+    \item[Chroma vektory] udávají tónovou strukturu skladby v průběhu času. Tento parametr je využit pro nastavení barev animace. Chromavektory se analyzují a jsou vybrány 3 hlavní tóny nejčastěji se znějící v nahrávce. Každému z tónů je přiřazen barevný odstín tak, aby se jednalo o barvy triadické. Zbývajícím tónům jsou přiřazeny odstíny těchto barev a jsou uloženy jako barevná paleta nahrávky. U jednotlivých animací jsou na základě počtu barev v údaji \texttt{colors} z chromavektorů vypočítány nejvíce se vyskytující tóny. Na základě těchto tónů jsou animaci přiřazeny barvy z palety barev. Celý proces generování a přiřazování barev je popsán v bodě \ref{sec:Color_palete}.
 
     \item[Hlasitost] pomáhá procesu segmentace. Refrén a sloka se mohou lišit hlasitostí. Hlasitost je počítána pro celou skladbu a následně pro segmenty. Při výběru vhodného bloku animace dochází k porovnání hlasitosti segmentu vůči hlasitosti nahrávky. Na základě porovnání je určeno jak výrazné mají být animace v daném segmentu. Vyšší hodnoty představují rychlejší a údernější animace. Nižší hodnoty naopak pomalejší a klidnější animace.
 \end{description}
@@ -276,7 +276,6 @@ Druhá třída s názvem \texttt{ChromaFeatures} je navržena pro získání chr
 
 Pro práci se segmenty je vytvořena třída \textit{Segmentation} a její struktura je zobrazena na obrázku \ref{fig:Segmentation_diagram}. Je využíváno již vypočítaných chromavektorů, které jsou vstupními parametry funkce z knihovny Librosa Tato funkce využívá hierarchického aglomerativního shlukování popsaného v bodě \ref{sec:Librosa}. Pro výpočet je nutné stanovit počet segmentů na které mají být data rozděleny. Počet segmentů je stanoven na základně zvolené nálady. Počty jsou následující: chill -- 8 segmentů, hang out -- 16 segmentů, happy -- 24 segmentů a dancing -- 32 segmentů. Rozdíly jsou vidět na obrázku \ref{fig:Segmentation_segments_comparison}.
 
-% TODO: Hodit tyto obrázky spolu s popisem do kapitoly "Metody extrakce parametrů"? 
 \begin{figure}[H]
     \centering
     \includegraphics[width = 1\linewidth]{obrazky/Segmentation_segments_comparisons.eps}
