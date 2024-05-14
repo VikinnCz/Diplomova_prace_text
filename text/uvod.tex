@@ -2,15 +2,25 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{Úvod}
 
-Práce se zabývá přípravou teoretických podkladů a průzkumem vhodných metod pro úspěšnou realizaci navazující diplomové práce v oblasti tvorby světelných animací na základě parametrizace hudební nahrávky. Získané znalosti jsou v semstrální práci využity pro výběr vhodných parametrů a návrh struktury výsledného systému. Tento systém bude generovat kód jež je následně převáděn na světelnou animaci pomocí řešení od společnosti Spectoda. Práce je rozdělena na 3 nasebe navazující cíle.
-
-%TODO: Doplnit informace o tom, že se jedné o animace zobrazované na ledpáscích řízených systémem SpecToda atd..
+Diplomová práce se zabývá generováním světelných animací pro systémy Spectoda, na základě analýze parametrů získaných z hudebních nahrávek. Spectoda je společnost specializující se na inteligentní řízení světel a světelných efektů. Aplikace vyvíjená v rámci této práce je primárně určena pro animace adresovatelných LED pásků. Práce je strukturovaná do třech cílů, které pokrývají celý proces vývoje -- od teoretického návrhu, přes průzkum a testování, až po vývoj finálního systému generujícího funkční kód pro ovládání LED pásků.
 
 \begin{description}
-    \item[Prvním cílem] je teoretický průzkum a vybudování dostatečné báze znalostí. Problematikou získávání informací z hudebních nahrávek se celosvětově zabývá vědní obor Music information retrieval zkráceně \acs{MIR}. V této oblasti je zapotřebí prozkoumat existující vhodná řešení a zjistit jakými postupy jsou realizovány. 
-    \item[Druhým cílem] je ze získaných znalostí navrhnout strukturu výsledného programu pro generování SpectodaCode, který je následně převáděn na světelné animace. Jsou prozkoumány a vybrány parametry hudebních děl potřebné pro realizaci systému. Při návrhu systému je nutné dbát aby byl realizovatelný, pro uživatele jednoduchý na použití a výpočetně nenáročný. Zároveň je kladen důraz na kvalitu generovaných animací.
-    \item[Třetím cílem] je praktická realizace získávání parametrů. Je nutné vyzkoušet dostupné metody pro analýzu vybraných parametrů, porovnat je mezi sebou na základě stanovených kritérií a určit jejich vhodnost pro použití ve struktuře výsledného systmu. Z průzkumu vzniknou návrhy pro zlepšení a úpravu vybraných parametrů. 
+    \item[Prvním cílem] -- je prozkoumat možnosti generování animací a identifikovat, které informace z nahrávek jsou pro tento proces nejrelevantnější. Na základě získaných dat bude navržena struktura systému.
+    \item[Druhým cílem] -- je prozkoumat existující řešení v oblasti extrakce hudebních parametrů, známé pod oborem Music Information Retrieval (MIR), a vyhodnotit je z hlediska přesnosti a efektivity výpočtů. Z těchto poznatků budou vybrány nejvhodnější metody pro implementaci.
+    \item[Třetím cílem] -- je naprogramovat a optimalizovat navržený systém. 
 \end{description}
+
+
+% Starý Úvod
+% -------------------------------------
+% Práce se zabývá přípravou teoretických podkladů a průzkumem vhodných metod pro úspěšnou realizaci navazující diplomové práce v oblasti tvorby světelných animací na základě parametrizace hudební nahrávky. Získané znalosti jsou v semstrální práci využity pro výběr vhodných parametrů a návrh struktury výsledného systému. Tento systém bude generovat kód jež je následně převáděn na světelnou animaci pomocí řešení od společnosti Spectoda. Práce je rozdělena na 3 nasebe navazující cíle.
+
+
+% \begin{description}
+%     \item[Prvním cílem] je teoretický průzkum a vybudování dostatečné báze znalostí. Problematikou získávání informací z hudebních nahrávek se celosvětově zabývá vědní obor Music information retrieval zkráceně \acs{MIR}. V této oblasti je zapotřebí prozkoumat existující vhodná řešení a zjistit jakými postupy jsou realizovány. 
+%     \item[Druhým cílem] je ze získaných znalostí navrhnout strukturu výsledného programu pro generování SpectodaCode, který je následně převáděn na světelné animace. Jsou prozkoumány a vybrány parametry hudebních děl potřebné pro realizaci systému. Při návrhu systému je nutné dbát aby byl realizovatelný, pro uživatele jednoduchý na použití a výpočetně nenáročný. Zároveň je kladen důraz na kvalitu generovaných animací.
+%     \item[Třetím cílem] je praktická realizace získávání parametrů. Je nutné vyzkoušet dostupné metody pro analýzu vybraných parametrů, porovnat je mezi sebou na základě stanovených kritérií a určit jejich vhodnost pro použití ve struktuře výsledného systmu. Z průzkumu vzniknou návrhy pro zlepšení a úpravu vybraných parametrů. 
+% \end{description}
 
 
 % V rámci semestrální práce jsou popsány možnosti pro dolování parametrů z hudebních nahrávek a jejich analýzu.
