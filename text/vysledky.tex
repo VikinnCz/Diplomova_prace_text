@@ -221,6 +221,7 @@ Dalším hodnoceným parametrem je délka výpočtu chromavektorů. Ta je závis
     \label{fig:Chroma_calculation_time}
 \end{figure}
     
+%TODO: Dávat ji tam když není použita?
 \subsection{Efektivní hodnota signálu}
 Výpočet efektivní hodnoty signálu je realizován pomocí funkce z knihovy Librosa. Pro výpočet je použito okno o délce 2048 vzorků. Hodnoty jsou vycentrovány na střed rozsahu okna tedy 1024 vzorků. Získaná křivka je uhlazena pomocí výpočtu klouzavého průměru. Počet vzorků ze kterých se klouzavý průměr vypočítá odpovídá délce signálu $7,5 s$ a je závislý na jeho vzorkovací frekvenci. Získané křivky jsou zobrazeny na obrázku \ref{fig:RMS_calculation}.
 
@@ -233,6 +234,16 @@ Výpočet efektivní hodnoty signálu je realizován pomocí funkce z knihovy Li
 
 \subsection{Hlasitost} \label{sec:Pyloudnorm}
 Pro výpočet hlasitosti skladby nebo jejich částí je použita knihovna \texttt{Pyloudnorm} \cite{Pyloudnorm}. Tato knihovna implementuje standardizovaný algoritmus ITU-R BS.1770 \cite{BS.1770}. Který je více popsaný v bodě \ref{sec:Dynamika}. Výstupní hodnotou funke je číselná hodnota udávající hlasitost skladby nebo jejich částí v jednotkách LUFS. 
+
+\subsection{Segmentace} \label{sec:Segmentace}
+Z vybraných knihoven nabízí metody pro segmentaci nahrávky pouze knihovna librosa ve funkci \texttt{agglomerative}. Pro rozdělení na segmenty využívá jako vstupní data chroma vektory. Díky tomu je možné dosáhnou odlišných výsledků použitím různých metod pro výpočet vstupních chroma vektorů. Na obrázku \ref{fig:Segmentation_chroma_comparison} je zobrazeno využití dvou různých přístupů na vliv výpočtu dvanácti segmentů. Prvním z přístupů je porovnání chromagramů získaných zvolenými metodami z knihvy librosa a madmom. Druhým přístupem je jejich přepočet na binární variantu s váhou  $0,6$ kde hodnoty vzorků chroma vektorů nižší nebo rovny jsou zapsány jako 0 a hodnoty vyšší jako 1. Tento proces je využit i při generování palety barev \ref{sec:Color_palete}. Z obrázku je patrné, že největší rozdíl ve stanovení segmentů hraje právě zvolená metoda pro výpočet chroma vektorů. U binární verze pak lze vidět malé odchylky v rámci dvou až tří segmentů. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Segmentation_chroma_comparisons.eps}
+    \caption{Porovnání vlivu výpočtu chroma vektorů na výslednou segmentaci pro 12 segmentů.}
+    \label{fig:Segmentation_chroma_comparison}
+\end{figure}
 
 \section{Realizace} \label{sec:Realizace}
 
@@ -263,9 +274,15 @@ Druhá třída s názvem \texttt{ChromaFeatures} je navržena pro získání chr
         \label{fig:ChromaFeatures_class_diagram}
 \end{figure}
 
-Pro práci se segmenty je vytvořena třída \textit{Segmentation} a její struktura je zobrazena na obrázku \ref{fig:Segmentation_diagram}. Je využíváno již vypočítaných chromavektorů, které jsou vstupními parametry funkce z knihovny Librosa využívající hierarchického aglomerativního shlukování popsaného v bodě \ref{sec:Librosa}. Pro výpočet je nutné stanovit počet segmentů na které mají být data rozděleny. Pro vytvářený systém je stanoveno 12 segmentů. 
+Pro práci se segmenty je vytvořena třída \textit{Segmentation} a její struktura je zobrazena na obrázku \ref{fig:Segmentation_diagram}. Je využíváno již vypočítaných chromavektorů, které jsou vstupními parametry funkce z knihovny Librosa Tato funkce využívá hierarchického aglomerativního shlukování popsaného v bodě \ref{sec:Librosa}. Pro výpočet je nutné stanovit počet segmentů na které mají být data rozděleny. Počet segmentů je stanoven na základně zvolené nálady. Počty jsou následující: chill -- 8 segmentů, hang out -- 16 segmentů, happy -- 24 segmentů a dancing -- 32 segmentů. Rozdíly jsou vidět na obrázku \ref{fig:Segmentation_segments_comparison}.
 
-%TODO: Sem by se mohl ještě vložit obrázek ukazující rozdělení skladby na 3 různé počty segmentů. 
+% TODO: Hodit tyto obrázky spolu s popisem do kapitoly "Metody extrakce parametrů"? 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Segmentation_segments_comparisons.eps}
+    \caption{Provnání počtu segmentů}
+    \label{fig:Segmentation_segments_comparison}
+\end{figure}
 
 \begin{figure}[H]
     \centering
@@ -289,7 +306,7 @@ Model pro klasifikaci žánrů je vytvořen pomocí návodu \uv{Music Classifica
 
 \subsection{Paleta barev} \label{sec:Color_palete}
 
-Paleta barev znázorňuje 12 půltónů s přiřazenými barevnými hodnotami. Barvy jsou stanoveny ve dvou krocích. Jako první jsou určeny 3 základní barvy, které tvoří triadické barevné uspořádání. Celý proces generování probíhá pomocí modelu \acs{HSV}\footnote{HSV -- Hue, Saturation, Value. HSV je barevný model pro uložení informací o barvě pomocí tří hodnot tón, sytost a jas).} U základní barvy je náhodně vygenerovaná hodnota odstínu v rozmezí 0 až 360. Hodnoty sytosti a jasu jsou přednastavené pro všechny barvy stejně. Ve funkci \texttt{Generate\_ triadic\_colors} jsou vygenerovány zbývající dvě barvy tak, že je hodnota odstínu posunuta vždy o 120 stupňů aby barvy odpovídaly triadickému uspořádání. Vygenerované. Aby bylo možné základní barvy přiřadit tónům je nejprve potřeba zjistit které tři tóny v nahrávce znějí nejčastěji. Matice chromavektorů je převedena na binární. Hodnoty větší nebo rovny 0,6 jsou zapsány jako 1 hodnoty nižší jsou zapsány jako 0. Následně jsou řádky matice sečteny. Pro každý tón je tedy získána hodnota jak často se vyskytuje. Třem tónům s nejvyšší hodnotou jsou přiřazeny základní barvy. Příklad získaných a přiřazených barev lze vidět na obrázku \ref{fig:Color_palete} a). Zbylé barvy jsou odvozeny od barvy základní pomocí posunutí hodnoty odstínu o $15*i$ stupňů, kde $i$ je počet půltónů od tónu se základní barvou.
+Paleta barev znázorňuje 12 půltónů s přiřazenými barevnými hodnotami. Barvy jsou stanoveny ve dvou krocích. Jako první jsou určeny 3 základní barvy, které tvoří triadické barevné uspořádání. Celý proces generování probíhá pomocí modelu \acs{HSV}\footnote{HSV -- Hue, Saturation, Value. HSV je barevný model pro uložení informací o barvě pomocí tří hodnot tón, sytost a jas).} U základní barvy je náhodně vygenerovaná hodnota odstínu v rozmezí 0 až 360. Hodnoty sytosti a jasu jsou přednastavené pro všechny barvy stejně. Ve funkci \texttt{Generate\_ triadic\_colors} jsou vygenerovány zbývající dvě barvy tak, že je hodnota odstínu posunuta vždy o 120 stupňů aby barvy odpovídaly triadickému uspořádání. Aby bylo možné základní barvy přiřadit tónům je nejprve potřeba zjistit které tři tóny v nahrávce znějí nejčastěji. Matice chromavektorů je převedena na binární. Hodnoty větší nebo rovny 0,6 jsou zapsány jako 1 hodnoty nižší jsou zapsány jako 0. Následně jsou řádky matice sečteny. Pro každý tón je tedy získána hodnota jak často se vyskytuje. Třem tónům s nejvyšší hodnotou jsou přiřazeny základní barvy. Příklad získaných a přiřazených barev lze vidět na obrázku \ref{fig:Color_palete} a). Zbylé barvy jsou odvozeny od barvy základní pomocí posunutí hodnoty odstínu o $15*i$ stupňů, kde $i$ je počet půltónů od tónu se základní barvou.
 
 \begin{figure}[H]
     \centering
