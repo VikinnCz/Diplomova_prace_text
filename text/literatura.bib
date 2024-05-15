@@ -68,7 +68,6 @@
     publisher = {Oxford University Press},
     year = {2016},
     month = {01},
-    abstract = "{Timbre is a set of auditory attributes that has been characterized through multidimensional scaling of dissimilarity ratings. Acoustic correlates of the resulting dimensions of timbre space provide clues to its sensory representation. Timbre space serves as a psychological model that can predict other aspects of timbre such as the perception of timbre intervals and the role of timbre-related acoustic cues in auditory stream segregation. Timbre also serves as a sensory vehicle for the identity of sound sources. Dimensions of timbre such as roughness provide the sensory basis of more complex musical structuring such as the creation of movement between states of tension and relaxation, both in musical harmony, but also in orchestration. The close link between auditory grouping processes and emergent timbral properties of musical textures demonstrate the range of perceptual variation that can be covered through orchestration techniques and confirm timbre’s role as a structuring force in music perception.}",
     doi = {10.1093/oxfordhb/9780198722946.013.12},
     url = {https://doi.org/10.1093/oxfordhb/9780198722946.013.12},
     eprint = {https://academic.oup.com/book/0/chapter/292611024/chapter-ag-pdf/44515461/book\_34489\_section\_292611024.ag.pdf},
@@ -324,13 +323,6 @@ doi = {10.1080/09298210701653344}
    note = "[Online; 11. 12. 2023]"
  }
 
-@electronic{EBU_R_128,
-   author = "European Broadcasting Union",
-   title = "Loudness normalisation and permitted maximumlevel of audio signals",
-   url = "https://tech.ebu.ch/docs/r/r128.pdf",
-   note = "[Online; 12. 12. 2023]"
- }
-
  @electronic{Spectoda,
    author = "Light Seekers s.r.o",
    title = "Spectoda",
@@ -365,6 +357,7 @@ Controlling Lighting Equipment and Accessories},
 title={pyloudnorm: {A} simple yet flexible loudness meter in Python},
 author={Steinmetz, Christian J. and Reiss, Joshua D.},
 booktitle={150th AES Convention},
+pages           = {},
 year={2021}}
 
 
@@ -372,7 +365,17 @@ year={2021}}
   author          = {International Telecommunication Union},
   journal         = {ITU Publications},
   title           = {Recommendation ITU-R BS.1770-5},
-  year            = {2023}
+  year            = {2011},
+  URL             = {https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1770-5-202311-I!!PDF-E.pdf},
+  note            = {Online, 15.5.2024}
+}
+
+@article{EBU_R_128,
+  journal         = {tech.ebu.ch. Geneva: European Broadcasting Union},
+  title           = {R 128 -- Loudness normalisation and permitted maximum level of audio signals},
+  year            = {2014},
+  URL = {https://tech.ebu.ch/docs/r/r128.pdf},
+  note            = {Online, 15.5.2024},
 }
 
 @book{CSS,
@@ -406,3 +409,88 @@ title = {Music Genre Classification using Neural Networks with Data Augmentation
    url = "https://cs.wikipedia.org/w/index.php?title=JavaScript_Object_Notation&oldid=20868532",
    note = "[Online; navštíveno 13. 05. 2024]"
  }
+
+ @article{Content_based_MIR,
+author = {Kontaki, Maria and Karydis, Ioannis and Manolopoulos, Yannis},
+year = {2007},
+month = {01},
+title = {Content-based Information Retrieval in Streaming Music}
+}
+
+@inbook{Musical_timbre_perception,
+author = {Mcadams, Stephen},
+year = {2013},
+month = {12},
+pages = {35-67},
+title = {Musical Timbre Perception},
+isbn = {9780123814609},
+journal = {The Psychology of Music},
+doi = {10.1016/B978-0-12-381460-9.00002-X}
+}
+
+@inproceedings{Chroma_feature_extraction,
+author = {Shah, Ayush and Kattel, Manasi and Nepal, Araju and Shrestha, D.},
+year = {2019},
+month = {01},
+pages = {},
+title = {Chroma Feature Extraction}
+}
+
+@article{Tonal_description,
+author = {Gómez, Emilia},
+year = {2006},
+month = {08},
+pages = {294-304},
+title = {Tonal Description of Polyphonic Audio for Music Content Processing},
+volume = {18},
+journal = {INFORMS Journal on Computing},
+doi = {10.1287/ijoc.1040.0126}
+}
+
+@inproceedings{Chroma_from_CQT,
+author = {Bello, Juan and Pickens, Jeremy},
+year = {2005},
+month = {09},
+pages = {},
+title = {A Robust Mid-level Representation for Harmonic Content in Music Signals}
+}
+
+@inproceedings{MuellerEwert11_ChromaToolbox_ISMIR,
+author    = {Meinard M{\"u}ller and Sebastian Ewert},
+title     = {{C}hroma {T}oolbox: {MATLAB} implementations for extracting variants of chroma-based audio features},
+booktitle = {Proceedings of the International Conference on Music Information Retrieval ({ISMIR})},
+address   = {Miami, Florida, USA},
+year      = {2011},
+pages     = {215--220},
+url-pdf   = {2011_MuellerEwert_ChromaToolbox_ISMIR.pdf},
+url-details = {https://www.audiolabs-erlangen.de/resources/MIR/chromatoolbox}
+}
+
+@inproceedings{The_deep_chroma_extractor,
+author = {Korzeniowski, Filip and Widmer, Gerhard},
+year = {2016},
+month = {08},
+pages = {},
+title = {Feature Learning for Chord Recognition: The Deep Chroma Extractor}
+}
+¨
+@inproceedings{madmom,
+   Title = {{madmom: a new Python Audio and Music Signal Processing Library}},
+   Author = {B{\"o}ck, Sebastian and Korzeniowski, Filip and Schl{\"u}ter, Jan and Krebs, Florian and Widmer, Gerhard},
+   Booktitle = {Proceedings of the 24th ACM International Conference on
+   Multimedia},
+   Month = {10},
+   Year = {2016},
+   Pages = {1174--1178},
+   Address = {Amsterdam, The Netherlands},
+   Doi = {10.1145/2964284.2973795}
+}
+
+@misc{madmom_paper,
+      title={madmom: a new Python Audio and Music Signal Processing Library}, 
+      author={Sebastian Böck and Filip Korzeniowski and Jan Schlüter and Florian Krebs and Gerhard Widmer},
+      year={2016},
+      eprint={1605.07008},
+      archivePrefix={arXiv},
+      primaryClass={cs.SD}
+}

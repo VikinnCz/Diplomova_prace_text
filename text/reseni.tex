@@ -7,9 +7,9 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
     Jsou zde kombinovány znalosti mnoha oborů jako jsou muzikologie, psychoakustika, strojové učení, zpracování signálů a další. 
     
     Výstupy jeho výzkumu jsou využívány v populárních technologických aplikacích. 
-    Jednou z aplikací je personalizované doporučování hudebních skladeb, které se nachází v moderních streamovacích platformách.
-    Další využítí je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky analýze tempa a klíčových částí skladby.
-    Tyto technologie se nachází v mnoha dalších aplikacích a s rozširováním digitálního audia jejich důležitost stále roste. %TODO: Citace
+    Jednou z aplikací je personifikované doporučování hudebních skladeb, které se nachází v moderních streamingových platformách.
+    Další využití je v programech pro mixování hudby používaných diskžokeji k plynulejší práci díky analýze tempa a klíčových částí skladby.
+    Tyto technologie se nachází v mnoha dalších aplikacích a s rozšiřováním digitálního audia jejich důležitost stále roste \cite{Content_based_MIR}.
     
     \subsection{Historie}
     V tomto bodě je napsán souhrn historie MIR z knihy A New Companion to Digital Humanities \cite{a_new_companion_to_digital_humanities}.
@@ -67,33 +67,6 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
     a rozložení na krátké překrývající se úseky, ze kterých mohou být nezávisle extrahovány jejich vlastnosti \cite{lidy09:448[TUW-181186]}. 
     Výsledkem je kolekce paralelně složených sekvencí hodnot jednotlivých vlastností, které se následně zpracují na požadovaná výstupní data.
 
-
-
-    %TODO: Předělat tuhle tabulku
-  % \begin{table}[H]
-  %   \centering
-  %   \begin{tabular}{|p{0.07\linewidth} | p{0.31\linewidth} | p{0.27\linewidth} | p{0.25\linewidth}|}
-  %       \hline
-  %       {\bf Data}                 & {\bf Vyhledávání informací} & {\bf Klasifikace a odhad} & {\bf Sekvenční značení}\\
-  %       \hline
-  %       Audio                      & Indetifikace kopie \uv{coverů},
-  %                                    Řazení skladeb,
-  %                                    Měření podobnosti,
-  %                                    Získání otisku,
-  %                                    Generování seznamu skladeb
-  %                                  & Identifikace umělce a skladatele,
-  %                                    Žánr a nálada,
-  %                                    Určení tempa
-  %                                  & Extrakce melodie,
-  %                                    Odhad akordů,
-  %                                    Detekce nástupů,
-  %                                    Segmentace                   \\
-  %       \hline
-  %   \end{tabular}
-  %   \caption{Typické procesy na základně vstupních a výstupních dat. \cite{a_new_companion_to_digital_humanities}}
-  %   \label{tab:MIR_typicke_procesy}
-  % \end{table}
-
   \section{Parametrizace hudebních nahrávek} \label{sec:Parametrizace}
   V této kapitole je popsán audio signál. Jak je reprezentován v oboru číslicového zpracování a základní principy práce s audiosignálem.
   V bodech \ref{sec:Dynamika} a \ref{sec:Barva} jsou popsány parametry získávané z audio signálu.
@@ -147,14 +120,6 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   Spektrum představuje rozložení původní části signálu na jednotlivé frekvenční složky popsané funkcí sinus. Kde reálná složka obsahuje informaci o magnitudě \uv{velikosti} funkce sinus.
   Imaginární složka komplexního čísla pak udává počáteční fázi.
   V grafu jsou poté zobrazeny frekvenční složky se kterých se signál skládá viz obr. \ref{fig:Bass_tone}.
-
-
-  % \begin{figure}[H]
-  %   \centering
-  %   \includegraphics[width = 0.9\linewidth]{obrazky/Bass_tone_spectrum.eps}
-  %   \caption{Zobrazení časového průběhu signálu}
-  %   \label{fig:Waveform}
-  % \end{figure}
 
   \begin{figure}[H]
     \centering
@@ -246,7 +211,7 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   \subsection{STFT -- Short-time Fourier transform} \label{sec:STFT}
 
   V roce 1946 Dennis Gabor představil \acs{STFT} jako možnost zařazení frekvenčních složek ke konkrétnímu času signálu \cite{strichartz2003guide}.
-  Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejmé v jakém časovém úseku signálu se získané fekvenční složky nachází.
+  Fourierova transformace umožňovala převod signálu z časové oblasti do frekvenční ale nebylo zřejmé v jakém časovém úseku signálu se získané frekvenční složky nachází.
   Hlavní myšlenkou \acs{STFT} je, že namísto analyzování celého signálu je analyzována pouze jeho malá část.
   Za tímto účelem je definovaná tzv. okénokvá funkce, která je nenulové pouze v malé části signálu.
   Analyzovaný signál je následně vynásoben vzniklou okénkovou funkcí a díky tomu vzniká malá nenulová část signálu dle okénkové funkce viz obr. \ref{fig:STFT}.
@@ -283,9 +248,6 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   \end{figure}
 
   \subsection{Dynamika hlasitost a intenzita} \label{sec:Dynamika}
-  
-%TODO: Informace o hlasitosti v češtině MPC-ELE2 přednáška 7 slide 64
-%TODO: Doplnit informace o hlasitosti v LUFS \cite{Pyloudnorm}
 
   V češtině se pojem hlasitost využívá pro reprezentaci subjektivního vnímání akustického tlaku definovanou například jednotkou phon\footnote{Phon - logaritmická jednotka vyjadřující individuální vnímání hlasitosti. Vnímání hlasitosti lidského ucha je závislé na křivce prahu slyšení a může se lišit pro každý tón \cite{tumarkin_1950}.}. 
   Stejně tak je hlasitost využívána, hovoří li se o měřené hlasitosti vyjádřené například hladinou intenzity zvuku popsanou níže nebo efektivní hodnotou signálu.
@@ -308,6 +270,10 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
     L_I = 10log(\frac{I}{I_0})
     \label{rov:hladina_intenzity}
   \end{equation}
+
+  Pro výpočet a měření hlasitosti audio souborů byly institutem Evropské vysílací unie zavedeny normy pro hlasitost zvuku ve vysílacích médiích. V roce 2010 vydala první doporučení EBU R 128 \cite{EBU_R_128} zabývající se normalizací hlasitosti zvuku ve vysílání. Ve zmíněném doporučení byla implementována norma ITU-R BS.1770 \cite{BS.1770}, ve které jsou stanoveny algoritmy pro měření digitálního záznamu zvuku a jejich jednotka hlasitosti \acs{LUFS}, která vychází z psychoakustických vlastností lidského sluchu a poskytuje normovanou metriku pro posouzení celkové hlasitosti a dynamiky zvukového obsahu. Použití jednotky \acs{LUFS} umožňuje konzistentní hodnocení hlasitosti přes různé platformy a média.
+
+  %TODO: Když bude čas doplnit fungování algoritmu dle BS.1770
 
   \subsection{Barva} \label{sec:Barva}
 
@@ -338,9 +304,9 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   Tón zahraný na hudební nástroj má svou fundamentální \uv{nosnou} frekvenci nazývanou první harmonická udávající jeho výšku.
   Dle konstrukce nástroje se v signálu objevují násobky nosné frekvence.
   Tyto násobky představují vyšší harmonické složky tónu.
-  Počet a amplituda vyšších harmonických složek má vliv na výslednou barvu tónu a je to hlavní důvod proč je lidské ucho schopné rozeznat stejný tón znějící na různé nástroje. %TODO: Bylo by vhodné poslední větu ocitovat.
+  Počet a amplitud vyšších harmonických složek má vliv na výslednou barvu tónu a je to hlavní důvod proč je lidské ucho schopné rozeznat stejný tón znějící na různé nástroje \cite{Musical_timbre_perception}.
 
-  %TODO: vložit obrázek spektrogramu tónu
+  %TODO: Když zbude čas vložit obrázek spektrogramu tónu
 
 \section{Detekce nástupů a analýza tempa skladby} \label{sec:Detekce_tempa}
 % V této kapitole jsou posány principy analýzy tempa skladby a detekce dob sklady. 
@@ -353,14 +319,14 @@ Výskyt takových udáslotí je provázen zvýšením energie signálu zaznamena
 Typickým znakem pro fázi nástupu je rychlý nárůst obálky amplitudy signálu.
 V této fázi se při vytváření tónu vyskytují \textbf{Tranzienty}. Tranzienty je možné pozorovat zejména u neperkusivních nástrojů například u dechových nebo smyčcových.
 Jsou představovány nakmitávajícími a dokmitávajícími pochody. Jedná se o zvuk netónové podoby připomínající hluk s výraznými frekvenčními změnami.
-U smyčcových nástrojů takový zvuk může být ze začátku způsoben drhnutím smyčce o strunu do chvíle než se ustálí její kmitání. Délka tranzientů pak může dosahovat od jednotek milisekund až po stovky milisekund v závisloti na typu nástroje a technice hry \cite{syrový2013hudební}.
+U smyčcových nástrojů takový zvuk může být ze začátku způsoben drhnutím smyčce o strunu do chvíle než se ustálí její kmitání. Délka tranzientů pak může dosahovat od jednotek milisekund až po stovky milisekund v závislosti na typu nástroje a technice hry \cite{syrový2013hudební}.
 Například v případě piana tranzient odpovídá počáteční fázi kdy byla zmáčknuta klávesa.
 Na základě zmáčknutí klávesy dochází ke zvednutí tlumítka, kladívko udeří do struny, struna začíná vibrovat a vibrace se přenáší do těla piana.
 V této fázi začíná tělo rezonovat a konečně dochází k ustálení tónové složky. Při úderu kladívka dochází k velkému přenosu energie patrném na obálce tónu. Díky tomu je lehké určit začátek tónu podle nárůstu amplitudy obálky \cite{fundamental_of_music_processing}.
 
 U některých nástrojů je však energie přenášená po celou dobu znění tónu konstantně a dochází k pomalému jemnému náběhu tónu například u určitých technik hry na smyčcové nástroje nebo u dechových nástrojů. Fáze náběhu je pak pomalá a dlouhá a plynule přechází do fáze podržení. Pro tyto jemné zvuky se stává obtížné určit skutečnou pozici začátku noty.
 
-%TODO: doplnit obrázek obálka perkusivního zvuku a táhlého
+%TODO: Když zbude čas doplnit obrázek obálka perkusivního zvuku a táhlého
 
 
 Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se například o polyfoní skladbu. Polyfoní skladbou rozumíme skladbu tvořenou více hlasy.
@@ -465,8 +431,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   % \end{equation}
 
   \subsection{Detekce periodicity}
-    Detekce periodicity je nezbytnou součástí procesu při detekci dob skladby.
-    Důležitou technikou pro detekci periodicity je autokorelační funkce.
+    Detekce periodicity je nezbytnou součástí procesu detekce dob skladby. Důležitou technikou pro detekci periodicity je autokorelační funkce.
     Autokorelační funkce slouží pro detekci periodických vzorů v datech.
     Tato metoda dokáže detekovat tempo, ale neumožňuje určit o jakou dobu se jedná.
     Základní použití je výpočet autokorelační funkce s energií signálu z bodu \ref{sec:Energie_signalu}. Matameticky je pak popsána dle rovnice \ref{rov:autocorelation} \cite{Signal_processing_methods_for_music_transcription}.
@@ -476,21 +441,32 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
       \label{rov:autocorelation}
     \end{equation}
 
-    Autokorelačn funkce zde přináší několik výhod. Jednoduchost a efektivita. Je to jednoduchá metoda pro zjisštění periodicity v signálech a vyžaduje menší množství paměti než jiné metody. Autokorelace může odhali ne zcela zřejmé periodické vzory, které nemusí být při poslechu nebo pozorování okamžitě zřejmé. Zároveň je robustní vůči šumu. Při analýze také nedochází ke ztrátě informace \cite{Tempo_and_metrical_analzsis_by_tracking_multiple_metrical_levels_using_autocorrelation}.
+    Autokorelačn funkce zde přináší několik výhod. Jednoduchost a efektivita. Je to jednoduchá metoda pro zjisštění periodicity v signálech a vyžaduje menší množství paměti než jiné metody. Autokorelace může odhalit ne zcela zřejmé periodické vzory, které nemusí být při poslechu nebo pozorování okamžitě zřejmé. Zároveň je robustní vůči šumu. Při analýze také nedochází ke ztrátě informace \cite{Tempo_and_metrical_analzsis_by_tracking_multiple_metrical_levels_using_autocorrelation}.
     
     Autokorelace má také své nevýhody. Není vhodná pro analýzu v reláném čase protože potřebuje dostatečné množství dat a je potřebné aby v analyzovaném datovém okně byla obsažena celá perioda. V opačném případě nedojdte k jejímu nalezení. Autokorelace není schopná pracovat s fází signálu. Pro rozpoznání fáze je zapotřebí dalších metod. Nekonstantní tempo v analyzovaném signálu představuje pro autokorelační analýzu problém \cite{Tempo_and_metrical_analzsis_by_tracking_multiple_metrical_levels_using_autocorrelation}.
 
     Při detekci periodicity je možné využít také banky rezonátorů hřebenového filtru s konstantním poločasem \cite{Tempo_and_beat_analysis_of_acoustic_musical_signals} nebo fázově blokující rezonátory \cite{Resonance_and_the_perciption_of_musical_meter}.
 
-    %TODO:  * popsat autokorelační funkci a její využití pro detekci tempa (periodicity) [Kdzby zbyl čas]
-
-
 \section{Analýza chroma vlastností} \label{sec:Chroma_vektory}
+Chroma vlastnosti jsou reprezentací zjednodušenou reprezentací hudebních tónů, která zohledňuje pouze jeho výšku bez ohledu na absolutní frekveci. Zíkané údaje mohou být důležitými prerekvizitami ke komplexním sématickým analýzám. Například rozeznávání akordů či harmonické podobnosti skladeb. Přesné stanovení chroma vlastností následně umožňuje mnohem lepší výsledky zmíněných pokročilých metod. Základními používanými metodami pro analýzu jsou \acs{STFT} a konstantní Q transformace -- \acs{CQT}. S rostoucí popularitou umělé inteligece se začaly objevovat i metody využívající hluboké neuronové sítě \cite{Chroma_feature_extraction}. 
 
-    %TODO: Poppast deep learning systém který využívá Madmom
+  \subsection{Analýza pomocí STFT}
+  Nejzákladnější metodou je výpočet ze spektra signálu získaného pomocí \acs{STFT}. Frekvenční spektrum je následně mapováno do chromatického prostoru, který reprezentuje 12 půltónů. Tento proces je rychlý, efektivní a poskytuje poměrně přesné výsledky \cite{Tonal_description}. 
+  
+  \subsection{Analýza pomocí CQT}
+  Při výpočetu \acs{CQT} je frekvenční spektrum, narozdíl od lineárního rozložení při \acs{DFT}, rozloženo logaritmicky. Logarytmické rozložení spektra je více frekvenčnímu vnímání lidského ucha. Díky tomu je možné lépe zachytit hudební intervaly \cite{Chroma_from_CQT}. Jak vyplývá z názvu metody poměr rozložení frekvencí na oktávu je konstantní v celém rozsahu spekra. Tato vlastnosti přináší vyšší rozlišení v oblasti nízkých kmitočtů. 
 
-\section{Segmentace} \label{sec:Segmentace}
+  \subsection{Zpracování metodou CENS}
+  Jedná se o variantu následného zpracování chroma vlastností získaných pomocí \acs{CQT} analýzy. Zkratka \acs {CENS} je odvozena z anglického názvu Chroma energy normalized statistics. U vypočítaného chromagramu je normalizována jeho energie a následně mohou být aplikovány statistické funkce jako jsou průměr, směrodatná odchyla a medián. Takto upravené chroma vlastnosti jsou méně náchylné na náhlé změny hlasitosti a dynamiky signálu. Metoda nachází nejlepší uplatnění v oblastech porovnávání podobnosti skladeb \cite{MuellerEwert11_ChromaToolbox_ISMIR}. 
 
+  \subsection{Využití neuronových sítí}
+  Přístupy k aplikaci neuronových sítí na extrakci chroma vlastností mohou být různorodé. Může se lišit předzpracování dat implementace vstupních dat, vnitří struktura sítě, způsob učení a zpracování výstupních. Každá změna v popsaném procesu přináší jiný výsledek a může být cíleně zaměřena na konkrétní oblast využítí. V této práci je popisován model z článku \cite{The_deep_chroma_extractor}. Tento model využívá jako stupní data spektrogram, ale na rozdíl od jiných modelů je vkládáno několik vzorků aby z nich byla lépe rozpoznám chroma složka. Jádro pak tvoří hluboká neuronová sítě z třemi skrytými vrstvy. Výstupní vrstva je tvořená dvanácti neurony představujícími jednotlivé tónové třídy. Výhodou modelu je jeho nenáchylnost na šumové složky obsažené v signálu a klade větší prioritu na jeho harmonické složky. Model je vhodný pro další použití v rozpoznávání akordů. 
+
+  \subsection{Pomocné zpracování vstupních a výstupních dat}
+  V praxi se vyskystuje spousta způsobů jak zlepšit výsledky analýzy chroma vektorů pomocí předzpracování vstupního sginálu a následného zpracování výstupního signálu. Takové operace mohou obsahovat statické metody jako je výpočet průměru, mediánu či zmíněná nromalizace energie spektra signálu. Dalším způsobem je aplikace filtrů pro potlačení nežádoucích šumových složek signálu a zvýraznění harmonických složek. Metody využívající knihovna Librosa jsou popsány v bodě \ref{sec:Librosa}.
+
+\section{Segmentace} \label{sec:Teorie_Segmentace}
+    
     %TODO: Popsat aglomerative clustering použivaný funkcí librosa.segment.agglomerative
 
     % https://portal.matematickabiologie.cz/index.php?pg=analyza-a-hodnoceni-biologickych-dat--vicerozmerne-metody-pro-analyzu-dat--shlukova-analyza--shlukova-hierarchicka-analyza--hierarchicke-shlukovani--hierarchicke-aglomerativni-shlukovani
@@ -512,10 +488,11 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
 \subsection{Librosa} \label{sec:Librosa}
     Knihovna Librosa vznikla v roce 2015 na základě potřeb vědecké komunity pro snadné použití metod z oblasti \acs{MIR} v jayzce python.
     Publikována a popsána byla článkem Audio and Music Signal Analysis in Python \cite{Librosa} na konferenci SciPy 2015.
-    Jedná se o otevřenou knihovnu jejiž další vývoj probíhá zapomoci vědecké komunity na GitHubu kde je kladen důraz na kompatibilitu, řádnou dokumentaci obsahující popisy funkcí s příkladovými kódy, a testování funkčnosti. Knihovna obsahuje pokročilé metody pro detekci dob.
+    Jedná se o otevřenou knihovnu jejiž další vývoj probíhá zapomoci vědecké komunity na GitHubu kde je kladen důraz na kompatibilitu, řádnou dokumentaci obsahující popisy funkcí s příkladovými kódy, a testování funkčnosti. Knihovna obsahuje velké množství funkcí pro extrakci vlastností hudební nahrávky a pro práci s audiosoubory.
 
-    Librosa obsahuje funkce pro extrakci audio vlastností.
-    Pro tuto práci jsou důležitými funkcemi zejména detekce tempa a dob skladby, rozpoznání začátků tónů. Následně jsou v knihovně obsaženy nástroje pro vizualizaci získaných vlastností. Například zobrazení spektrograma či grtafické zobrazení detekovaného tempa a dob.
+    Pro tuto práci jsou důležitými funkcemi zejména detekce dob, tempa, segmentace a analýza chroma vektorů. V knihovně jsou obsaženy i nástroje pro vizualizaci získaných vlastností. Například zobrazení spektrograma či grtafické zobrazení detekovaného tempa a dob.
+
+    % TODO: Vkládat vůbec podrobný popis funkcí??? Tento text hodit do teorie detekce nástupů a zde nechat jen text o samotné knihovně. 
     Funkce pro detekci tempa a dob skladby pomocí dynamického programování je v knihovně zapsána:
 
     \begin{lstlisting}
@@ -550,15 +527,17 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
         \label{rov:actual_vs_ideal_time_spacing}
       \end{equation}
     \end{description}
-
-    %TODO: popis funkcí pro výpočet chromavektorů. 
     
 \subsection{Madmom}
+Madmom je volně šiřitelná knihovna pro zpracování audio signálů psaná v jazyce Python a je zaměřená především na oblas \acs{MIR} \cite{madmom}. Knihovna byla vytvořina na Kepler University Linz v Rakousku v roce 2015 a od svého vzniku je rozšiřována vědeckou komunitou. V knihově jsou obsaženy jak základní metody pro extrakci parametrů, tak komplexní řešní pro náročné vlastnosti. Madmom se zaměřuje na efektivní a snadné prototypování algoritmů MIR a umožňuje jednoduché přetvoření prototypů do běžně spustitelných programů. Knihovna také poskytuje integrovanou podporu pro metody strojového učení a nabízí několik špičkových systémů pro zpracování zvuku a získávání hudebních informací, včetně jejich natrénovaných modelů \cite{madmom_paper}. Velkou výhodou jsou vytvořené třídy procesorů pro jednotlivé vlastnosti. Tyto procesory umožňují více jádrové výpočty a urychlují tak výpočty parametrů při implementaci do aplikací. 
+
 \subsection{Aubio}
+
+
 \subsection{Hodnocení extrakce informací} \label{sec:Mir_eval}
 
-\section{Systém Spectoda} \label{sec:Spectoda}
 
+\section{Systém Spectoda} \label{sec:Spectoda}
 Systém Spectoda je vytvořen a spravován společností Light Seekres s.r.o. sýdlící v Praze. Spectodu představují jako nový komunikační protokol pro bezdrátové ovládání světelncýh produktů \cite{Spectoda}. Pro převod digitálních příkazů v podobě Spectodakódu na světelné animace je využíváno procesorů ESP32 a jeich varianty umístěné ve vlastních obvodech speciálně navržených pro různé problematiky využití. Procesory následně ovládají připojené světelné zdroja nejčastěji pak adresovatelné led pásky osazené čipy WS2812B nebo WS2815.
 
 Spectoda kód představující animaci je zároveň uložen na plošené desce. Proto v případě ztráty signálu se zdrojem kódu, může světelné zařízení nadále pracovat. Tím se systém stává výhodnější oproti rozšířenému protokolu DMX\footnote{Digital Multiplexer - Protokol pro digitální přenos informací a řízení scénických světel \cite{DMX}.}, u kterého je nutný nepřetržitý tok příkazů. 
