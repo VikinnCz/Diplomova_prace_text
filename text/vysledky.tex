@@ -10,7 +10,7 @@ V kapitole je popsán návrh výsledného systému. Skládá se z několika čá
 \subsection{Uživatelské rozhraní} \label{sec:User_interface}
 
 Jedná se o jednoduché webové rozhraní, ve kterém uživatel vloží hudební skladbu ve formátu .wav nebo mp3. Rozhraní obsahuje pole pro vložení cesty ke skladbě umožňující výběr ze souborů v uživatelově úložišti. Níže se nachází posuvník se čtyřmi základními hodnotami pro výběr nálady
-\texttt{mood}. Jedná se hodnoty \uv{chill}, \uv{hang out}, \uv{feeling happy} a \uv{dancing}, které jsou v tomto pořadí umístěny na posuvníku. Uživatel může pomocí posouvání posuvníku vybrat pro jakou náladu chce vytvořit animaci. Pod posuvníkem pro výběr nálady se nachází tlačítko spouštějící proces generování SpectodaCodu.
+\texttt{mood}. Jedná se hodnoty \uv{chill}, \uv{hang out}, \uv{feeling happy} a \uv{dancing}, které jsou v tomto pořadí umístěny na posuvníku. Uživatel může pomocí posouvání posuvníku vybrat pro jakou náladu chce vytvořit animaci. Pod posuvníkem pro výběr nálady se nachází tlačítko spouštějící proces generování Spectoda kódu.
 Poslední částí webového rozhraní je textové pole, ve kterém se zobrazí vygenerovaný kód. Na blokovém schématu \ref{fig:User_interaction_diagram} je zobrazen proces postupu uživatele skrze webové rozhraní. 
 
  \begin{figure}[H]
@@ -21,8 +21,7 @@ Poslední částí webového rozhraní je textové pole, ve kterém se zobrazí 
 \end{figure}
 
 \subsection{Parametry hudební nahrávky} \label{sec:Parametry_nahravky}
-
-Systém pro generování spektoda kódu popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní data o hudební nahrávce. Tyto data jsou rozdělena na 7 parametrů. Každý z parametrů představuje vlastnost analyzované nahrávky. Tyto vlastnosti jsou získány pomocí technik popsaných v bodě \ref{sec:Exktrakce_vlastnosti_metody}. Jednotlivé vlastnosti a jejich datové struktury jsou shrnuty v následujících bodech.
+Systém pro generování spectoda kódu popsaný v bodě \ref{sec:System_generovani_animaci} vyžaduje vstupní data o hudební nahrávce. Tyto data jsou rozdělena na 7 parametrů. Každý z parametrů představuje vlastnost analyzované nahrávky. Tyto vlastnosti jsou získány pomocí technik popsaných v bodě \ref{sec:Exktrakce_vlastnosti_metody}. Jednotlivé vlastnosti a jejich datové struktury jsou shrnuty v následujících bodech.
 
 \begin{description}
     \item[Detekce dob] -- představuje pole hodnot jehož délka je závislá na době trvání nahrávky. Jednotlivé hodnoty pak udávají časy hudební nahrávky, ve kterých se doby nacházejí. V rámci detekce dob je vypočítána i obálka síly nástupů jednotivých not. Jedná se o pole hodnot síly nástupů pro jednotlivé snímky. 
@@ -106,7 +105,6 @@ Jak bylo zmíněno bloky animací mají proměnou \texttt{characteristic}, kter�
 \end{figure}
 
 \subsection{Systém pro generování animací} \label{sec:System_generovani_animaci}
-
 Systém pro generování animací je jádrem práce. Jeho struktura udává vizuální kvalitu animací a schopnost přizpůsobit se různorodým skladbám. V této kapitole je popsána jeho vnitřní logika.
 
 První částí systému je vstupní rozhraní, ve kterém jsou přijímány data obsahující vlastnosti hudební nahrávky. Struktura přijímaných dat je popsána v bodě \ref{sec:Parametry_nahravky}. Každý ze zmíněných parametrů plní důležitou funkci v rozhodovacím procesu skládání bloků animace. Níže jsou popsány rozhodovací funkce pro jednotlivé parametry.
@@ -250,6 +248,12 @@ Kapitola popisuje jakým způsobem bylo dosaženo funkčního prototypu systému
 \subsection{Uživatelské rozhraní}
 
 Uživatelské rozhraní je reprezentováno webovou stránkou a je naprogramováno pomocí značkovacího jazyka \acs{HTML}\footnote{HTML -- Hypertext markup language. Je značkovací jazyk používaný pro tvorbu webových stránek.} spolu s formátováním v jazyce \acs{CSS}\footnote{CSS -- Cascading style sheets. Je jazyk popisující styl zobrazení HTML elementů\cite{CSS}.}. Aby bylo možné k webové stránce přistupovat veřejně je nasazena serveru služby PythonAnywhere. Která poskytuje cloudové řešení pro realizaci python aplikací. Funkčnost a propojení webového rozhraní s python systémem pracujícím na pozadí je řešeno pomocí frameworku Flask. Flask umožňuje jednoduchou interakci webové stránky s python aplikací běžící na pozadí pomocí protokolu HTTP\footnote{HTTP -- Hypertext transfer protocol. Je protokol navržen pro komunikaci mezi klientem a serverem.}. V rámci webové aplikace je využito pouze metod \texttt{GET} a \texttt{POST}. Kde metoda \texttt{POST} slouží pro odeslání dat s přiřazenou nahrávkou a vybranou náladou.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{obrazky/Uzivatelske_rozhrani.png}
+    \caption{Uživatelské rozhraní aplikace}
+\end{figure}
 
 \subsection{Extrakce parametrů} \label{sec:Parameter_extraction}
 Pro získání všech potřebných parametrů z nahraného audio souboru jsou naprogramovány čtyři třídy. Tyto třídy analyzují veškeré potřebné parametry. V textu níže je postupně popsána jejich vnitřní struktura a funkce které obstarávají. Vypočítané vlastnosti jsou pak dostupné jako property dané třídy. Property v pythonu nahrazují jinde typické funkce typu Getter a Setter.

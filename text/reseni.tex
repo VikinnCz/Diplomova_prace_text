@@ -248,7 +248,6 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   \end{figure}
 
   \subsection{Dynamika hlasitost a intenzita} \label{sec:Dynamika}
-
   V češtině se pojem hlasitost využívá pro reprezentaci subjektivního vnímání akustického tlaku definovanou například jednotkou phon\footnote{Phon - logaritmická jednotka vyjadřující individuální vnímání hlasitosti. Vnímání hlasitosti lidského ucha je závislé na křivce prahu slyšení a může se lišit pro každý tón \cite{tumarkin_1950}.}. 
   Stejně tak je hlasitost využívána, hovoří li se o měřené hlasitosti vyjádřené například hladinou intenzity zvuku popsanou níže nebo efektivní hodnotou signálu.
   Z důvodu lepší srozumitelnosti jsou dále využívána anglické pojmy \uv{volume} a \uv{loudness}. 
@@ -263,7 +262,7 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   A intenzita zvuku je pak definována jako množství energie, které projde jednotkovou plochou kolmou na směr šíření na jednotku času. Jednotkou je $Wm^{-2}$ \cite{intenzita_zvuku_definice}.
   
   Z pohledu vnímání hlasitosti lidským uchem je rozsah vnímané intenzity zvuku v řádech bilionů. Práh slyšení činí $10^{-12}$ $Wm^{-2}$ a práh bolesti je $10$ $Wm^{-2}$.
-  Pro zmenšení tak velkého řádu je definována hladina intenzity zuvku v decibelech $dB$. Kde vztažnou hodnotou je práh slyšení $I_0 = 10^{-12}$ $Wm^{-2}$.
+  Pro zmenšení tak velkého řádu je definována hladina intenzity zvuku v decibelech $dB$. Kde vztažnou hodnotou je práh slyšení $I_0 = 10^{-12}$ $Wm^{-2}$.
   Hladina intenzity se vypočítá dle rovnice \ref{rov:hladina_intenzity}.
 
   \begin{equation}
@@ -273,12 +272,9 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
 
   Pro výpočet a měření hlasitosti audio souborů byly institutem Evropské vysílací unie zavedeny normy pro hlasitost zvuku ve vysílacích médiích. V roce 2010 vydala první doporučení EBU R 128 \cite{EBU_R_128} zabývající se normalizací hlasitosti zvuku ve vysílání. Ve zmíněném doporučení byla implementována norma ITU-R BS.1770 \cite{BS.1770}, ve které jsou stanoveny algoritmy pro měření digitálního záznamu zvuku a jejich jednotka hlasitosti \acs{LUFS}, která vychází z psychoakustických vlastností lidského sluchu a poskytuje normovanou metriku pro posouzení celkové hlasitosti a dynamiky zvukového obsahu. Použití jednotky \acs{LUFS} umožňuje konzistentní hodnocení hlasitosti přes různé platformy a média.
 
-  %TODO: Když bude čas doplnit fungování algoritmu dle BS.1770
-
   \subsection{Barva} \label{sec:Barva}
-
   V hudebním vyjádření se za slovem barva skrývá komplexní sdružení atributů.
-  Jedná se jak o psychologický, tak hudební problém, který je vnímán individuálně\cite{The_perception_of_musical_timbre}. Zjednodušeně se barva definuje jako vlastnosti, díky kterým je možné rozeznat tón o stejné výšce a hlasitosti zahraný na dva různé náastroje\cite{MULLER2014713}.
+  Jedná se jak o psychologický, tak hudební problém, který je vnímán individuálně\cite{The_perception_of_musical_timbre}. Zjednodušeně se barva definuje jako vlastnosti, díky kterým je možné rozeznat tón o stejné výšce a hlasitosti zahraný na dva různé nástroje\cite{MULLER2014713}.
   Díky barvě je posluchač schopen rozeznávat odlišné zvuky nástrojů a typů interpretace. Z důvodu špatné kategorizace barvy fyzikálními veličinami je většinou interpretována přídavnýmy jmény.
   Například je barva popisována jako jasná, temná, ostrá, čistá, teplá, pestrá, nazální, tonální a další.
 
@@ -309,33 +305,18 @@ V této kapitole je shrnuta teorie a sepsány potřebné informace pro realizaci
   %TODO: Když zbude čas vložit obrázek spektrogramu tónu
 
 \section{Detekce nástupů a analýza tempa skladby} \label{sec:Detekce_tempa}
-% V této kapitole jsou posány principy analýzy tempa skladby a detekce dob sklady. 
-S vývojem nových technologií se mění i přístupy využívané v \acs{MIR} pro analýzu tempa skladby. 
-V této kapitole je popsán postupný vývoj algoritmů.
-Od nejjednodušších přístupů po komplexní řešení využívající moderní metody strojového učení.
+V kapitole je popsán postupný vývoj algoritmů pro detekci dob od nejjednodušších přístupů po komplexní řešení. Detekce nástupů lze chápat jako detekci začátků not či dalších hudebních událostí, které se vyskytnou v průběhu skladby. Výskyt takových událostí je provázen zvýšením energie signálu zaznamenané ve fázi nástupu dle \acs{ADSR} obálky popsané v bodě \ref{sec:Barva}. Typickým znakem pro fázi nástupu je rychlý nárůst obálky amplitudy signálu.
+V této fázi se při vytváření tónu vyskytují \textbf{Tranzienty}. Tranzienty je možné pozorovat zejména u neperkusivních nástrojů například u dechových nebo smyčcových. Jsou představovány nakmitávajícími a dokmitávajícími pochody. Jedná se o zvuk netónové podoby připomínající hluk s výraznými frekvenčními změnami. U smyčcových nástrojů takový zvuk může být ze začátku způsoben drhnutím smyčce o strunu do chvíle než se ustálí její kmitání. Délka tranzientů pak může dosahovat od jednotek milisekund až po stovky milisekund v závislosti na typu nástroje a technice hry \cite{syrový2013hudební}. Například v případě piana tranzient odpovídá počáteční fázi kdy byla zmáčknuta klávesa. Na základě zmáčknutí klávesy dochází ke zvednutí tlumítka, kladívko udeří do struny, struna začíná vibrovat a vibrace se přenáší do těla piana. V této fázi začíná tělo rezonovat a konečně dochází k ustálení tónové složky. Při úderu kladívka dochází k velkému přenosu energie patrném na obálce tónu. Díky tomu je lehké určit začátek tónu podle nárůstu amplitudy obálky \cite{fundamental_of_music_processing}. U některých nástrojů je však energie přenášená po celou dobu znění tónu konstantně a dochází k pomalému jemnému náběhu tónu například u určitých technik hry na smyčcové nástroje nebo u dechových nástrojů. Fáze náběhu je pak pomalá a dlouhá a plynule přechází do fáze podržení. Pro tyto jemné zvuky se stává obtížné určit skutečnou pozici začátku noty.
 
-Detekce nástupů lze chápat jako detekci začátků not či dalších hudebních událostí, které se vyskytnou v průběhu skaldby.
-Výskyt takových udáslotí je provázen zvýšením energie signálu zaznamenané ve fázi nástupu dle ADSR obálky popsané v bodě \ref{sec:Barva}.
-Typickým znakem pro fázi nástupu je rychlý nárůst obálky amplitudy signálu.
-V této fázi se při vytváření tónu vyskytují \textbf{Tranzienty}. Tranzienty je možné pozorovat zejména u neperkusivních nástrojů například u dechových nebo smyčcových.
-Jsou představovány nakmitávajícími a dokmitávajícími pochody. Jedná se o zvuk netónové podoby připomínající hluk s výraznými frekvenčními změnami.
-U smyčcových nástrojů takový zvuk může být ze začátku způsoben drhnutím smyčce o strunu do chvíle než se ustálí její kmitání. Délka tranzientů pak může dosahovat od jednotek milisekund až po stovky milisekund v závislosti na typu nástroje a technice hry \cite{syrový2013hudební}.
-Například v případě piana tranzient odpovídá počáteční fázi kdy byla zmáčknuta klávesa.
-Na základě zmáčknutí klávesy dochází ke zvednutí tlumítka, kladívko udeří do struny, struna začíná vibrovat a vibrace se přenáší do těla piana.
-V této fázi začíná tělo rezonovat a konečně dochází k ustálení tónové složky. Při úderu kladívka dochází k velkému přenosu energie patrném na obálce tónu. Díky tomu je lehké určit začátek tónu podle nárůstu amplitudy obálky \cite{fundamental_of_music_processing}.
-
-U některých nástrojů je však energie přenášená po celou dobu znění tónu konstantně a dochází k pomalému jemnému náběhu tónu například u určitých technik hry na smyčcové nástroje nebo u dechových nástrojů. Fáze náběhu je pak pomalá a dlouhá a plynule přechází do fáze podržení. Pro tyto jemné zvuky se stává obtížné určit skutečnou pozici začátku noty.
-
-%TODO: Když zbude čas doplnit obrázek obálka perkusivního zvuku a táhlého
-
-
-Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se například o polyfoní skladbu. Polyfoní skladbou rozumíme skladbu tvořenou více hlasy.
+Náročnost detekce nástupů se zvyšuje v případě, že nehraje pouze jeden nástroj. Jedná se například o polyfonní skladbu. Polyfonní skladbou rozumíme skladbu tvořenou více hlasy.
 Zároveň nemají určenou roli vedoucího a doprovodného hlasu \cite{6155601}.
 Takové uspořádání hlasů může vést k překrývání a nástupy mohou být maskovány. Díky jevu maskování je obtížné zaznamenat změny energie signálu. V tomto případě přichází potřeba po komplexnějších metodách detekce nástupů \cite{fundamental_of_music_processing}. Například pohled na krátkodobé změny ve spektru signálu pomocí využití \acs{STFT} popsané v bodě \ref{sec:STFT}.
 
+Jako příklad 
+
   \subsection{Využití energie signálu} \label{sec:Energie_signalu}
 
-  Jak již bylo zmíněno při hraní dochází k přenosu energie od hřáče na hudební nástroj.
+  Jak již bylo zmíněno při hraní dochází k přenosu energie od hráče na hudební nástroj.
   Tento přenos je ve značné míře provázen rychlým nárůstem amplitudy ve fázi náběhu na začátku tónu.
   Například při úderu kladívka piana na strunu nebo úderu paličky na blánu bubnu.
   Ná základě tohoto jevu je možnost detekovat nástup tónu pomocí funkce pro výpočet energie signálu v daném místě.
@@ -351,7 +332,7 @@ Takové uspořádání hlasů může vést k překrývání a nástupy mohou bý
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.8\linewidth]{obrazky/Energy_based_novely.eps}
-    \caption{Detekce nástupů perikusivního zvuku \textbf{a)} Okamžitá výchylka nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
+    \caption{Detekce nástupů perkusního zvuku \textbf{a)} Okamžitá výchylka nahrávky \textbf{b)} Lokální energie signálu $E_{xw}(n)$ \textbf{c)} Derivace lokální enegrie signálu s půlvlnným usměrněním $\Delta_E(n)$}
     \label{fig:energy_based_novelty}
   \end{figure}
 
@@ -466,19 +447,23 @@ Chroma vlastnosti jsou reprezentací zjednodušenou reprezentací hudebních tó
   V praxi se vyskystuje spousta způsobů jak zlepšit výsledky analýzy chroma vektorů pomocí předzpracování vstupního sginálu a následného zpracování výstupního signálu. Takové operace mohou obsahovat statické metody jako je výpočet průměru, mediánu či zmíněná nromalizace energie spektra signálu. Dalším způsobem je aplikace filtrů pro potlačení nežádoucích šumových složek signálu a zvýraznění harmonických složek. Metody využívající knihovna Librosa jsou popsány v bodě \ref{sec:Librosa}.
 
 \section{Segmentace} \label{sec:Teorie_Segmentace}
-    
-    %TODO: Popsat aglomerative clustering použivaný funkcí librosa.segment.agglomerative
+Segmentaci můžeme chápat jako vyhledávání časových hranic smysluplných úseků skladby. Například intro, sloka, refrém a outro \cite{Segmentation_introduction}. Obecný systém segmentace se skládá ze dvou kroků: extrakce vlastností a strategie segmentace samotné \cite{Multiclass_audio_segmentation}. Eistuje spousta přístupů k řešení problematiky segmentace hudební nahrávky. Některý přístupy se lyší v prvním kroku, kde pro hledání využívají časovou oblast nebo frekvenční oblast. Dalším rozdílem je pak samotná strategie hledání časových hranic. V této práci je využívána metoda aglomerativního shlukování jež jsou implementovány v rámci knihovny Librosa \cite{Librosa}.
 
     % https://portal.matematickabiologie.cz/index.php?pg=analyza-a-hodnoceni-biologickych-dat--vicerozmerne-metody-pro-analyzu-dat--shlukova-analyza--shlukova-hierarchicka-analyza--hierarchicke-shlukovani--hierarchicke-aglomerativni-shlukovani
 
-\section{Klasifikace žánrů a nálady} \label{sec:Klasifikace_zanru}
+\section{Klasifikace žánrů} \label{sec:Klasifikace_zanru}
+Klasifikace žánrů představuje automatické rozpoznávání hudebního žánru u zvolené nahrávky.Protože se jedná o poměrně složitější proces vyžadujíc komplexní řešení, tak se setkáváme primárně s využitím strojového učení v podobě hlubokých neuronových sítí. Před rozmachem umělé inteligence byly používány například metody rozhodovacích stromů či k-nejbližších sousedů a další. Tyto algoritmy však trpěly velkou nepřesností výsledků. Přístupy založené na neuronových sítí poskytují mnohem přesnější odhady a jejich implementaci můžeme najít v celosvětově známých aplikacích jako je Spotify či Youtube\cite{Music_genre_classification}. 
+Pro trénování sítí zaměřených na klasifikaci žánrů byl v roce 2001 vytvořen dataset GTZAN, který obsahuje 10 žánrů a pro každý žánr sto třiceti sekundových úryvků skladeb \cite{GTZAN}. 
+
+V této diplomové práci je využíto dostupného tutoriálu, který vychází z článku Music Genre Classification using Neural Networks with Data Augmentation \cite{Music_classification_using_deep_learning, Music_genre_classification_paper}. Zmíněný tutoriál využívá jako vstupní data 25s uryvky nahrávek převedené na mel spektrogramy. Model sítě se skládá z pěti 2d konvolučních vrstev a třech dense vrstev. Výstupem modelu je pak 10 hodnot pravděpodobnosti žánrů.
+
 % https://dspace.cvut.cz/bitstream/handle/10467/65310/F3-BP-2016-Bartos-Jaroslav-detekce_hudebnich_zanru_pro_ucely_masteringu_gramofonovych_desek.pdf?sequence=1&isAllowed=y
 
 % Použitý tutoriál : https://medium.com/analytics-vidhya/music-classification-using-deep-learning-python-b22614adb7a2
-\cite{Music_classification_using_deep_learning}
+
 
 % Článek k citaci https://www.researchgate.net/publication/353244342_Music_Genre_Classification_using_Neural_Networks_with_Data_Augmentation_A_Make_in_India_Creation
-\cite{Music_genre_classification_paper}
+
 
 
 
