@@ -475,57 +475,62 @@ V této diplomové práci je využíto dostupného tutoriálu, který vychází 
     Publikována a popsána byla článkem Audio and Music Signal Analysis in Python \cite{Librosa} na konferenci SciPy 2015.
     Jedná se o otevřenou knihovnu jejiž další vývoj probíhá zapomoci vědecké komunity na GitHubu kde je kladen důraz na kompatibilitu, řádnou dokumentaci obsahující popisy funkcí s příkladovými kódy, a testování funkčnosti. Knihovna obsahuje velké množství funkcí pro extrakci vlastností hudební nahrávky a pro práci s audiosoubory.
 
-    Pro tuto práci jsou důležitými funkcemi zejména detekce dob, tempa, segmentace a analýza chroma vektorů. V knihovně jsou obsaženy i nástroje pro vizualizaci získaných vlastností. Například zobrazení spektrograma či grtafické zobrazení detekovaného tempa a dob.
+    Pro tuto práci jsou důležitými funkcemi zejména detekce dob, tempa, segmentace a analýza chroma vektorů. V knihovně jsou obsaženy i nástroje pro vizualizaci získaných vlastností. Například zobrazení spektrograma či grtafické zobrazení detekovaného tempa a dob. Pro detekci tempa a dob knihovna využívá dynamického programování \cite{Beat_tracking_by_dynamic_programing}.
 
-    % TODO: Vkládat vůbec podrobný popis funkcí??? Tento text hodit do teorie detekce nástupů a zde nechat jen text o samotné knihovně. 
-    Funkce pro detekci tempa a dob skladby pomocí dynamického programování je v knihovně zapsána:
 
-    \begin{lstlisting}
-      tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
-    \end{lstlisting}
+    % ----------
+    % Vkládat vůbec podrobný popis funkcí??? Tento text hodit do teorie detekce nástupů a zde nechat jen text o samotné knihovně. 
+    % ----------
+
+
+    % Funkce pro detekci tempa a dob skladby pomocí dynamického programování je v knihovně zapsána:
+
+    % \begin{lstlisting}
+    %   tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+    % \end{lstlisting}
     
-    Kde $ y $ je analyzovaný signál a $ sr $ je vzorkovací frekvence signálu.
-    Detekce dob je ve funkci $ brat\_track() $ realizována pomocí dynamického programování. Proces je rozdělen na 3 etapy popsané Danielem P.W. Ellis ve článku Beat Tracking by Dynamic Programing \cite{Beat_tracking_by_dynamic_programing}. Jedná se o tyto kroky:
+    % Kde $ y $ je analyzovaný signál a $ sr $ je vzorkovací frekvence signálu.
+    % Detekce dob je ve funkci $ brat\_track() $ realizována pomocí dynamického programování. Proces je rozdělen na 3 etapy popsané Danielem P.W. Ellis ve článku Beat Tracking by Dynamic Programing \cite{Beat_tracking_by_dynamic_programing}. Jedná se o tyto kroky:
 
-    \smallskip
+    % \smallskip
 
-    \begin{enumerate}
-      \item Výpočet obálky síly nástupů
-      \item Globální odhat tempa
-      \item Porovnání obálky síly nástupů s globálním tempem
-    \end{enumerate}
+    % \begin{enumerate}
+    %   \item Výpočet obálky síly nástupů
+    %   \item Globální odhat tempa
+    %   \item Porovnání obálky síly nástupů s globálním tempem
+    % \end{enumerate}
 
-    \smallskip
+    % \smallskip
 
-    \begin{description}
-      \item[Výpočet obálky síly nástupů:] Při výpočtu obálky síly nástupů je vstupní signál převzorkován na 8 kHz. Poté je vypočítána \acs{STFT} s délkou okna 32 ms a 4 ms mezerou mezi okny. Vypočítaný spektogram je převeden na mel spektrogram o 40 mel pásmech. Mel stupnice je využívána ve snaze vyrovnat důležitost každého frekvenčního pásma v návaznosti na logaritmickém vnímání frekvencí lidským uchem. Mel spektogram je převeden na dB a následně jsou počítány diferenční rovnice pro každé mel pásmo. Principem půlvnlného usměrnění jsou výsledné negativní hotnoty změněny na nulové. hodnoty kladné jsou v daném čase sečteny napříč všemi pásmy. Výsledný signál je filtrován horní propustí s mezní frekvencí 0,4 Hz a vyhlazen pomocí konvoluce s Gaussovou křivkou s šířkou okolo 20 ms. Pomocí výše popsaného procesu je získána jednorozměrná obálka síly nástupů v závislosti na čase reprezentující proporcionální nárůst energie přibližně sečtené ve mel pásmech.
-      \item[Globální odhad tempa:] Globální odhad tempa je určen z obálky síly signálu $O(t)$ získané v předchozím kroku. Je počítána autokorelace mezi původní obálkou signálu $O(t)$ a jejími zpožděnými verzemi. Pro zpoždění ve kterých se potká velké množství vrcholů obálky nastává velká korelace. Tato korelace může nastat v celočíselných násobcích dané hodnoty zpoždění. Díky tomuto jevu je těžké určit který čas zpozdění představuje správné tempo skladby. Avšak lidmi vnímané tempo skladeb má sklon být kolem 120 \acs{BPM}, jak bylo zjištěno ve výzkumu popsaném v článku Ambiguity in Tempo Perception: What Draws Listeners to Different Metrical Levels? \cite{Ambiguity_in_tempo_perception}. Proto je na výslednou autokorelaci aplikováno váhové okno snižující hodnotu autokorelace se vzdáleností od 120 BPM. Čas ve kterém autokorelace dosahuje největší hodnoty je čas hledaného tempa skladby.  
-      \item[Porovnání obálky síly nástupů s globálním tempem:] Matematicky je tento krok fomulován rovnicí \ref{rov:Dynamic_programing_formula_for_beat_tracking} kde $ \{t_i\} $ je pole nalezených dob, $O(t)$ je obálka síly signálu, $\alpha$ je váhový koeficient určující důležitost mezi obálkou síly signálu a detekovaným tempem. Funkce $F(\Delta t, \tau_p)$ zapsaná rovnicí \ref{rov:actual_vs_ideal_time_spacing} měří konzistenci mezi skutečným časem od sebe vzdálených dob $\Delta t$ a ideálním časem mezi dobami $ \tau_p$ určeným cílovým tempem.
+    % \begin{description}
+    %   \item[Výpočet obálky síly nástupů:] Při výpočtu obálky síly nástupů je vstupní signál převzorkován na 8 kHz. Poté je vypočítána \acs{STFT} s délkou okna 32 ms a 4 ms mezerou mezi okny. Vypočítaný spektogram je převeden na mel spektrogram o 40 mel pásmech. Mel stupnice je využívána ve snaze vyrovnat důležitost každého frekvenčního pásma v návaznosti na logaritmickém vnímání frekvencí lidským uchem. Mel spektogram je převeden na dB a následně jsou počítány diferenční rovnice pro každé mel pásmo. Principem půlvnlného usměrnění jsou výsledné negativní hotnoty změněny na nulové. hodnoty kladné jsou v daném čase sečteny napříč všemi pásmy. Výsledný signál je filtrován horní propustí s mezní frekvencí 0,4 Hz a vyhlazen pomocí konvoluce s Gaussovou křivkou s šířkou okolo 20 ms. Pomocí výše popsaného procesu je získána jednorozměrná obálka síly nástupů v závislosti na čase reprezentující proporcionální nárůst energie přibližně sečtené ve mel pásmech.
+    %   \item[Globální odhad tempa:] Globální odhad tempa je určen z obálky síly signálu $O(t)$ získané v předchozím kroku. Je počítána autokorelace mezi původní obálkou signálu $O(t)$ a jejími zpožděnými verzemi. Pro zpoždění ve kterých se potká velké množství vrcholů obálky nastává velká korelace. Tato korelace může nastat v celočíselných násobcích dané hodnoty zpoždění. Díky tomuto jevu je těžké určit který čas zpozdění představuje správné tempo skladby. Avšak lidmi vnímané tempo skladeb má sklon být kolem 120 \acs{BPM}, jak bylo zjištěno ve výzkumu popsaném v článku Ambiguity in Tempo Perception: What Draws Listeners to Different Metrical Levels? \cite{Ambiguity_in_tempo_perception}. Proto je na výslednou autokorelaci aplikováno váhové okno snižující hodnotu autokorelace se vzdáleností od 120 BPM. Čas ve kterém autokorelace dosahuje největší hodnoty je čas hledaného tempa skladby.  
+    %   \item[Porovnání obálky síly nástupů s globálním tempem:] Matematicky je tento krok fomulován rovnicí \ref{rov:Dynamic_programing_formula_for_beat_tracking} kde $ \{t_i\} $ je pole nalezených dob, $O(t)$ je obálka síly signálu, $\alpha$ je váhový koeficient určující důležitost mezi obálkou síly signálu a detekovaným tempem. Funkce $F(\Delta t, \tau_p)$ zapsaná rovnicí \ref{rov:actual_vs_ideal_time_spacing} měří konzistenci mezi skutečným časem od sebe vzdálených dob $\Delta t$ a ideálním časem mezi dobami $ \tau_p$ určeným cílovým tempem.
 
-      \begin{equation}
-        C(\{t_i\}) = \sum_{i = 1}^{N} O(t_i) + \alpha \sum_{i = 2}^{N} F(t_i - t_{i-1}, \tau_p)
-        \label{rov:Dynamic_programing_formula_for_beat_tracking}
-      \end{equation}
+    %   \begin{equation}
+    %     C(\{t_i\}) = \sum_{i = 1}^{N} O(t_i) + \alpha \sum_{i = 2}^{N} F(t_i - t_{i-1}, \tau_p)
+    %     \label{rov:Dynamic_programing_formula_for_beat_tracking}
+    %   \end{equation}
   
-      \begin{equation}
-        F(\Delta t, \tau) = -(log \frac{\Delta t}{\tau})^2
-        \label{rov:actual_vs_ideal_time_spacing}
-      \end{equation}
-    \end{description}
+    %   \begin{equation}
+    %     F(\Delta t, \tau) = -(log \frac{\Delta t}{\tau})^2
+    %     \label{rov:actual_vs_ideal_time_spacing}
+    %   \end{equation}
+    % \end{description}
     
 \subsection{Madmom}
 Madmom je volně šiřitelná knihovna pro zpracování audio signálů psaná v jazyce Python a je zaměřená především na oblas \acs{MIR} \cite{madmom}. Knihovna byla vytvořina na Kepler University Linz v Rakousku v roce 2015 a od svého vzniku je rozšiřována vědeckou komunitou. V knihově jsou obsaženy jak základní metody pro extrakci parametrů, tak komplexní řešní pro náročné vlastnosti. Madmom se zaměřuje na efektivní a snadné prototypování algoritmů MIR a umožňuje jednoduché přetvoření prototypů do běžně spustitelných programů. Knihovna také poskytuje integrovanou podporu pro metody strojového učení a nabízí několik špičkových systémů pro zpracování zvuku a získávání hudebních informací, včetně jejich natrénovaných modelů \cite{madmom_paper}. Velkou výhodou jsou vytvořené třídy procesorů pro jednotlivé vlastnosti. Tyto procesory umožňují více jádrové výpočty a urychlují tak výpočty parametrů při implementaci do aplikací. 
 
 \subsection{Aubio}
-
+Aubio je na rozdíl od předchozík knihoven psaná v programovacím jazyce C a nabízí rozhraní pro Python. Díky tomu knihovna může pracovat efektivněji než výše zmíněné knihovny psané kompletně v jazyce Python. Jsou zde obsaženy funkce pro tvorbu digitálních filtrů, detekci dob, výpočet mel spektrogramu a další. Knihovna je volně šířitelná a spravovaná komunitou na platformě GitHub. Ze zmíněných knihoven se jedná o tu nejmenší. Zajmavostí je, že obsažené funkce jsou navržené s ohledem na fungování v reálném čase s co nejnižším zpožděním \cite{Aubio}.
 
 \subsection{Hodnocení extrakce informací} \label{sec:Mir_eval}
-
+Z předchozích kapitol je zřejmé, že existuje nespočet přístupů a metod pro získávání informací z audio signálů. Otázkou ale je jak porovnat přesnost a úspěšnost výsledků. Jako odpověd na tyto otázky vznikla v jazyce python knihovna Mir\_eval, která sdružuje nespočet vyvinutých metod pro hodnocení parametrů z oblasti \acs{MIR} do jedné ucelené knihovny. Díky tomu se tyto metody staly standardizovanými \cite{Mir_eval}. Knihovna je publikována jako veřejně šiřitelná a je spravována komunitou.
 
 \section{Systém Spectoda} \label{sec:Spectoda}
 Systém Spectoda je vytvořen a spravován společností Light Seekres s.r.o. sýdlící v Praze. Spectodu představují jako nový komunikační protokol pro bezdrátové ovládání světelncýh produktů \cite{Spectoda}. Pro převod digitálních příkazů v podobě Spectodakódu na světelné animace je využíváno procesorů ESP32 a jeich varianty umístěné ve vlastních obvodech speciálně navržených pro různé problematiky využití. Procesory následně ovládají připojené světelné zdroja nejčastěji pak adresovatelné led pásky osazené čipy WS2812B nebo WS2815.
 
-Spectoda kód představující animaci je zároveň uložen na plošené desce. Proto v případě ztráty signálu se zdrojem kódu, může světelné zařízení nadále pracovat. Tím se systém stává výhodnější oproti rozšířenému protokolu DMX\footnote{Digital Multiplexer - Protokol pro digitální přenos informací a řízení scénických světel \cite{DMX}.}, u kterého je nutný nepřetržitý tok příkazů. 
+Spectoda kód představující animaci je zároveň uložen na plošené desce. Proto v případě ztráty signálu se zdrojem kódu, může světelné zařízení nadále pracovat. Tím se systém stává výhodnější oproti rozšířenému protokolu \acs{DMX}\footnote{Digital Multiplexer - Protokol pro digitální přenos informací a řízení scénických světel \cite{DMX}.}, u kterého je nutný nepřetržitý tok příkazů. 
 
 Systém spectoda využívá pro generování animací několik základních animací. Tyto animace následně mohou být mezi sebou odčítány sčítány a skládány do bloků animací. Animace i bloky je možné posouvat a skládat zasebe či přes sebe v čase. Typickým příkladem jsou animace pro led pásky tvořící unikátní efekty v rámci architektonického osvětlení či přenosných světel. Animace je možné synchronizovat s hudebním podkladem, takže se hodí také pro scénické osvětlení v rámci kreativních vystoupení. 
 

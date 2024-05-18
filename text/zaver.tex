@@ -3,34 +3,12 @@
 \addcontentsline{toc}{chapter}{Závěr}
 
 
-V rámci diplomové práce byly splněny v úvodu stanovené cíle.
+V rámci diplomové práce byly splněny v úvodu stanovené cíle. Byla prozkoumána problematika oboru \acs{MIR} a na základě průzkumu navržena struktura systému pro generování spectoda kódu animací z parametrů hudební nahrávky. Systém byl následně realizován. Práce se zaobírá velkým množství oborů v oblasti \acs{MIR}, díky tomu je často problematika daných odvětví řešena pouze okrajově s cílem zachovat jednoduchost výsledné práce. V programu jsou z velké části implementovány již existující řešení v podobě volně dostupných knihoven pro nekomerční účely. Hlavní přidanou hodnotou je výsledná logická struktura skládající bloky animací na základě získaných parametrů. 
 
-% TODO: Shrnout jednotlivé cíle jejich splnění a postup realizace
-% TODO: Zhodnotit celkovou práci
-% TODO: Vytknout problémy a překážky 
+První sekcí práce byl primárně teoretický průzkum a vytvoření blokové struktury znázorňující, jak by mohl proces generování probíhat. Zásadní byl průzkum použitelných parametrů hudební nahrávky a popis jakou roli dané parametry zaujmou v aplikaci. Výstupem první části byly blokové schémata a datová struktura systému popsaná v bodě \ref{sec:Navrh_systemu}. 
 
+Druhým stanoveným cílem je porovnání metod pro extrakci zvolených parametrů. Zde byly porovnány primárně metody z knihoven Librosa, Madmom a Aubio. K hodnocení byla použita knihovna Mir\_eval. Výsledkem je osm Jupyter notebooků přiložených ve složce \textit{Methods\_comparisons}. Ne u všech parametrů bylo možné porovnat více metod k vůli jejich komplexnosti a náročnosti řešení. Například u klasifikace žánrů bylo vyzkoušeno pouze jedno řešeni. Podobně u segmentace hudební nahrávky poskytovala dobře dokumentované a funkční metody pouze knihovna Librosa. 
 
+Realizace navrženého systému byla třetím cílem práce. Vzhledem k připraveným podkladům se jednalo primárně o přenesení návrhu na funkčního řešení. bylo nutné primárně vymyslet jednoduché propojení uživatelského rozhraní s vnitřní logikou systému. Propojení bylo nakonec vyřešeno pomocí frameworku Flask, díky tomu může aplikace pracovat na serveru a komunikovat s webovou stránkou pomocí \acs{HTTP} protokolu. Celý proces realizace je popsán v bodě \ref{sec:Realizace}. Vzniklé zdrojové kódy jsou přiložené v elektronické příloze \ref{sec:Obsah_prilohy}. 
 
-
-
-
-
-
-
-% Starý Závěr
-% -------------------------------------
-
-%Shrnutí studentské práce co jsem dělal a musí zaznít co budu dělat v diplomové práci a jak toho dosáhnu.
-% V rámci semestrální práce byly splněny v úvodu stanovené cíle. Byla prozkoumána vědní oblast \acs{MIR}, metody vzniklé v rámci výzkumů v této oblasti a možnost jejich využití pro navazující diplomovou práci. Komunita soustředící se kolem oblasti \acs{MIR} vytvořila pro vědecké účely volně dostupné knihovny. Tyto knihovny jsou lehce implementovatelné v programovacím jazyce python a obsahují pokročilé mteody pro analýzu a práci s hudebními nahrávkami v časové i frekvenční oblasti.
-
-% V části \ref{sec:Teorie} je popsána teorie základních principů práce s hudební nahrávkou v digitální formě. Od metod využívajícíh základní principy zpracování signálů po moderní řešení s využitím strojového učení. Dále jsou v této části v bodech \ref{sec:Librosa} až \ref{sec:Mir_eval} popsány víše zmíněné dostupné knihovny jejich metody pro extrakci parametrů, potřebných pro navazující diplomovou práci, a principy jak jsou tyto metody realizovány. Zde je zapotřebí v rámci diplomové práce řádně doplnit popis knihoven Madmom, Aubio a Mir\_eval.
-
-% Třetím cílem semestrální práce byl návrh systému pro generování SpectodaCodu na základě parametrů nahrávky. SpectodaCod je následně nahrán do Spectoda zařízení, které kód převádějí na světelné animace. Návrh systému je rozdělen na několik částí. Uživatelské rozhraní popsané v bodě \ref{sec:User_interface}, parametry potřebné pro realizaci funkčního procesu generování animací a popis jejich datové struktury je v bodě \ref{sec:Parametry_nahravky}. Popis jak by celý proces generování měl v principu fungovat a jeho struktura je popsána v bodě \ref{sec:System_generovani_animaci}.
-
-% Posledním bodem práce byla samotná extrakce vybraných parametrů z hudební nahrávky. Jsou prozkoumány dostupné metody a vytvořeny Jupyter notebooky, jež jsou k nalezení v příloze práce, obsahují porovnání těchto metod na základě přesnosti a rychlosti výpočtů. Hodnocena je také vhodnost pro výsledný systému. Tato část práce je popsána v bodě \ref{sec:Exktrakce_vlastnosti_metody}.
-
-% V rámci navazující diplomové práce dojde k realizaci výsledného systému a jeho uvedení do funkčního stavu. Bude naprogramováno uživatelské rozhraní popsané v bodě \ref{sec:User_interface} a realizována rozhodovací struktura zobrazena v bodě \ref{sec:System_generovani_animaci}. Tato struktura bude následně testována a upravena, aby bylo dosaženo funkčního generování vizuálně zajímavých animací. Na základě existence rozhodovací struktury dojde k přezkoumání vhodnosti získaných parametrů a jejich úprava pro lepší výsledky při generování animací. Budou také doplněny body, které se nezdařilo realizovat v rámci semsetrální práce. Jedná se o teorii a realizaci automatické klasifikace žánrů. Popis knihoven Madmom, Aubio a Mir\_eval.
-
-
-%Není zde popsána segmentace, která zatím není realizována stejně jako přidělování žánrů. 
-% --Segmentace a přidělování žándrů zahrnout v rámci kapitoly zlepšení
+V kapitole \ref{sec:Hodnoceni_systemu} jsou shrnuty problematiky vzniklého řešení a popsány návrhy na jeho zlepšení v rámci budoucího vývoje. Zkráceně generování spectoda kódu je funkční, ale animace nejsou vizuálně zajímavé. Jednou z příčin je nedostatečná databáze datasetů, která by potřebovala zapojení designera pro vytvoření vizuálně zajímavých datasetů animací. Animace jako takové dobře reagují na rytmickou skladbu nahrávky a systém dokáže komponovat bloky animací na základě struktury dané skladby. Pro další vývoj je potřebné stanovit parametry pro hodnocení vizuální stránky výsledných animací. Na základě stanovených parametrů provést ladění systému obnášející testování vlivu změn hodnot vah a parametrů logické struktury pro přiřazování bloků animací. 
