@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-05-14T13:36:48.348Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="xwD4QEanPjDa3n_3nCTS" version="24.4.0" type="device">
+<mxfile host="app.diagrams.net" modified="2024-05-19T15:34:55.954Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="h1kH3_VesZDdRrP4Nrth" version="24.4.4" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="794" dy="492" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="934" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -509,16 +509,16 @@
         <mxCell id="oKw0ikxr2X2nw4R8P-xI-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.589;entryY=0.036;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="oKw0ikxr2X2nw4R8P-xI-2" target="oKw0ikxr2X2nw4R8P-xI-8" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="oKw0ikxr2X2nw4R8P-xI-17" value="Váhování&lt;br&gt;* 0,2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="oKw0ikxr2X2nw4R8P-xI-17" value="Váhování&lt;br&gt;* 0,04" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1615.5" y="470" width="60" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="oKw0ikxr2X2nw4R8P-xI-18" value="Váhování&lt;br&gt;* 0,7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="oKw0ikxr2X2nw4R8P-xI-18" value="Váhování&lt;br&gt;/ 0,7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1800.5" y="470" width="60" height="60" as="geometry" />
         </mxCell>
         <mxCell id="oKw0ikxr2X2nw4R8P-xI-60" style="edgeStyle=elbowEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;elbow=vertical;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="oKw0ikxr2X2nw4R8P-xI-19" target="oKw0ikxr2X2nw4R8P-xI-22" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="oKw0ikxr2X2nw4R8P-xI-19" value="Váhování&lt;br&gt;* 0,7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="oKw0ikxr2X2nw4R8P-xI-19" value="Váhování&lt;br&gt;* 0,6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1896" y="470" width="60" height="60" as="geometry" />
         </mxCell>
         <mxCell id="oKw0ikxr2X2nw4R8P-xI-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="oKw0ikxr2X2nw4R8P-xI-20" target="oKw0ikxr2X2nw4R8P-xI-31" edge="1">
